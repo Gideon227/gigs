@@ -1,6 +1,13 @@
+export const dynamic = 'force-static';
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Lora } from "next/font/google";
+import localFont from "next/font/local";
+
 import "./globals.css";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,6 +17,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const segoeUi = localFont({
+  src: "../public/fonts/Segoe UI.ttf",
+  variable: "--font-segoe-ui",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +44,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`
+          ${geistSans.variable} 
+          ${geistMono.variable} 
+          ${lora.variable}
+          ${segoeUi.variable}
+          antialiased`}
       >
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
