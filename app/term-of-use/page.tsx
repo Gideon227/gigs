@@ -1,10 +1,11 @@
 "use client"
 import Link from 'next/link';
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
 const TermPage = () => {
     const [activeId, setActiveId] = useState('about-gig')
 
+    const containerRef = useRef<HTMLDivElement>(null);
     const aboutGigRef = useRef<HTMLElement | null>(null);
     const usePlatformRef = useRef<HTMLElement | null>(null);
     const jobListingRef = useRef<HTMLElement | null>(null);
@@ -15,47 +16,114 @@ const TermPage = () => {
     const lawRef = useRef<HTMLElement | null>(null);
     const contactRef = useRef<HTMLElement | null>(null);
 
+
+    const scrollToSection = useCallback((ref: React.RefObject<HTMLElement | null>) => {
+        if (!ref.current || !containerRef.current) return;
+        const top = ref.current.offsetTop;
+        containerRef.current.scrollTo({ top, behavior: 'smooth' });
+      }, []);
+
+
+    useEffect(() => {
+        // const handleScroll = () => {
+        //   const scrollY = window.scrollY;
+    
+        //   const buffer = 100; // offset for header spacing
+        //   const refs = [
+        //     { id: 'about-gig', ref: aboutGigRef },
+        //     { id: 'use-platform', ref: usePlatformRef },
+        //     { id: 'job-listing', ref: jobListingRef },
+        //     { id: 'user-account', ref: userAccountRef },
+        //     { id: 'intellectual-property', ref: intellectualPropertyRef },
+        //     { id: 'liability', ref: liabilityRef },
+        //     { id: 'term-changes', ref: termRef },
+        //     { id: 'law', ref: lawRef },
+        //     { id: 'contact', ref: contactRef },
+        //   ];
+    
+        //   for (let i = refs.length - 1; i >= 0; i--) {
+        //     const el = refs[i].ref.current;
+        //     if (el && el.offsetTop <= scrollY + buffer) {
+        //       setActiveId(refs[i].id);
+        //       break;
+        //     }
+        //   }
+        // };
+    
+        // window.addEventListener('scroll', handleScroll);
+        // return () => window.removeEventListener('scroll', handleScroll);
+
+
+        const container = containerRef.current;
+    if (!container) return;
+
+    const options: IntersectionObserverInit = {
+      root: container,
+      rootMargin: '0px 0px -60% 0px', // fire when section crosses 40% from top
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          setActiveId(entry.target.id);
+          break; // only need the first visible
+        }
+      }
+    }, options);
+
+    // observe each section
+    [aboutGigRef, usePlatformRef, jobListingRef, userAccountRef,intellectualPropertyRef, liabilityRef, termRef, lawRef, contactRef].forEach((ref) => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    return () => observer.disconnect();
+      }, []);
+
   return (
-    <div className='bg-[#101217] py-16 px-20 flex h-screen '>
-        <div className='w-1/3 bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start'>
-            <Link href='#about-gig' onClick={() => setActiveId("about-gig")} className={`pl-4 leading-[18px] ${activeId === 'about-gig' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+    <div className='bg-[#101217] lg:py-16 lg:px-20 px-6 py-10 flex h-screen '>
+        <div className='w-1/3 bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
+            <Link href='#about-gig' onClick={() => scrollToSection(aboutGigRef)} className={`pl-4 leading-[18px] ${activeId === 'about-gig' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 About Gig.Tech
             </Link>
 
-            <Link href='#use-platform' onClick={() => setActiveId("use-platform")} className={`pl-4 leading-[18px] ${activeId === 'use-platform' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
-                Your Use of the Platform
+            <Link 
+                href='#use-platform' 
+                onClick={() => scrollToSection(usePlatformRef)} 
+                className={`pl-4 leading-[18px] ${activeId === 'use-platform' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+                    Your Use of the Platform
             </Link>
 
-            <Link href='#job-listing' onClick={() => setActiveId("job-listing")} className={`pl-4 leading-[18px] ${activeId === 'job-listing' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#job-listing' onClick={() => scrollToSection(jobListingRef)} className={`pl-4 leading-[18px] ${activeId === 'job-listing' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 Job Listings
             </Link>
 
-            <Link href='#user-account' onClick={() => setActiveId("user-account")} className={`pl-4 leading-[18px] ${activeId === 'user-account' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#user-account' onClick={() => scrollToSection(userAccountRef)} className={`pl-4 leading-[18px] ${activeId === 'user-account' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 User Accounts (Future Feature)  
             </Link>
 
-            <Link href='#intellectual-property' onClick={() => setActiveId("intellectual-property")} className={`pl-4 leading-[18px] ${activeId === 'intellectual-property' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#intellectual-property' onClick={() => scrollToSection(intellectualPropertyRef)} className={`pl-4 leading-[18px] ${activeId === 'intellectual-property' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 Intellectual Property
             </Link>
 
-            <Link href='#liability' onClick={() => setActiveId("liability")} className={`pl-4 leading-[18px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`pl-4 leading-[18px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 Limitation of Liability
             </Link>
 
-            <Link href='#term-changes' onClick={() => setActiveId("term-changes")} className={`pl-4 leading-[18px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`pl-4 leading-[18px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 Changes to These Terms
             </Link>
 
-            <Link href='#law' onClick={() => setActiveId("law")} className={`pl-4 leading-[18px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`pl-4 leading-[18px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 Governing Law
             </Link>
 
-            <Link href='#contact' onClick={() => setActiveId("contact")} className={`pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
+            <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[16px] font-semibold' : 'text-neutral text-[14px]'}`}>
                 Contact Us
             </Link>
         </div>
 
-        <main className='w-2/3 pl-12 overflow-y-auto h-screen space-y-8 hide-scrollbar'>
+        <main className='lg:w-2/3 lg:pl-12 overflow-y-auto h-full space-y-8 hide-scrollbar lg:pb-96' ref={containerRef}>
             <section 
                 id="about-gig"
                 ref={aboutGigRef}

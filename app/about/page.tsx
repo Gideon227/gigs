@@ -7,12 +7,12 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className='bg-[#101217] m-0'>
+    <div className='bg-[#101217] m-0 hide-scrollbar'>
         <AboutHero />
         <AboutSection />
-        <div className='px-16 py-28 bg-[#101217] space-y-10'>
-            <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center'>The Real Problem in the Market <br />(And Why No One Solved It Yet)</h1>
-            <div className='flex space-x-6'>
+        <div className='px-16 lg:py-28 bg-[#101217] space-y-10 max-lg:px-4 max-lg:py-16'>
+            <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center max-lg:text-[24px] max-lg:leading-[27px]'>The Real Problem in the Market <br />(And Why No One Solved It Yet)</h1>
+            <div className='flex md:space-x-6 max-md:flex-col max-md:space-y-6 max-md:items-center'>
                 <Card 
                     title= { <span>For Job Seekers</span> }
                     text={ <span>Generic job boards are cluttered, full of outdated listings, and make it nearly impossible to discover real-time openings for niche roles in the Microsoft stack. Most job seekers end up navigating a maze of LinkedIn reposts, third-party listings, or worse — ghost jobs.</span> }
@@ -26,14 +26,14 @@ const About = () => {
                 <Card 
                     title= { <span>For Recruiters and Hiring Teams</span> }
                     text={ <span>Finding <b>qualified, available,</b> and <b>interested</b> candidates in Power Platform and Dynamics 365 is a daily struggle. Most talent marketplaces are too broad, too slow, or full of noise — making sourcing inefficient and expensive.<br />
-                    <b>There hasn&amp;t been a single place</b> where this community can <b>connect quickly, transparently, and with purpose</b>. Until now.</span> }
+                    <span className='max-lg:hidden'><b>There hasn&apos;t been a single place</b> where this community can <b>connect quickly, transparently, and with purpose</b>. Until now.</span></span> }
                     image= "/icon-about.png"
                     width={168}
                     imageHeight={168}
                     image2= "/icon-about-2.png"
                     height2={140}
                     width2={117}
-                    style2='absolute -top-20 right-24'
+                    style2='absolute -top-20 right-24 max-lg:right-4'
                     extraImage= {true}
                     background='bg-[#114ECE66]'
                     height='h-[264]'
@@ -42,7 +42,7 @@ const About = () => {
         </div>
 
         <AboutMain />
-        <div className='bg-black flex justify-center items-center flex-1 p-28'>
+        <div className='bg-black flex justify-center items-center flex-1 p-28 max-md:p-8'>
             <Cta 
                 title={<span>Join Us in Redefining the Future of Microsoft Business Apps Careers</span>}
                 text={<span>

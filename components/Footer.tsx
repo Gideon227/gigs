@@ -6,9 +6,9 @@ const Footer = () => {
   return (
     <div className='bg-[#101217]'>
         <hr className='text-[#363636] bg-[#363636] w-full h-[1px] my-4'/>
-        <div className='grid grid-cols-4 gap-16 max-lg:gap-4 px-12 py-24'>
+        <div className='grid grid-cols-4 gap-16 max-lg:gap-10 px-12 py-24 max-md:grid-cols-3 max-md:px-6'>
 
-            <div className='flex justify-start flex-col space-y-6'>
+            <div className='flex justify-start flex-col space-y-6 max-md:col-span-3'>
                 <Image src='/logo.png' width={170} height={41} alt="Gigs logo"/>
                 <p className='text-neutral text-sm leading-[21px]'>The only Microsoft Power Platform & Dynamics 365 job aggregator in the space.</p>
                 <Link href='/' className='flex justify-start items-end'>
@@ -17,7 +17,7 @@ const Footer = () => {
             </div>
 
             {/* Footer item 2 */}
-            <div className='flex justify-start flex-col space-y-6'>
+            <div className='flex justify-start flex-col space-y-6 col-span-1'>
                 <h2 className='text-primary text-[16px] font-semibold leading-[24px]'>COMPANY</h2>
                 <div className=''>
                     <ul className='space-y-4'>
@@ -30,7 +30,7 @@ const Footer = () => {
             </div>
 
             {/* Footer item 3 */}
-            <div className='flex justify-start flex-col space-y-6'>
+            <div className='flex justify-start flex-col space-y-6 col-span-1'>
                 <h2 className='text-primary text-[16px] font-semibold leading-[24px]'>RESOURCES</h2>
                 <div className=''>
                     <ul className='space-y-4'>
@@ -41,7 +41,7 @@ const Footer = () => {
             </div>
 
             {/* Footer item 4 */}
-            <div className='flex justify-start flex-col space-y-6'>
+            <div className='flex justify-start flex-col space-y-6 col-span-1'>
                 <h2 className='text-primary text-[16px] font-semibold leading-[24px]'>HELP</h2>
                 <div className=''>
                     <ul className='space-y-4'>

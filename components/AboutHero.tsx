@@ -2,7 +2,7 @@ import React from 'react'
 
 const AboutHero = () => {
   return (
-    <div className='w-full h-[606px] flex-1 bg-[url(/bg.png)] flex bg-no-repeat bg-cover'>
+    <div className='w-full lg:h-[606px] flex-1 bg-[url(/bg.png)] flex bg-no-repeat bg-cover max-lg:h-[350px]'>
         {/* <div className='flex justify-center items-center flex-1 space-x-2'>
             <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113}/>
             <div>
