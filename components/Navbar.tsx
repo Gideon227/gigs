@@ -9,7 +9,7 @@ const Navbar = () => {
     const [toggle, setToggle] = useState<Boolean>(false)
 
   return (
-    <div className='bg-[#1B1E28] z-50 pt-2 px-8 flex justify-between items-center w-full max-lg:pb-4 max-lg:px-6'>
+    <div className='bg-[#1B1E28] z-50 pt-2 px-8 flex justify-between items-center w-full max-lg:py-4 max-lg:px-6'>
         <div className='items-start flex flex-1 justify-start'>
             <Image src='/logo.png' height={35} width={140} alt='logo image' className='max-lg:hidden'/>
             <Image src='/logo.png' height={35} width={110} alt='logo image' className='lg:hidden'/>
@@ -57,17 +57,18 @@ const Navbar = () => {
 
         {/* MOBILE SCREEN NAV */}
         <button onClick={() => setToggle(prev => !prev)} className='lg:hidden bg-transparent justify-center items-center flex flex-col z-50 space-y-0.5'>
-            <div className={`${toggle && 'bar-1'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
-            <div className={`${toggle && 'bar-2'} bg-white w-[25px] h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
-            <div className={`${toggle && 'bar-3'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
+            <div className={`${toggle && 'bar-1 bg-white'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
+            <div className={`${toggle && 'bar-2 bg-white'} bg-white w-[25px] h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
+            <div className={`${toggle && 'bar-3 bg-white'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
         </button>
 
         {toggle && (
-            <div className={`py-20 pl-6 fixed top-0 right-0 w-full h-full bg-[#1B1E28] text-white z-10 transform transition-transform duration-300 ease-in-out ${
+            <div className={`py-20 pl-6 fixed top-0 right-0 w-full h-full bg-[#1B1E28] text-white z-40 transform transition-transform duration-300 ease-in-out ${
                 toggle ? 'translate-x-0' : 'translate-x-full'
             }`}>
                 <nav className='flex-col flex justify-start items-start space-y-8 font-normal text-start text-[18px] text-heading'>
                     <Link 
+                        onClick={() => setToggle(false)}
                         href="/" 
                         className={`${pathname === "/" 
                             ? "text-primary " 
@@ -77,6 +78,7 @@ const Navbar = () => {
                             Home
                     </Link>
                     <Link 
+                        onClick={() => setToggle(false)}
                         href="/browse-jobs" 
                         className={`s${pathname === "/browse-jobs" 
                             ? "text-primary " 
@@ -85,6 +87,7 @@ const Navbar = () => {
                             Browse Jobs
                     </Link>
                     <Link 
+                        onClick={() => setToggle(false)}
                         href="/about" 
                         className={`s${pathname === "/about" 
                             ? "text-primary " 
@@ -93,6 +96,7 @@ const Navbar = () => {
                             About
                     </Link>
                     <Link 
+                        onClick={() => setToggle(false)}
                         href="/contact" 
                         className={`s${pathname === "/contact" 
                             ? "text-primary " 

@@ -10,8 +10,8 @@ const About = () => {
     <div className='bg-[#101217] m-0 hide-scrollbar'>
         <AboutHero />
         <AboutSection />
-        <div className='px-16 lg:py-28 bg-[#101217] space-y-10 max-lg:px-4 max-lg:py-16'>
-            <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center max-lg:text-[24px] max-lg:leading-[27px]'>The Real Problem in the Market <br />(And Why No One Solved It Yet)</h1>
+        <div className='max-w-[1600px] mx-auto px-16 lg:py-28 bg-[#101217] space-y-10 max-lg:px-4 max-lg:py-16'>
+            <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center max-md:text-[21px] max-lg:leading-[37px]'>The Real Problem in the Market <br />(And Why No One Solved It Yet)</h1>
             <div className='flex md:space-x-6 max-md:flex-col max-md:space-y-6 max-md:items-center'>
                 <Card 
                     title= { <span>For Job Seekers</span> }
@@ -42,7 +42,7 @@ const About = () => {
         </div>
 
         <AboutMain />
-        <div className='bg-black flex justify-center items-center flex-1 p-28 max-md:p-8'>
+        <div className='bg-black flex justify-center items-center flex-1 p-28 max-md:px-8 max-md:py-16'>
             <Cta 
                 title={<span>Join Us in Redefining the Future of Microsoft Business Apps Careers</span>}
                 text={<span>

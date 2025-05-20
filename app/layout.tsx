@@ -49,7 +49,7 @@ export default function RootLayout({
           ${geistMono.variable} 
           ${lora.variable}
           ${segoeUi.variable}
-          antialiased overflow-x-hidden `}
+          antialiased overflow-x-hidden`}
       >
         <Navbar />
         {children}

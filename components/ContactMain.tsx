@@ -4,13 +4,13 @@ import Link from 'next/link'
 
 const ContactMain = () => {
   return (
-    <div className='bg-[#101217] px-12 max-md:px-6'>
+    <div className='bg-[#101217] max-w-[1600px] mx-auto px-12 max-md:px-6 max-lg:px-6'>
         <div className='py-16 flex flex-col justify-center items-center text-center space-y-2'>
-            <h1 className='text-center text-[32px] leading-[48px] font-semibold text-heading'>Get in Touch with Gigs.Tech</h1>
+            <h1 className='text-center text-[32px] leading-[48px] font-semibold text-heading max-md:text-[28px] max-md:leading-[35px]'>Get in Touch with Gigs.Tech</h1>
             <p className='text-paragraph text-[16px] leading-[24px] text-center'>Whether you&apos;re a <span className='text-primary'>Power Platform or Dynamics 365 professional</span> searching for your next opportunity,<br /> or a <span className='text-primary'>recruiter</span> looking to connect with qualified talent, we&apos;d love to hear from you.</p>
         </div>
 
-        <div className='grid grid-cols-2 md:grid-rows-7 gap-6 max-md:grid-cols-1 max-md:space-y-0'>
+        <div className='grid grid-cols-2 md:grid-rows-7 gap-6 2xl:gap-12 max-md:grid-cols-1 max-md:space-y-0'>
             <Card 
                 title={<span>General Inquiries</span>}
                 text={<span>Got a question about how Gigs.Tech works? Want to partner with us or provide feedback?
@@ -22,6 +22,7 @@ const ContactMain = () => {
                 background='bg-[#1B1E28]'
                 height='h-[265px]'
                 width={300}
+                mobileWidth={200}
                 imageHeight={200}
             />
 
@@ -38,6 +39,7 @@ const ContactMain = () => {
                 background='bg-[#1B1E28]'
                 height='h-[344px]'
                 width={300}
+                mobileWidth={200}
                 imageHeight={200}
             />
             <Card 
@@ -58,6 +60,7 @@ const ContactMain = () => {
                 background='bg-[#1B1E28]'
                 height='h-[344px]'
                 width={300}
+                mobileWidth={200}
                 imageHeight={200}
             />
             <Card 
@@ -71,6 +74,7 @@ const ContactMain = () => {
                 background='bg-[#1B1E28]'
                 height='h-[265px]'
                 width={300}
+                mobileWidth={200}
                 imageHeight={200}
             />
         </div>

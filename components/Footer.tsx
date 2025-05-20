@@ -17,8 +17,8 @@ const Footer = () => {
             </div>
 
             {/* Footer item 2 */}
-            <div className='flex justify-start flex-col space-y-6 col-span-1'>
-                <h2 className='text-primary text-[16px] font-semibold leading-[24px]'>COMPANY</h2>
+            <div className='flex justify-start flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
+                <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>COMPANY</h2>
                 <div className=''>
                     <ul className='space-y-4'>
                         <li><Link href='/' className='text-neutral text-sm leading-[21px]'>Home</Link></li>
@@ -30,8 +30,8 @@ const Footer = () => {
             </div>
 
             {/* Footer item 3 */}
-            <div className='flex justify-start flex-col space-y-6 col-span-1'>
-                <h2 className='text-primary text-[16px] font-semibold leading-[24px]'>RESOURCES</h2>
+            <div className='flex justify-start flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
+                <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>RESOURCES</h2>
                 <div className=''>
                     <ul className='space-y-4'>
                         <li><Link href='/term-of-use' className='text-neutral text-sm leading-[21px]'>Term of Use</Link></li>
@@ -41,8 +41,8 @@ const Footer = () => {
             </div>
 
             {/* Footer item 4 */}
-            <div className='flex justify-start flex-col space-y-6 col-span-1'>
-                <h2 className='text-primary text-[16px] font-semibold leading-[24px]'>HELP</h2>
+            <div className='flex justify-start flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
+                <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>HELP</h2>
                 <div className=''>
                     <ul className='space-y-4'>
                         <li><Link href='/' className='text-neutral text-sm leading-[21px]'>Support</Link></li>
@@ -55,7 +55,7 @@ const Footer = () => {
         <hr className='text-[#363636] bg-[#363636] w-6/7 h-[1px] mx-auto'/>
 
         <div className='flex justify-center items-center p-6'>
-            <p className='text-center text-neutral text-sm leading-[21px]'>{`© Copyright ${new Date().getFullYear()}, All Rights Reserved by Gigs.Tech`}</p>
+            <p className='text-center text-neutral text-sm leading-[21px] max-md:text-[1opx]'>{`© Copyright ${new Date().getFullYear()}, All Rights Reserved by Gigs.Tech`}</p>
         </div>  
     </div>
   )

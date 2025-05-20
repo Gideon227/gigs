@@ -1,20 +1,23 @@
 import React from 'react'
+import Image from 'next/image'
 
 const AboutHero = () => {
   return (
-    <div className='w-full lg:h-[606px] flex-1 bg-[url(/bg.png)] flex bg-no-repeat bg-cover max-lg:h-[350px]'>
-        {/* <div className='flex justify-center items-center flex-1 space-x-2'>
-            <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113}/>
+    <div className='hero_bg w-full lg:h-[606px] flex-1 flex items-center justify-center max-lg:h-[350px] max-md:flex-col'>
+        <div className='flex justify-center items-center flex-1 space-x-2 relative md:py-16 max-md:text-center px-12'>
+            <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113} className='absolute left-20 top-0 max-lg:hidden'/>
+            <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-0 max-md:top-10 left-4 top-0 lg:hidden'/>
             <div>
-                <p className='text-[16px] font-medium leading-[24px] font-[#E3E3E3]'>Get to know who we are and the why</p>
-                <h1 className='text-heading text-[56px] text-semibold leading-[67.2px]'>About</h1>
+                <p className='text-[16px] font-semibold font-lora leading-[24px] text-[#E3E3E3]'>Get to know who we are and the why</p>
+                <h1 className='text-heading lg:text-[56px] font-semibold lg:leading-[67.2px] max-md:text-[38px] max-lg:leading-[50px] max-lg:text-[45px] '>About Us</h1>
             </div>
-            <Image src='/Group 5.png' alt='Glitters in about page' width={100} height={86} className='mt-4'/>
-
+            <Image src='/Group 5.png' alt='Glitters in about page' width={100} height={86} className='absolute right-40 bottom-0 max-lg:hidden'/>
+            <Image src='/Group 5.png' alt='Glitters in about page' width={50} height={86} className='absolute max-md:right-5 max-md:bottom-16 right-20 bottom-5 lg:hidden'/>
         </div>
-        <div className='flex items-end justify-center flex-1'>
+        
+        <div className='flex items-end justify-center flex-1 max-md:hidden'>
             <Image src='/About_illustration.png' alt='About us page illustration' width={585} height={514}/>
-        </div>   */}
+        </div>  
         
     </div>
   )

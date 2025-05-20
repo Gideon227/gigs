@@ -53,16 +53,18 @@ const PrivacyPage = () => {
   return (
     <div className='overflow-hidden'>
         <div className='hero_bg w-full h-[525px] bg-bottom -mt-20 flex items-center justify-center'>
-            <div className='lg:w-2/3 px-36 relative flex flex-col space-y-6 justify-center items-center text-center py-8'>
-                <Image src='/Group 6.png' width={90} height={114} alt='sparkles' className='absolute left-0 top-0'/>
+            <div className='lg:w-2/3 lg:px-36 max-lg:px-24 max-md:px-6 relative flex flex-col space-y-6 justify-center items-center text-center py-8'>
+                <Image src='/Group 6.png' width={90} height={114} alt='sparkles' className='absolute left-0 top-0 max-lg:hidden'/>
+                <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-5 max-md:top-0 left-28 top-0 lg:hidden'/>
 
-                <Image src='/Group 5.png' width={100} height={86} alt='sparkles' className='absolute right-0 bottom-0'/>
+                <Image src='/Group 5.png' width={100} height={86} alt='sparkles' className='absolute right-0 bottom-0 max-lg:hidden'/>
+                <Image src='/Group 5.png' alt='sparkles' width={50} height={86} className='absolute max-md:right-7 max-md:-bottom-10 right-36 -bottom-10 lg:hidden'/>
 
-                <h1 className='leading-[84px] text-[56px] font-semibold text-heading'>Privacy Policy</h1>
+                <h1 className='leading-[84px] text-[56px] font-semibold text-heading max-md:text-[38px] max-lg:leading-[50px] max-lg:text-[45px]'>Privacy Policy</h1>
 
                 <p className='text-[16px] leading-[24px] font-normal text-heading'><b>Welcome to Gigs.Tech.</b> This Privacy Policy explains how we collect, use, and protect your information — whether you're a <b>job seeker</b> looking for your next Microsoft Business Apps role or a <b>recruiter</b> sourcing top Power Platform & Dynamics 365 talent.</p>
 
-                <div className='flex space-x-6 items-center justify-center w-1/2'>
+                <div className='flex space-x-6 items-center justify-center lg:w-1/2'>
                     <div className='space-y-2 '>
                         <p className='text-[16px] font-semibold leading-[27px] text-heading '>Effective Date:</p>
                         <p className='text-sm text-heading'>April 16th 2025</p>
@@ -259,7 +261,7 @@ const PrivacyPage = () => {
                     <h1 className='text-[21px] leading-[36px] font-semibold text-heading'>Contact</h1>
                     <div className='text-[14px] leading-[24px] text-heading'>
                         <Link href='mailto:support@gigs.tech' className='text-primary underline'>support@gigs.tech</Link>
-                        <br /><br /><br />
+                        <br /><br />
                         <p>We&apos;re committed to protecting your privacy — every click, post, and application. 
                         </p>
                     </div>
