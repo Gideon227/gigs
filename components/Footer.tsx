@@ -22,7 +22,7 @@ const Footer = () => {
                 <div className=''>
                     <ul className='space-y-4'>
                         <li><Link href='/' className='text-neutral text-sm leading-[21px]'>Home</Link></li>
-                        <li><Link href='/jobs' className='text-neutral text-sm leading-[21px]'>Browse Jobs</Link></li>
+                        <li><Link href='/browse-jobs' className='text-neutral text-sm leading-[21px]'>Browse Jobs</Link></li>
                         <li><Link href='/contact' className='text-neutral text-sm leading-[21px]'>Contact</Link></li>
                         <li><Link href='/about' className='text-neutral text-sm leading-[21px]'>About</Link></li>
                     </ul>
@@ -55,7 +55,7 @@ const Footer = () => {
         <hr className='text-[#363636] bg-[#363636] w-6/7 h-[1px] mx-auto'/>
 
         <div className='flex justify-center items-center p-6'>
-            <p className='text-center text-neutral text-sm leading-[21px] max-md:text-[1opx]'>{`© Copyright ${new Date().getFullYear()}, All Rights Reserved by Gigs.Tech`}</p>
+            <p className='text-center text-neutral text-sm leading-[21px] max-md:text-[10px]'>{`© Copyright ${new Date().getFullYear()}, All Rights Reserved by Gigs.Tech`}</p>
         </div>  
     </div>
   )

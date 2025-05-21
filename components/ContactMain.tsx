@@ -32,14 +32,14 @@ const ContactMain = () => {
                         <br /> <br /> 
                         Reach out anytime: <Link href='mailto:support@gigs.tech' className='text-primary underline'>support@gigs.tech</Link>
                         <br /><br />
-                        We&apos;re building this platform with your voice in mind.
+                        We&apos;re building this platform<br /> with your voice in mind.
                     </span>}
                 image='/Typing-bro 1.png'
                 extraStyles='md:row-span-4'
                 background='bg-[#1B1E28]'
                 height='h-[344px]'
                 width={300}
-                mobileWidth={200}
+                mobileWidth={180}
                 imageHeight={200}
             />
             <Card 
@@ -48,9 +48,9 @@ const ContactMain = () => {
                     <br /><br />
                     We&apos;re currently accepting recruiters to offer early access to:
                     <br /><br />            
-                    Direct posting features (free postings)
-                    Beta talent matching tools
-                    Advertising tools
+                    Direct posting features (free postings)<br />
+                    Beta talent matching tools<br />
+                    Advertising tools<br />
                     AI tools    
                     <br />
                         Let&apos;s connect: <Link href='mailto:recruit@gigs.tech' className='text-primary underline'>recruit@gigs.tech</Link>
@@ -60,7 +60,7 @@ const ContactMain = () => {
                 background='bg-[#1B1E28]'
                 height='h-[344px]'
                 width={300}
-                mobileWidth={200}
+                mobileWidth={165}
                 imageHeight={200}
             />
             <Card 
