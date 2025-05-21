@@ -83,17 +83,17 @@ const TermPage = () => {
 
   return (
     <div className='overflow-hidden'>
-        <div className='hero_bg w-full h-[525px] bg-bottom -mt-20 flex items-center justify-center'>
-            <div className='lg:w-2/3 lg:px-36 max-lg:px-24 max-md:px-6 relative flex flex-col space-y-6 justify-center items-center text-center py-8'>
+        <div className='hero_bg w-full h-[605px] bg-bottom -mt-20 -mb-20 flex items-center justify-center'>
+            <div className='lg:w-2/3 lg:px-36 max-lg:px-24 max-md:px-6 relative flex flex-col max-sm:space-y-2 sm:space-y-6 justify-center items-center text-center py-8'>
                 <Image src='/Group 6.png' width={90} height={114} alt='sparkles' className='absolute left-20 top-0 max-lg:hidden'/>
                 <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-5 max-md:-top-5 left-28 top-0 lg:hidden'/>
 
                 <Image src='/Group 5.png' width={100} height={86} alt='sparkles' className='absolute right-20 bottom-0 max-lg:hidden'/>
                 <Image src='/Group 5.png' alt='sparkles' width={50} height={86} className='absolute max-md:right-7 max-md:-bottom-10 right-36 -bottom-10 lg:hidden'/>
 
-                <h1 className='leading-[84px] text-[56px] font-semibold text-heading max-md:text-[38px] max-lg:leading-[50px] max-lg:text-[45px]'>Terms of Use</h1>
+                <h1 className='leading-[84px] text-[56px] font-semibold text-heading max-md:text-[38px] max-lg:leading-[50px] max-lg:text-[45px] max-sm:text-[27px] max-sm:leading-[36px]'>Terms of Use</h1>
 
-                <p className='text-[16px] leading-[24px] font-normal text-heading'>By using <b>Gigs.Tech</b> ("we", "our", "us"), you agree to these Terms — whether you&apos;re browsing as a <b>job seeker</b> or posting as a <b>recruiter</b>.</p>
+                <p className='text-[16px] leading-[24px] font-normal text-heading max-sm:text-sm'>By using <b>Gigs.Tech</b> ("we", "our", "us"), you agree to these Terms — whether you&apos;re browsing as a <b>job seeker</b> or posting as a <b>recruiter</b>.</p>
 
                 <div className='flex space-x-6 items-center justify-center lg:w-1/2'>
                     <div className='space-y-2 '>
