@@ -17,7 +17,7 @@ const Footer = () => {
             </div>
 
             {/* Footer item 2 */}
-            <div className='flex justify-start flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
+            <div className='flex justify-start md:items-end flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
                 <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>COMPANY</h2>
                 <div className=''>
                     <ul className='space-y-4'>
@@ -30,7 +30,7 @@ const Footer = () => {
             </div>
 
             {/* Footer item 3 */}
-            <div className='flex justify-start flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
+            <div className='flex justify-start md:items-end flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
                 <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>RESOURCES</h2>
                 <div className=''>
                     <ul className='space-y-4'>
@@ -41,8 +41,8 @@ const Footer = () => {
             </div>
 
             {/* Footer item 4 */}
-            <div className='flex justify-start flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
-                <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>HELP</h2>
+            <div className='flex justify-start md:items-end flex-col space-y-6 col-span-1 max-md:space-y-5 max-md:mt-4'>
+                <h2 className='text-primary md:text-start text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium md:pr-3'>HELP</h2>
                 <div className=''>
                     <ul className='space-y-4'>
                         <li><Link href='/' className='text-neutral text-sm leading-[21px]'>Support</Link></li>

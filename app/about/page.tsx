@@ -12,7 +12,7 @@ const About = () => {
         <AboutSection />
         <div className='max-w-[1600px] mx-auto px-16 lg:py-28 bg-[#101217] space-y-10 max-lg:px-4 max-lg:py-16'>
             <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center max-md:text-[21px] max-lg:leading-[37px]'>The Real Problem in the Market <br />(And Why No One Solved It Yet)</h1>
-            <div className='flex md:space-x-6 max-md:flex-col max-md:space-y-6 max-md:items-center'>
+            <div className='flex lg:space-x-6 max-lg:flex-col max-lg:space-y-6 max-lg:items-center'>
                 <Card 
                     title= { <span>For Job Seekers</span> }
                     text={ <span>Generic job boards are cluttered, full of outdated listings, and make it nearly impossible to discover real-time openings for niche roles in the Microsoft stack. Most job seekers end up navigating a maze of LinkedIn reposts, third-party listings, or worse — ghost jobs.</span> }

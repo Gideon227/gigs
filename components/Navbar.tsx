@@ -10,10 +10,10 @@ const Navbar = () => {
 
   return (
     <div className='bg-[#1B1E28] z-50 pt-2 px-8 flex justify-between items-center w-full max-lg:py-4 max-lg:px-6'>
-        <div className='items-start flex flex-1 justify-start'>
+        <Link href='/browse-jobs' className='items-start flex flex-1 justify-start'>
             <Image src='/logo.png' height={35} width={140} alt='logo image' className='max-lg:hidden'/>
             <Image src='/logo.png' height={35} width={110} alt='logo image' className='lg:hidden'/>
-        </div>
+        </Link>
         
         <div className='flex flex-1 justify-center items-center space-x-8 pb-0.5 max-lg:hidden'>
             <Link 
