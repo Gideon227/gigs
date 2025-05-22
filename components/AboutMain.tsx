@@ -11,9 +11,9 @@ const AboutMain = () => {
             <div className='lg:w-2/3 flex flex-col justify-start space-y-6 max-lg:mt-4 max-md:space-y-4'>
                 <h1 className='text-[32px] font-semibold leading-[48px] text-start text-heading max-lg:text-[27px] max-lg:leading-[40px] max-md:text-[25px] max-md:leading-[35px]'>Our Solution: The Home for Microsoft Power Platform & Dynamics Jobs</h1>
 
-                <p className='font-lora font-medium text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary'>Gigs.Tech</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
+                <p className='font-normal text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary font-lora'>Gigs.Tech</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
 
-                <p className='text-heading text-[18px] leading-[36px] max-lg:text-[16px] max-lg:leading-[30px]'>Help job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
+                <p className='text-heading text-[24px] font-normal leading-[36px] max-lg:text-[16px] max-lg:leading-[30px]'>Help job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
 
                 <p className='text-[16px] leading-[24px] text-start text-paragraph'>What we do:</p>
             </div>
@@ -40,7 +40,7 @@ const AboutMain = () => {
                 />
             </div>
 
-            <p className='text-paragraph text-[14px] leading-[24px] text-start'>
+            <p className='text-paragraph text-[16px] leading-[24px] text-start'>
                 We&apos;re here to make sure no Dynamics or Power Platform opportunity gets missed again.
             </p>
 
