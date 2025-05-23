@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import AboutCard from './AboutCard';
+import LastLineImage from './LastLineImage';
 
 const AboutMain = () => {
   return (
@@ -9,9 +10,13 @@ const AboutMain = () => {
             <Image src='/diamond sparkle.png' width={58} height={58} alt='diamond sparkle' className='object-contain'/>
 
             <div className='lg:w-2/3 flex flex-col justify-start space-y-6 max-lg:mt-4 max-md:space-y-4'>
-                <h1 className='text-[32px] relative font-semibold leading-[48px] text-start text-heading max-lg:text-[27px] max-lg:leading-[40px] max-md:text-[25px] max-md:leading-[35px]'>
-                    Our Solution: The Home for Microsoft Power Platform & Dynamics Jobs <Image src='/diamond.svg' width={68} height={68} alt='diamond' className='absolute -bottom-4 xl:left-60 left-72'/>
-                </h1>
+                <LastLineImage 
+                    text='Our Solution: The Home for Microsoft Power Platform & Dynamics Jobs'
+                    imageUrl='/diamond.svg'
+                />
+                {/* <h1 className=''>
+                    <Image src='/diamond.svg' alt='diamond' className='absolute -bottom-4 xl:left-60 left-72'/>
+                </h1> */}
 
                 <p className='font-normal text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary font-lora'>Gigs.Tech</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
 
