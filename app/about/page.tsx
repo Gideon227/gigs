@@ -21,6 +21,7 @@ const About = () => {
                     height='h-[264]'
                     width={168}
                     imageHeight={168}
+                    extraStyles='lg:w-[750px]'
                 />
 
                 <Card 
@@ -37,6 +38,7 @@ const About = () => {
                     extraImage= {true}
                     background='bg-[#114ECE66]'
                     height='h-[264]'
+                    extraStyles='lg:w-[750px]'
                 />
             </div>
         </div>

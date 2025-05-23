@@ -9,11 +9,13 @@ const AboutMain = () => {
             <Image src='/diamond sparkle.png' width={58} height={58} alt='diamond sparkle' className='object-contain'/>
 
             <div className='lg:w-2/3 flex flex-col justify-start space-y-6 max-lg:mt-4 max-md:space-y-4'>
-                <h1 className='text-[32px] font-semibold leading-[48px] text-start text-heading max-lg:text-[27px] max-lg:leading-[40px] max-md:text-[25px] max-md:leading-[35px]'>Our Solution: The Home for Microsoft Power Platform & Dynamics Jobs</h1>
+                <h1 className='text-[32px] relative font-semibold leading-[48px] text-start text-heading max-lg:text-[27px] max-lg:leading-[40px] max-md:text-[25px] max-md:leading-[35px]'>
+                    Our Solution: The Home for Microsoft Power Platform & Dynamics Jobs <Image src='/diamond.svg' width={68} height={68} alt='diamond' className='absolute -bottom-4 xl:left-60 left-72'/>
+                </h1>
 
                 <p className='font-normal text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary font-lora'>Gigs.Tech</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
 
-                <p className='text-heading text-[24px] font-normal leading-[36px] max-lg:text-[16px] max-lg:leading-[30px]'>Help job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
+                <p className='text-heading text-[24px] font-normal leading-[36px] max-lg:text-[18px] max-lg:leading-[27px]'>Help job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
 
                 <p className='text-[16px] leading-[24px] text-start text-paragraph'>What we do:</p>
             </div>
@@ -90,27 +92,17 @@ const AboutMain = () => {
                     />
                     <AboutCard 
                         image='/about-illustration-5.png'
-                        title='Be first in line'
-                        text='Find jobs minutes after they&apos;re posted on official career sites.'
+                        title='Stay ahead of the market'
+                        text='Stay ahead of the market with fresh listings updated daily.'
                         position='end'
                     />
-                    {/* desktop screens */}
+
                     <AboutCard 
                         image='/about-illustration-6.png'
                         title='Finding roles'
                         text='Find roles that match your actual skills: Canvas Apps, Power Automate, CE, F&O, and more.'
                         position='end'
-                        extraStyle='max-md:hidden'
                     />
-                    {/* Mobile screens */}
-                    <AboutCard 
-                        image='/about-illustration-6.png'
-                        title='Finding roles'
-                        text='Find roles that match your skills: Power Automate, CE.'
-                        position='end'
-                        extraStyle='md:hidden'
-                    />
-
                 </div>   
             </div>
 
@@ -163,7 +155,7 @@ const AboutMain = () => {
                     <AboutCard 
                         image='/about-illustration-11.png'
                         title='Trust and credibility'
-                        text='built on 15+ years of industry relationships.'
+                        text='Built on 15+ years of industry relationships.'
                         position='start'
                     />
 

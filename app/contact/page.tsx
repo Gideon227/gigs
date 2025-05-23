@@ -7,7 +7,7 @@ const Contact = () => {
   return (
     <div className='bg-[#101217] overflow-hidden'>
       <div className='hero_bg w-full lg:h-[606px] flex-1 flex items-center justify-center max-lg:h-[350px] max-md:flex-col'>
-        <div className='lg:w-1/2 px-28 relative flex flex-col lg:space-y-6 justify-center items-center text-center py-20 space-x-2 md:py-16 max-md:text-center max-md:px-16 max-sm:px-10'>
+        <div className='lg:w-1/2 px-28 relative flex flex-col justify-center items-center text-center py-20 space-x-2 md:py-16 max-md:text-center max-md:px-16 max-sm:px-10'>
           <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113} className='absolute left-20 top-0 max-lg:hidden'/>
           <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-0 max-md:top-8 left-16 top-0 lg:hidden'/>
 

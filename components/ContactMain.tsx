@@ -15,7 +15,7 @@ const ContactMain = () => {
                 title={<span>General Inquiries</span>}
                 text={<span>Got a question about how Gigs.Tech works? Want to partner with us or provide feedback?
                         <br /> <br /> 
-                        <span className='text-white'>Email:</span> <Link href='mailto:hello@gigs.tech' className='text-primary underline'>hello@gigs.tech</Link>
+                        <span className='text-white font-semibold'>Email:</span> <Link href='mailto:hello@gigs.tech' className='text-primary underline'>hello@gigs.tech</Link>
                     </span>}
                 image='/Speech.svg'
                 extraStyles='md:row-span-3'
@@ -30,9 +30,9 @@ const ContactMain = () => {
                 title={<span>For Job Seekers</span>}
                 text={<span>If you&apos;re having trouble finding the right roles, want to report an issue, or just want to tell us how we can make the site better for you:
                         <br /> <br /> 
-                        <span className='text-heading'>Reach out anytime:</span> <Link href='mailto:support@gigs.tech' className='text-primary underline'>support@gigs.tech</Link>
+                        <span className='text-heading font-semibold'>Reach out anytime:</span> <Link href='mailto:support@gigs.tech' className='text-primary underline'>support@gigs.tech</Link>
                         <br /><br />
-                        We&apos;re building this platform<br /> with your voice in mind.
+                        We&apos;re building this platform with your voice in mind.
                     </span>}
                 image='/Typing.svg'
                 extraStyles='md:row-span-4'
@@ -48,14 +48,13 @@ const ContactMain = () => {
                     <br /><br />
                     We&apos;re currently accepting recruiters to offer early access to:
                     <br /><br />  
-                    <ul className='list-disc pl-6'>
+                    <ul className='list-disc pl-6 max-lg:pb-1 2xl:pb-2'>
                         <li>Direct posting features (free postings)</li>
                         <li>Beta talent matching tools</li>
                         <li>Advertising tools</li>
                         <li>AI tools</li>    
                     </ul>  
-                    <br className='md:hidden'/>
-                    <span className='text-heading'>Let&apos;s connect:</span> <Link href='mailto:recruit@gigs.tech' className='text-primary underline'>recruit@gigs.tech</Link>
+                    <span className='text-heading font-semibold'>Let&apos;s connect:</span> <Link href='mailto:recruit@gigs.tech' className='text-primary underline'>recruit@gigs.tech</Link>
                     </span>}
                 image='/Interview.svg'
                 extraStyles='md:row-span-4'
@@ -69,7 +68,7 @@ const ContactMain = () => {
                 title={<span>Business & Media</span>}
                 text={<span>For press, media, investor inquiries, or business development discussions:
                         <br /> <br /> 
-                       <span className='text-heading'>Contact:</span> <Link href='mailto:hello@gigs.tech' className='text-primary underline'>hello@gigs.tech</Link>
+                       <span className='text-heading font-semibold'>Contact:</span> <Link href='mailto:hello@gigs.tech' className='text-primary underline'>hello@gigs.tech</Link>
                     </span>}
                 image='/Group discussion.svg'
                 extraStyles='md:row-span-3 md:-mt-4'

@@ -20,7 +20,7 @@ interface CardProps {
 
 const Card = ({ title, text, image, width, mobileWidth, imageHeight, image2, width2, height2, style2, extraImage = false, background, height, extraStyles }: CardProps) => {
   return (
-    <div className={`rounded-[16px] py-8 lg:pl-8 lg:w-[600px] relative ${height} space-y-4 ${background} ${extraStyles} max-lg:w-[365px] max-lg:pl-4 max-lg:py-6 max-lg:space-y-2 max-lg:justify-self-center`}>
+    <div className={`rounded-[16px] py-8 lg:pl-8 relative ${height} space-y-4 ${background} ${extraStyles} max-lg:w-[365px] max-lg:pl-4 max-lg:py-6 max-lg:space-y-2 max-lg:justify-self-center`}>
         <h1 className='font-semibold text-[#FCFCFC] text-[26px] leading-[31.2px] max-lg:text-[21px]'>{title}</h1>
         <div className='text-[16px] max-sm:text-[14px] text-[#CACACA] leading-[24px] lg:w-2/3 items-start max-lg:leading-[21px] break-words max-lg:pr-[85px]'>{text}</div>
 

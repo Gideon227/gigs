@@ -52,7 +52,7 @@ const Navbar = () => {
                 </Link>
             </div>
 
-            <Link href="https://www.linkedin.com/in/shahenudu/" className='flex flex-1 items-end justify-end max-lg:hidden'>
+            <Link href="https://www.linkedin.com/company/gigs-dot-tech/" className='flex flex-1 items-end justify-end max-lg:hidden'>
                 <Image src='/linkedin.png' width={25} height={30} alt='linkedin icon' />
             </Link>
 
@@ -107,7 +107,7 @@ const Navbar = () => {
                         </Link>
                     </nav>
 
-                    <Link href='https://www.linkedin.com/in/shahenudu/' className='flex flex-1 items-start justify-start mt-16'>
+                    <Link href='https://www.linkedin.com/company/gigs-dot-tech/' className='flex flex-1 items-start justify-start mt-16'>
                         <Image src='/linkedin.png' width={25} height={30} alt='linkedin icon' />
                     </Link>
                 </div>
