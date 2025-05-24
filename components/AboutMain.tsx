@@ -20,7 +20,7 @@ const AboutMain = () => {
 
                 <p className='font-normal text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary font-lora'>Gigs.Tech</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
 
-                <p className='text-heading text-[24px] font-normal leading-[36px] max-lg:text-[18px] max-lg:leading-[27px]'>Help job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
+                <p className='text-heading text-[24px] font-normal leading-[36px] max-lg:text-[18px] max-lg:leading-[27px]'>Help Microsoft job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
 
                 <p className='text-[16px] leading-[24px] text-start text-paragraph'>What we do:</p>
             </div>
@@ -58,9 +58,9 @@ const AboutMain = () => {
             <div className='flex flex-col justify-end items-end text-end space-y-4'>
                 <h1 className='text-[32px] font-semibold leading-[48px] text-heading max-lg:text-[27px] max-lg:leading-[36px]'>Why <span className='text-primary'>Gigs.Tech?</span> The Benefits for Everyone Involved</h1>
 
-                <p className='text-paragraph text-[20px] leading-[30px] max-md:text-[16px]'>For Job seekers:</p>
+                <p className='text-paragraph text-[20px] leading-[30px] max-md:text-[16px] pb-6'>For Job Seekers:</p>
 
-                <div className='grid grid-cols-3 gap-12 auto-rows-[minmax(300px,_auto)] max-md:grid-cols-2 max-md:gap-4'>
+                <div className='grid grid-cols-3 gap-12 items-start auto-rows-[minmax(300px,_auto)] max-md:grid-cols-2 max-md:gap-4 '>
                     <AboutCard 
                         image='/about-illustration-1.png'
                         title='Be first in line'
@@ -116,7 +116,7 @@ const AboutMain = () => {
             </span>
 
             <div className='flex flex-col justify-start items-start text-start space-y-4 px-2'>
-                <p className='text-paragraph text-[20px] leading-[30px] text-start max-md:mb-16'>For Recruiters and Hiring Teams:</p>
+                <p className='text-paragraph text-[20px] leading-[30px] text-start max-md:mb-16 pb-6'>For Recruiters and Hiring Teams:</p>
 
                 <div className='grid grid-cols-3 gap-12 auto-rows-[minmax(250px,_auto)] max-md:grid-cols-2 max-md:gap-4 '>
                     <AboutCard 

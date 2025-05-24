@@ -9,7 +9,7 @@ const AboutHero = () => {
               <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113} className='absolute left-20 top-0 max-lg:hidden'/>
               <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-0 max-md:top-10 left-4 top-0 lg:hidden'/>
               <div>
-                  <p className='text-[16px] font-medium font-lora leading-[24px] text-[#E3E3E3]'>Get to know who we are and the why</p>
+                  <p className='text-[16px] max-sm:text-sm font-medium font-lora leading-[24px] text-[#E3E3E3]'>Get to know who we are and the why</p>
                   <h1 className='text-heading lg:text-[56px] font-semibold lg:leading-[67.2px] max-md:text-[38px] max-lg:leading-[50px] max-lg:text-[45px] text-center'>About Us</h1>
               </div>
               <Image src='/Group 5.png' alt='Glitters in about page' width={100} height={86} className='absolute right-40 bottom-0 max-lg:hidden'/>

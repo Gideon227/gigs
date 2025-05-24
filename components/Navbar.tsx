@@ -52,9 +52,13 @@ const Navbar = () => {
                 </Link>
             </div>
 
-            <Link href="https://www.linkedin.com/company/gigs-dot-tech/" className='flex flex-1 items-end justify-end max-lg:hidden'>
-                <Image src='/linkedin.png' width={25} height={30} alt='linkedin icon' />
-            </Link>
+            <a 
+                href="https://www.linkedin.com/company/gigs-dot-tech/" 
+                className='flex flex-1 items-end justify-end max-lg:hidden'
+                target="_blank"
+                rel="noopener noreferrer">
+                    <Image src='/Linkedin.svg' width={25} height={30} alt='linkedin icon' />
+            </a>
 
             {/* MOBILE SCREEN NAV */}
             <button onClick={() => setToggle(prev => !prev)} className='lg:hidden bg-transparent justify-center items-center flex flex-col z-50 space-y-0.5'>
@@ -107,9 +111,13 @@ const Navbar = () => {
                         </Link>
                     </nav>
 
-                    <Link href='https://www.linkedin.com/company/gigs-dot-tech/' className='flex flex-1 items-start justify-start mt-16'>
-                        <Image src='/linkedin.png' width={25} height={30} alt='linkedin icon' />
-                    </Link>
+                    <a 
+                        href='https://www.linkedin.com/company/gigs-dot-tech/' 
+                        className='flex flex-1 items-start justify-start mt-16'
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            <Image src='/Linkedin.svg' width={25} height={30} alt='linkedin icon' />
+                    </a>
                 </div>
             )}
         </div>

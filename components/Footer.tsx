@@ -12,9 +12,13 @@ const Footer = () => {
                 <div className='flex justify-start flex-col space-y-6 max-md:col-span-3'>
                     <Image src='/logo.png' width={170} height={41} alt="Gigs logo"/>
                     <p className='text-neutral text-sm leading-[21px]'>The only Microsoft Power Platform & Dynamics 365 job aggregator in the space.</p>
-                    <Link href='https://www.linkedin.com/company/gigs-dot-tech/' className='flex justify-start items-end'>
-                        <Image src='/linkedin.png' width={28} height={28} alt="Linkedin logo"/>
-                    </Link>
+                    <a 
+                        href='https://www.linkedin.com/company/gigs-dot-tech/' 
+                        className='flex justify-start items-end'
+                        target="_blank"
+                        rel="noopener noreferrer">
+                            <Image src='/Linkedin.svg' width={28} height={28} alt="Linkedin logo"/>
+                    </a>
                 </div>
 
                 {/* Footer item 2 */}
@@ -35,7 +39,7 @@ const Footer = () => {
                     <h2 className='text-primary text-[16px] font-semibold leading-[24px] max-md:text-[14px] max-md:font-medium'>RESOURCES</h2>
                     <div className=''>
                         <ul className='space-y-4'>
-                            <li><Link href='/term-of-use' className='text-neutral text-sm leading-[21px]'>Terms of Use</Link></li>
+                            <li><Link href='/terms-of-use' className='text-neutral text-sm leading-[21px]'>Terms of Use</Link></li>
                             <li><Link href='/privacy-policy' className='text-neutral text-sm leading-[21px]'>Privacy Policy</Link></li>
                         </ul>
                     </div>

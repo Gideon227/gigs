@@ -32,7 +32,7 @@ const ContactMain = () => {
                         <br /> <br /> 
                         <span className='text-heading font-semibold'>Reach out anytime:</span> <Link href='mailto:support@gigs.tech' className='text-primary underline'>support@gigs.tech</Link>
                         <br /><br />
-                        We&apos;re building this platform with your voice in mind.
+                        We&apos;re building this platform <br className='md:hidden'/>with your voice in mind.
                     </span>}
                 image='/Typing.svg'
                 extraStyles='md:row-span-4'
@@ -49,7 +49,7 @@ const ContactMain = () => {
                     We&apos;re currently accepting recruiters to offer early access to:
                     <br /><br />  
                     <ul className='list-disc pl-6 max-lg:pb-1 2xl:pb-2'>
-                        <li>Direct posting features (free postings)</li>
+                        <li>Direct posting features (free <br className='md:hidden'/> postings)</li>
                         <li>Beta talent matching tools</li>
                         <li>Advertising tools</li>
                         <li>AI tools</li>    
