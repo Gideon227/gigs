@@ -59,12 +59,23 @@ body {
 }
 
 .hero_bg{
-  background-image: radial-gradient(251.39% 593.42% at 160.35% -56.11%, rgba(0, 44, 48, 0) 24.99%, #d1ff178c 78.46%),
+  background-image: radial-gradient(251.39% 593.42% at 160.35% -56.11%, rgba(0, 44, 48, 0) 24.99%, #b9ff178c 78.46%),
   url('/hero-bg.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-blend-mode: overlay;
 }
+/* #d1ff178c */
+
+.browse-jobs_bg{
+  background: radial-gradient(241.18% 916.02% at 236.47% 398.81%, #D1FF17 0%, #012D31 87.59%),
+  url('/hero-bg.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-blend-mode: overlay;
+}
+
+
 
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */

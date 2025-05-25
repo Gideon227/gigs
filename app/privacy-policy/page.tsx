@@ -101,19 +101,19 @@ const PrivacyPage = () => {
                         Cookies and Tracking
                     </Link>
 
-                    <Link href='#security' onClick={() => scrollToSection(securityRef)} className={`pl-4 leading-[18px] ${activeId === 'security' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#security' onClick={() => scrollToSection(securityRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'security' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Data Sharing and Security  
                     </Link>
 
-                    <Link href='#right' onClick={() => scrollToSection(rightRef)} className={`pl-4 leading-[18px] ${activeId === 'right' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#right' onClick={() => scrollToSection(rightRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'right' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Your Rights
                     </Link>
 
-                    <Link href='#policy' onClick={() => scrollToSection(policyRef)} className={`pl-4 leading-[18px] ${activeId === 'policy' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#policy' onClick={() => scrollToSection(policyRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'policy' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Changes to This Policy
                     </Link>
 
-                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Contact
                     </Link>
                 </div>

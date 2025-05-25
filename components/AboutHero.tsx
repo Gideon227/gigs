@@ -6,7 +6,7 @@ const AboutHero = () => {
     <div className='hero_bg w-full lg:h-[606px] max-lg:h-[350px] flex justify-center'>
         <div className='max-w-[1800px] flex-1 flex items-center justify-center max-md:flex-col'>
           <div className='flex justify-center items-center flex-1 space-x-2 relative md:py-16 max-md:text-center px-12'>
-              <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113} className='absolute left-20 top-0 max-lg:hidden'/>
+              <Image src='/Group 6.png' alt='Glitters in about page' width={90} height={113} className='absolute left-36 2xl:left-48 top-0 max-lg:hidden'/>
               <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-0 max-md:top-10 left-4 top-0 lg:hidden'/>
               <div>
                   <p className='text-[16px] max-sm:text-sm font-medium font-lora leading-[24px] text-[#E3E3E3]'>Get to know who we are and the why</p>

@@ -139,19 +139,19 @@ const TermPage = () => {
                         Intellectual Property
                     </Link>
 
-                    <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`pl-4 leading-[18px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Limitation of Liability
                     </Link>
 
-                    <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`pl-4 leading-[18px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Changes to These Terms
                     </Link>
 
-                    <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`pl-4 leading-[18px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Governing Law
                     </Link>
 
-                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
                         Contact Us
                     </Link>
                 </div>

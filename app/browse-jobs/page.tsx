@@ -4,7 +4,7 @@ import Image from 'next/image'
 const Jobs = () => {
   return (
     <div className='bg-[#101217]'>
-        <div className='hero_bg w-full lg:h-[606px] max-lg:h-[350px] flex justify-center lg:px-20 max-lg:px-8 max-sm:px-4 lg:space-x-10 max-lg:space-x-4 max-sm:space-x-0'>
+        <div className='browse-jobs_bg w-full lg:h-[606px] max-lg:h-[350px] flex justify-center lg:px-20 max-lg:px-8 max-sm:px-4 lg:space-x-10 max-lg:space-x-4 max-sm:space-x-0'>
             <div className='max-w-[1600px] flex-1 flex items-center justify-center max-md:flex-col'>
                 <div className='md:w-2/3 space-y-2 max-lg:space-y-3 lg:pr-6'>
                     <div className='flex space-x-1 items-center'>
