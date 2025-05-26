@@ -49,7 +49,7 @@ const ContactMain = () => {
                     We&apos;re currently accepting recruiters to offer early access to:
                     <br /><br />  
                     <ul className='list-disc pl-6 max-lg:pb-1 2xl:pb-2'>
-                        <li>Direct posting features (free <br className='md:hidden'/> postings)</li>
+                        <li>Direct posting features <br className='md:hidden'/>(free postings)</li>
                         <li>Beta talent matching tools</li>
                         <li>Advertising tools</li>
                         <li>AI tools</li>    
@@ -57,9 +57,9 @@ const ContactMain = () => {
                     <span className='text-heading font-semibold'>Let&apos;s connect:</span> <Link href='mailto:recruit@gigs.tech' className='text-primary underline'>recruit@gigs.tech</Link>
                     </span>}
                 image='/Interview.svg'
-                extraStyles='md:row-span-4'
+                extraStyles='md:row-span-4 max-md:h-[380px]'
                 background='bg-[#1B1E28]'
-                height='h-[344px]'
+                height='md:h-[344px]'
                 width={250}
                 mobileWidth={165}
                 imageHeight={220}
