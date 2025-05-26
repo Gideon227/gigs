@@ -116,42 +116,42 @@ const TermPage = () => {
         <div className='bg-[#101217]'>
             <div className='max-w-[1800px] flex items-start m-auto lg:py-16 lg:px-20 px-6 py-10 h-screen'>
                 <div className='w-1/3 bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
-                    <Link href='#about-gig' onClick={() => scrollToSection(aboutGigRef)} className={`pl-4 leading-[18px] ${activeId === 'about-gig' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[14px]'}`}>
+                    <Link href='#about-gig' onClick={() => scrollToSection(aboutGigRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'about-gig' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral '}`}>
                         About Gig.Tech
                     </Link>
 
                     <Link 
                         href='#use-platform' 
                         onClick={() => scrollToSection(usePlatformRef)} 
-                        className={`pl-4 leading-[18px] ${activeId === 'use-platform' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                        className={`pl-4 leading-[18px] text-[16px] ${activeId === 'use-platform' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                             Your Use of the Platform
                     </Link>
 
-                    <Link href='#job-listing' onClick={() => scrollToSection(jobListingRef)} className={`pl-4 leading-[18px] ${activeId === 'job-listing' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#job-listing' onClick={() => scrollToSection(jobListingRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'job-listing' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Job Listings
                     </Link>
 
-                    <Link href='#user-account' onClick={() => scrollToSection(userAccountRef)} className={`pl-4 leading-[18px] ${activeId === 'user-account' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#user-account' onClick={() => scrollToSection(userAccountRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'user-account' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         User Accounts (Future Feature)  
                     </Link>
 
-                    <Link href='#intellectual-property' onClick={() => scrollToSection(intellectualPropertyRef)} className={`pl-4 leading-[18px] ${activeId === 'intellectual-property' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#intellectual-property' onClick={() => scrollToSection(intellectualPropertyRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'intellectual-property' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Intellectual Property
                     </Link>
 
-                    <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Limitation of Liability
                     </Link>
 
-                    <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Changes to These Terms
                     </Link>
 
-                    <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Governing Law
                     </Link>
 
-                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`2xl:hidden pl-4 leading-[18px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary text-[18px] font-semibold' : 'text-neutral text-[16px]'}`}>
+                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Contact Us
                     </Link>
                 </div>
