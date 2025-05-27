@@ -29,10 +29,9 @@ const LastLineImage: React.FC<LastLineImageProps> = ({
     return (
         <h1 className="text-[32px] font-semibold leading-[48px] text-start text-heading max-lg:text-[27px] max-lg:leading-[40px] max-md:text-[25px] max-md:leading-[35px]">
           {leading && <>{leading}&nbsp;</>}
-          <span className="whitespace-nowrap inline-flex items-center gap-2">
+          <span className="whitespace-nowrap inline-flex items-center gap-2 max-md:-mt-3">
             {trailing}
-            <Image src={imageUrl} alt={imageAlt} width={68} height={68} className="inline-block md:hidden" />
-            <Image src={imageUrl} alt={imageAlt} width={40} height={45} className="inline-block max-md:hidden" />
+            <Image src={imageUrl} alt={imageAlt} width={68} height={68} className="inline-block" />
           </span>
         </h1>
     );

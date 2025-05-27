@@ -10,8 +10,8 @@ const About = () => {
     <div className='bg-[#101217] m-0 hide-scrollbar'>
         <AboutHero />
         <AboutSection />
-        <div className='max-w-[1600px] mx-auto px-16 lg:py-16 bg-[#101217] space-y-10 max-lg:px-4 max-lg:py-16'>
-            <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center max-md:text-[21px] max-lg:leading-[37px]'>The Real Problem in the Market <br />(And Why No One Solved It Yet)</h1>
+        <div className='max-w-[1600px] mx-auto px-16 lg:py-12 bg-[#101217] space-y-10 max-lg:px-4 max-lg:py-16'>
+            <h1 className='text-heading font-semibold text-[32px] leading-[48px] text-center max-md:text-[21px] max-lg:leading-[37px]'>The Real Problem in the Market</h1>
             <div className='flex justify-center lg:space-x-10 max-lg:flex-col max-lg:space-y-6 max-lg:items-center'>
                 <Card 
                     title= { <span>For Job Seekers</span> }
