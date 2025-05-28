@@ -58,7 +58,7 @@ const AboutMain = () => {
             <div className='flex flex-col justify-end items-end text-end space-y-4'>
                 <h1 className='text-[32px] font-semibold leading-[48px] text-heading max-lg:text-[27px] max-lg:leading-[36px]'>Why <span className='text-primary'>Gigs.Tech?</span> The Benefits for Everyone Involved</h1>
 
-                <p className='text-paragraph text-[20px] leading-[30px] max-md:text-[16px] pb-6'>For Job Seekers:</p>
+                <p className='text-paragraph text-[20px] leading-[30px] max-md:text-[21px] pb-6'>For Job Seekers:</p>
 
                 <div className='grid grid-cols-3 gap-12 items-start auto-rows-[minmax(300px,_auto)] max-md:grid-cols-2 max-md:gap-4 '>
                     <AboutCard 
