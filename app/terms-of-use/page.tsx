@@ -114,8 +114,8 @@ const TermPage = () => {
         </div>
 
         <div className='bg-[#101217]'>
-            <div className='max-w-[1800px] flex items-start m-auto lg:py-16 lg:px-20 px-6 py-10 h-screen'>
-                <div className='w-1/3 bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
+            <div className='max-w-[1800px] 2xl:max-w-fit flex items-start m-auto lg:py-16 lg:px-20 px-6 py-10 h-screen'>
+                <div className='max-2xl:w-1/3 2xl:hidden bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
                     <Link href='#about-gig' onClick={() => scrollToSection(aboutGigRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'about-gig' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral '}`}>
                         About Gigs.Tech
                     </Link>
@@ -139,24 +139,24 @@ const TermPage = () => {
                         Intellectual Property
                     </Link>
 
-                    <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#liability' onClick={() => scrollToSection(liabilityRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'liability' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Limitation of Liability
                     </Link>
 
-                    <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#term-changes' onClick={() => scrollToSection(termRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'term-changes' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Changes to These Terms
                     </Link>
 
-                    <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#law' onClick={() => scrollToSection(lawRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'law' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Governing Law
                     </Link>
 
-                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Contact Us
                     </Link>
                 </div>
 
-                <main className='lg:w-2/3 lg:pl-12 overflow-y-auto h-full space-y-8 hide-scrollbar lg:pb-96' ref={containerRef}>
+                <main className='lg:w-2/3 2xl:w-full 2xl:pl-0 2xl:mx-auto lg:pl-12 overflow-y-auto h-full space-y-8 hide-scrollbar lg:pb-96 2xl:pb-16' ref={containerRef}>
                     <section 
                         id="about-gig"
                         ref={aboutGigRef}

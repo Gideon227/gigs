@@ -84,8 +84,8 @@ const PrivacyPage = () => {
 
         {/* MAIN CONTENT */}
         <div className='bg-[#101217] '>
-            <div className='max-w-[1800px] flex items-start m-auto lg:py-16 lg:px-20 px-6 py-10 h-screen'>
-                <div className='w-1/3 bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
+            <div className='max-w-[1800px] 2xl:max-w-fit flex items-start m-auto lg:py-16 lg:px-20 px-6 py-10 h-screen'>
+                <div className='max-2xl:w-1/3 2xl:hidden  bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
                     <Link href='#data' onClick={() => scrollToSection(dataRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'data' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         What We Collect (Now and in the Future)
                     </Link>
@@ -101,24 +101,24 @@ const PrivacyPage = () => {
                         Cookies and Tracking
                     </Link>
 
-                    <Link href='#security' onClick={() => scrollToSection(securityRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'security' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#security' onClick={() => scrollToSection(securityRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'security' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Data Sharing and Security  
                     </Link>
 
-                    <Link href='#right' onClick={() => scrollToSection(rightRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'right' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#right' onClick={() => scrollToSection(rightRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'right' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Your Rights
                     </Link>
 
-                    <Link href='#policy' onClick={() => scrollToSection(policyRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'policy' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#policy' onClick={() => scrollToSection(policyRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'policy' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Changes to This Policy
                     </Link>
 
-                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`2xl:hidden pl-4 leading-[18px] text-[16px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
+                    <Link href='#contact' onClick={() => scrollToSection(contactRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'contact' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral'}`}>
                         Contact
                     </Link>
                 </div>
 
-                <main className='lg:w-2/3 lg:pl-12 overflow-y-auto h-full space-y-8 hide-scrollbar lg:pb-96 2xl:pb' ref={containerRef}>
+                <main className='lg:w-2/3 2xl:w-full 2xl:pl-0 2xl:mx-auto lg:pl-12 overflow-y-auto h-full space-y-8 hide-scrollbar lg:pb-96 2xl:pb-16' ref={containerRef}>
                     <section 
                         id="data"
                         ref={dataRef}
