@@ -1,5 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
+import JobCta from '@/components/JobCta'
+import JobMain from '@/components/JobMain'
 
 const Jobs = () => {
   return (
@@ -9,8 +11,8 @@ const Jobs = () => {
                 <div className='md:w-2/3 space-y-2 max-lg:space-y-3 lg:pr-6'>
                     <div className='flex space-x-1 items-center'>
                         <p className='text-sm leading-[24px] text-[#E3E3E3]'>Welcome to Gigs.Tech</p>
-                        <Image src='/waving.png' alt='waving emoji' width={28} height={28} className='flex items-center object-contain -mt-1 max-md:hidden'/>
-                        <Image src='/waving.png' alt='waving emoji' width={18} height={18} className='flex items-center object-contain -mt-1 md:hidden'/>
+                        <Image src='/waving.png' alt='waving emoji' width={18} height={18} className='flex items-center object-contain -mt-1 max-md:hidden'/>
+                        <Image src='/waving.png' alt='waving emoji' width={14} height={14} className='flex items-center object-contain -mt-1 md:hidden'/>
                     </div>
 
                     <h1 className='font-semibold text-[40px] lg:leading-[60px] text-heading max-lg:text-[27px] max-lg:leading-[32px] max-sm:text-[21px] max-sm:leading-7'>Power Platform & Dynamics <br /> 365 jobs all in one place.</h1>
@@ -22,7 +24,14 @@ const Jobs = () => {
                 </div>  
             </div>
         </div>
+
+        <div className='max-w-[1600px] p-4 m-auto'>
+            <JobMain />
+        </div>
         
+        <div className='bg-black flex justify-center items-center flex-1 p-20 max-md:px-8 max-md:py-16'>
+            <JobCta />
+        </div>
     </div>
   )
 }
