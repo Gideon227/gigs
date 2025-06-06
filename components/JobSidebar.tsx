@@ -90,7 +90,6 @@ const JobSidebar = () => {
           state = {jobType}
           setState={setJobType}
           options={jobTypeOptions}
-          handleValueChange={handleChange}
           changeKey= "jobType"
         />
 
@@ -99,7 +98,6 @@ const JobSidebar = () => {
           state = {jobType}
           setState={setJobType}
           options={jobTypeOptions}
-          handleValueChange={handleChange}
           changeKey= "salary"
         />
         <Slider.Root
@@ -127,7 +125,6 @@ const JobSidebar = () => {
           state = {workSettings}
           setState={setWorkSettings}
           options={workSettingsOptions}
-          handleValueChange={handleChange}
           changeKey= "workSettings"
         />
 
@@ -137,7 +134,6 @@ const JobSidebar = () => {
           state = {skills}
           setState={setSkills}
           options={skillsOptions}
-          handleValueChange={handleChange}
           changeKey= "skills"
         />
 

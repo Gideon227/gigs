@@ -1,4 +1,5 @@
-import React, { SetStateAction } from 'react';
+import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   RadioGroup,
   RadioGroupItem,
@@ -10,12 +11,20 @@ interface FilterProps{
     title: string;
     state: string | null;
     setState: React.Dispatch<React.SetStateAction<string | null>>;
-    options: Option[]
-    handleValueChange: (key:string, value:any) => void
+    options: Option[];
     changeKey: string
 }
 
-const FilterCard = ({ title, state, setState, options, handleValueChange, changeKey }: FilterProps) => {
+const FilterCard = ({ title, state, setState, options, changeKey }: FilterProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleChange = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set(key, value);
+    params.set('page', '1'); // Reset to page 1 on filter change
+    router.push(`/jobs?${params.toString()}`);
+  };
 
   return (
     <div className='py-2.5 space-y-4'> 
@@ -26,7 +35,7 @@ const FilterCard = ({ title, state, setState, options, handleValueChange, change
 
         <RadioGroup 
           defaultValue={state ?? ""} 
-          onValueChange={(value) => handleValueChange(changeKey!, value)} 
+          onValueChange={(value) => handleChange(changeKey, value)} 
           className='grid grid-cols-2 w-full px-2'>
 
             {options?.map((option) => (
