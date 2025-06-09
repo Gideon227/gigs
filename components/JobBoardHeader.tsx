@@ -24,7 +24,7 @@ const JobBoardHeader = () => {
                     placeholder="Enter city, state, zip, or country"
                     className="bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-full ml-4 placeholder-[#7E7E7E]"
                 />
-                <button className='bg-primary leading-6 text-nowrap rounded-lg py-2 px-4 font-semibold 2xl:text-[16px] max-2xl:text-[14px] text-dark'>Find Jobs</button>
+                <button className='bg-primary leading-6 text-nowrap rounded-lg py-2 px-4 font-semibold 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] text-dark'>Find Jobs</button>
             </div>
         </div>
 

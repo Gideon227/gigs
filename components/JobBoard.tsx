@@ -5,6 +5,7 @@ import JobBoardHeader from './JobBoardHeader'
 import { JobProps, Jobs } from '@/constants/Jobs'
 import JobCard from './JobCard'
 import dynamic from 'next/dynamic'
+import JobCardSkeleton from './JobCardSkeleton';
 
 
 const JobDrawer = dynamic(() => import('./JobDrawer'), {
@@ -20,27 +21,48 @@ const JobBoard = () => {
     const [pagination, setPagination] = useState({ currentPage: 1, totalPages: 1 });
 
 
+    const fetchJobs = async () => {
+        setLoading(true); 
+        try {
+            const query = searchParams.toString();
+            const res = await fetch(`/api/browse-jobs?${query}`);
+            const data = await res.json();
+            setJobs(data.jobs); 
+        } catch (error: any) {
+            console.log(error.message)
+        } finally {
+            setLoading(false);
+        }   
+    };
+    
     useEffect(() => {
-        const fetchJobs = async () => {
-          setLoading(true);
-    
-          const queryString = searchParams.toString(); // Get current URL query
-          const res = await fetch(`/api/jobs?${queryString}`);
-          const data = await res.json();
-    
-          if (data.success) {
-            setJobs(data.data);
-            setPagination({
-              currentPage: Number(searchParams.get('page') || 1),
-              totalPages: data.totalPages || 1,
-            });
-          }
-    
-          setLoading(false);
-        };
-    
         fetchJobs();
-      }, [searchParams]);
+    }, [searchParams]);
+
+    useEffect(() => {
+        const id = searchParams.get("id");
+      
+        if (id) {
+          const index = parseInt(id, 10);
+          if (!isNaN(index) && Jobs[index]) {
+            setSelectedJob(Jobs[index]);
+          }
+        }
+    }, [searchParams]);
+
+
+    const updateSearchParam = (key: string, value: string | null) => {
+        const params = new URLSearchParams(searchParams);
+    
+        if (value) {
+          params.set(key, value);
+        } else {
+          params.delete(key);
+        }
+    
+        params.set("page", "1"); // reset page to 1 on filter
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+    };
 
     const openJob = (job: JobProps) => {
         setSelectedJob(job)
@@ -48,6 +70,10 @@ const JobBoard = () => {
 
     const closeDrawer = () => {
         setSelectedJob(null)
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete("id");
+
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     }
   return (
     <div className='flex flex-col space-y-4'>
@@ -64,18 +90,40 @@ const JobBoard = () => {
             </div>
 
             <div className='2xl:px-12 md:px-8 max-md:px-4 mt-2 cursor-pointer'>
-                {Jobs.map((job, index) => (
-                    <JobCard key={index} job={job} hasBorder= {index !== Jobs.length - 1} onClick={() => {openJob(job)}} />
-                ))}
+                {loading ? (
+                    <div className='space-y-4'>
+                        {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
+                    </div>
+                    ) : Jobs.length > 0 ? (
+                    Jobs.map((job, index) => (
+                        <JobCard
+                        key={index}
+                        job={job}
+                        hasBorder={index !== Jobs.length - 1}
+                        onClick={() => {
+                            openJob(job)
+                            updateSearchParam("id", index.toString())
+                        }}
+                        />
+                    ))
+                    ): (
+                        <h1 className='text-heading text-[18px] py-4 text-center'>No jobs found</h1>
+                    )
+                }
 
             </div>
             {selectedJob && <JobDrawer job={selectedJob} onClose={closeDrawer} />}
         </div>
 
         <button
-            disabled={jobs.length < 20}
-            onClick={() => {}}
-            className='w-full rounded-lg border-primary border bg-transparent text-primary text-[16px] text-center py-2 hover:bg-primary hover:text-[#101217] disabled:opacity-60'
+            // disabled={jobs.length < 20}
+            onClick={() => {
+                const newPage = pagination.currentPage + 1;
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('page', newPage.toString());
+                router.push(`?${params.toString()}`);
+            }}
+            className='w-full p-0.5 rounded-sm border-primary border bg-transparent text-primary text-[14px] text-center py-3 hover:bg-primary hover:text-[#101217] hover:font-medium cursor-pointer'
         >
             Load More
         </button>

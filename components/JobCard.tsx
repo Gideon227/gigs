@@ -80,7 +80,7 @@ const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
             <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px]'>{jobType}</p>
         </div>
 
-        <div className='w-4/5 items-start flex'>
+        <div className='sm:w-4/5 items-start flex'>
             <p className='text-paragraph md:text-[16px] max-md:text-[14px] leading-6 text-start'>
                 {truncateText(description, 28)}
             </p>

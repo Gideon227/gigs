@@ -1,21 +1,11 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import FilterDate from './FilterDate';
-import LocationFilter from './LocationFilter';
+import CountryFilter from './CountryFilter';
 import FilterCard from './FilterCard';
 import RoleFilter from './RoleFilter';
-import * as Slider from '@radix-ui/react-slider'
-// import { useRouter } from 'next/router';
 
-
-interface PriceSliderProps {
-  value: [number, number];
-  setValue: (value: [number, number]) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-}
 
 export type Option = {
   value: string;
@@ -28,6 +18,15 @@ const jobTypeOptions = [
   { value: 'contract-to-hire', label: 'Contract to hire' },
   { value: 'temp-contract', label: 'Temp contract' },
   { value: 'gig-work', label: 'Gig-work' },
+] 
+
+const salaryRangeOptions = [
+  { value: 'under-50k', label: 'Under $50K' },
+  { value: '51k-100k', label: '$51K-$100K' },
+  { value: '101k-150k', label: '$101K-$150K' },
+  { value: '151k-200k', label: '$151K-$200K' },
+  { value: '200k', label: '$200K+' },
+  { value: 'custom', label: 'Custom' }
 ] 
 
 const workSettingsOptions = [
@@ -50,38 +49,88 @@ const JobSidebar = () => {
   // const router = useRouter()
   const router = useRouter();
   const searchParams = useSearchParams();
-
+  
   const [jobType, setJobType] = useState<string | null>(null)
+  const [salaryRange, setSalaryRange] = useState<string | null>(null)
   const [skills, setSkills] = useState<string | null>(null)
   const [workSettings, setWorkSettings] = useState<string | null>(null)
 
-  const handleChange = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(key, value);
-    params.set('page', '1'); // Reset to page 1 on filter change
-    router.push(`/jobs?${params.toString()}`);
+  const [country, setCountry] = useState<string | null>(null);
+  const [state, setState] = useState<string | null>(null);
+  const [city, setCity] = useState<string | null>(null);
+
+  const getParam = (key: string) => searchParams.get(key)
+
+  const params = new URLSearchParams(searchParams);
+  
+  const updateSearchParam = (key: string, value: string | null) => {
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+
+    params.set("page", "1"); // reset page to 1 on filter
+    router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
   };
+
+
+
+  useEffect(() => {
+    // Initialize from query params
+    const jobTypeParam = getParam("jobType");
+    const salaryParam = getParam("salary");
+    const skillsParam = getParam("skills");
+    const workSettingsParam = getParam("workSettings");
+    const countryParam = getParam("country")
+    const cityParam = getParam("city")
+    const stateParam = getParam("state")
+
+
+    if (jobTypeParam) setJobType(jobTypeParam);
+    if (salaryParam) setSalaryRange(salaryParam);
+    if (skillsParam) setSkills(skillsParam);
+    if (workSettingsParam) setWorkSettings(workSettingsParam);
+    if (countryParam) setCountry(countryParam);
+    if (stateParam) setState(stateParam);
+    if (cityParam) setCity(cityParam);
+
+    // Optionally call job fetcher API here
+  }, [searchParams]);
+
 
   return (
     <div className='bg-[#1B1E28] border border-[#363636] rounded-lg gap-y-2.5'>
       <div className='flex justify-between px-4 py-4 border-b border-[#363636]'>
         <h1 className='text-heading text-[18px] font-medium'>Filter</h1>
-        <button className='text-[#FB4D5C] text-[16px] leading-6'>Clear all</button>
+        <button 
+          onClick={() => {
+            setJobType(null);
+            setSalaryRange(null);
+            setSkills(null);
+            setWorkSettings(null);
+            router.replace('/browse-jobs'); // clear all
+          }}
+          className='text-[#FB4D5C] text-[16px] leading-6'>
+            Clear all
+        </button>
       </div>
 
-      <div className='px-4 space-y-4'>
+      <div className='px-4'>
         <FilterDate 
           onSelect={(date) => {
-            // Convert to ISO string and call your job filter API
             const isoDate = date.toISOString()
             console.log("Filter jobs posted from:", isoDate)
-
-            // For example:
-            // router.push(`/jobs?fromDate=${isoDate}`)
           }}
         />
 
-        {/* <LocationFilter /> */}
+        {/* <CountryFilter
+          onChange={({ country, state, city }) => {
+          setCountry(country);
+          setState(state);
+          setCity(city);
+        }}
+        /> */}
 
         <RoleFilter />
 
@@ -91,34 +140,18 @@ const JobSidebar = () => {
           setState={setJobType}
           options={jobTypeOptions}
           changeKey= "jobType"
+          onChange={updateSearchParam}
         />
 
         <FilterCard 
           title='Salary Range'
-          state = {jobType}
-          setState={setJobType}
-          options={jobTypeOptions}
+          state = {salaryRange}
+          setState={setSalaryRange}
+          options={salaryRangeOptions}
           changeKey= "salary"
+          onChange={updateSearchParam}
+          extraStyles= "rounded-full"
         />
-        <Slider.Root
-            className="relative flex items-center select-none touch-none w-full h-6"
-            min={0}
-            max={100}
-            step={0}
-            // value={0, 80}
-            // onValueChange={setValue}
-          >
-            <Slider.Track className="bg-[#363636] relative grow rounded-full h-1">
-              <Slider.Range className="absolute bg-primary rounded-full h-full" />
-            </Slider.Track>
-            <Slider.Thumb className="block w-4 h-4 bg-primary rounded-sm shadow" />
-            <Slider.Thumb className="block w-4 h-4 bg-primary rounded-sm shadow" />
-        </Slider.Root>
-
-        <div className='flex justify-between px-4'>
-          <h1 className='text-heading text-[16px] leading'>$20K</h1>
-          <h1 className='text-heading text-[16px] leading'>$200K</h1>
-        </div>
 
         <FilterCard 
           title='Work Settings'
@@ -126,6 +159,7 @@ const JobSidebar = () => {
           setState={setWorkSettings}
           options={workSettingsOptions}
           changeKey= "workSettings"
+          onChange={updateSearchParam}
         />
 
 
@@ -135,6 +169,8 @@ const JobSidebar = () => {
           setState={setSkills}
           options={skillsOptions}
           changeKey= "skills"
+          onChange={updateSearchParam}
+          hasBorderBottom = {false}
         />
 
       </div>

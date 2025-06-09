@@ -1,9 +1,11 @@
+
 import React from 'react'
 import Image from 'next/image'
 import JobCta from '@/components/JobCta'
 import JobMain from '@/components/JobMain'
 
 const Jobs = () => {
+
   return (
     <div className='bg-[#101217]'>
         <div className='browse-jobs_bg w-full lg:h-[606px] max-lg:h-[350px] flex justify-center lg:px-20 max-lg:px-8 max-sm:px-4 lg:space-x-10 max-lg:space-x-4 max-sm:space-x-0'>
