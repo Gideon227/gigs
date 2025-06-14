@@ -33,14 +33,17 @@ function truncateText(text: string, wordLimit: number) {
   }
 
 const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
-    const { image, title, description, location, companyName, jobType, datePosted, salary, tags, shareLink } = job
+  const { title, description, location, country, state, city, jobType, salary, skills, applicationUrl, companyLogo, createdAt } = job
+  
+  const formattedCreatedDate = new Date(createdAt.replace(" ", "T")).toLocaleString();
+
   return (
     <div 
         onClick={() => onClick(job)} 
         className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
         <div className='flex items-start justify-between w-full'>
             <div className='flex space-x-2 justify-start items-end'>
-                <Image src={image} height={45} width={45} alt='company&apos;s logo' className='rounded-lg'/>
+                {companyLogo && <Image src={companyLogo!} height={45} width={45} alt='company&apos;s logo' className='rounded-lg'/>}
                 
                 <div className='flex flex-col justify-between items-start'>
                     <div className='flex space-x-4'>
@@ -52,7 +55,7 @@ const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
                     <div className='flex space-x-2 justify-start items-center'>
                         <div className='flex space-x-1.5'>
                             <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
-                            <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{companyName}</p>
+                            <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>Company Name</p>
                         </div>
 
                         <span className='inline-block w-1 h-1 bg-[#4F4F4F]'></span>
@@ -72,7 +75,7 @@ const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
                     <span className='text-heading text-[16px] font-normal'>year</span>
                  </h1>
                )}
-               <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>{datePosted}</p>
+               <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>{formattedCreatedDate}</p>
             </div>
         </div>
 
@@ -93,19 +96,19 @@ const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
                 <span className='text-heading text-[16px] font-normal'>year</span>
              </h1>
            )}
-            <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>{datePosted}</p>
+            <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>{formattedCreatedDate}</p>
         </div>
 
         <div className='flex justify-between items-center w-full flex-1'>
            <div className='gap-2 flex flex-wrap'>
-            {tags.map((tag) => (
-                <div className='rounded-full border-neutral border py-0.5 px-4' key={tag}>
-                    <p className='text-heading 2xl:text-[14px] max-2xl:text-[12px] leading-[21px]'>{tag}</p>
+            {skills.map((skill: string) => (
+                <div className='rounded-full border-neutral border py-0.5 px-4' key={skill}>
+                    <p className='text-heading 2xl:text-[14px] max-2xl:text-[12px] leading-[21px]'>{skill}</p>
                 </div>
             ))}
            </div>
 
-           <Link href={shareLink}>
+           <Link href={applicationUrl}>
                 <Image src='/share.svg' width={20} height={20} alt='share icon'/>
            </Link>
         </div>

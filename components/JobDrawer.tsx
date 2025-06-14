@@ -39,7 +39,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
     <div className='fixed inset-0 z-50 flex w-full'>
         <div
             onClick={onClose}
-            className="flex-1 bg-[#181818] bg-opacity-30 overflow-hidden"
+            className="flex-1 bg-transparent bg-opacity-30 overflow-hidden"
         />
         
         <motion.div
@@ -84,9 +84,9 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
                             <Image src={job.image} width={35} height={35} alt='company logo' className='rounded-lg'/>
-                            <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[18px] '>{job.title}</h2>
+                            <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px] '>{job.title}</h2>
                         </div>
-                        <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-2 max-sm:items-start'>
+                        <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
                             <div className='flex items-center'>
                                 <span className='sm:hidden inline-block w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
@@ -179,10 +179,10 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
                             
                             <div className='space-y-4 flex flex-col items-center'>
-                                <Link href='/' className='bg-primary py-3 sm:px-16 max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px]'>Apply for Job</Link>
+                                <Link href='/' className='bg-primary py-3 sm:px-16  max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px] max-md:text-[14px]'>Apply for Job</Link>
                                 <button className='flex items-center space-x-2'>
-                                    <Image src='/Bookmark.svg' width={24} height={24} alt='Bookmark icon' />
-                                    <h2 className='text-primary text-[16px] text-nowrap font-semibold leading-6'>Save job for later</h2>
+                                    <Image src='/Bookmark.svg' width={24} height={24} alt='Bookmark icon' className='max-md:w-4'/>
+                                    <h2 className='text-primary text-[16px] max-md:text-[14px] text-nowrap font-semibold leading-6'>Save job for later</h2>
                                 </button>
                             </div>
                         </div>

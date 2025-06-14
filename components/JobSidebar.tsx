@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import FilterDate from './FilterDate';
-import CountryFilter from './CountryFilter';
 import FilterCard from './FilterCard';
+import ExperienceLevelFilter from './ExperienceFilter';
+import dynamic from 'next/dynamic';
 import RoleFilter from './RoleFilter';
 
+// const CountryFilter = dynamic(() => import('./CountryFilter'), { ssr: false })
 
 export type Option = {
   value: string;
@@ -40,7 +42,7 @@ const skillsOptions = [
   { value: 'lavarel', label: 'Lavarel' },
   { value: 'webflow', label: 'Webflow' },
   { value: 'framer', label: 'Framer' },
-  { value: 'php', label: 'Php' },
+  { value: 'php', label: 'PHP' },
   { value: 'javascript', label: 'JavaScript' },
 ] 
 
@@ -54,6 +56,8 @@ const JobSidebar = () => {
   const [salaryRange, setSalaryRange] = useState<string | null>(null)
   const [skills, setSkills] = useState<string | null>(null)
   const [workSettings, setWorkSettings] = useState<string | null>(null)
+  const [experienceLevel, setExperienceLevel] = useState<string | null>(null)
+  const [role, setRole] = useState<string | null>(null)
 
   const [country, setCountry] = useState<string | null>(null);
   const [state, setState] = useState<string | null>(null);
@@ -85,6 +89,8 @@ const JobSidebar = () => {
     const countryParam = getParam("country")
     const cityParam = getParam("city")
     const stateParam = getParam("state")
+    const experienceLevelParam = getParam("experienceLevel")
+    const roleParam = getParam("role")
 
 
     if (jobTypeParam) setJobType(jobTypeParam);
@@ -94,6 +100,8 @@ const JobSidebar = () => {
     if (countryParam) setCountry(countryParam);
     if (stateParam) setState(stateParam);
     if (cityParam) setCity(cityParam);
+    if (experienceLevelParam) setExperienceLevel(experienceLevelParam)
+    if (roleParam) setRole(roleParam)
 
     // Optionally call job fetcher API here
   }, [searchParams]);
@@ -117,22 +125,20 @@ const JobSidebar = () => {
       </div>
 
       <div className='px-4'>
-        <FilterDate 
-          onSelect={(date) => {
-            const isoDate = date.toISOString()
-            console.log("Filter jobs posted from:", isoDate)
-          }}
-        />
+        <FilterDate />
 
         {/* <CountryFilter
           onChange={({ country, state, city }) => {
-          setCountry(country);
-          setState(state);
-          setCity(city);
-        }}
+            setCountry(country);
+            setState(state);
+            setCity(city);
+          }}
         /> */}
 
-        <RoleFilter />
+        <RoleFilter 
+          role={role}
+          setRole={setRole}
+        />
 
         <FilterCard 
           title='Job Type'
@@ -162,6 +168,10 @@ const JobSidebar = () => {
           onChange={updateSearchParam}
         />
 
+        <ExperienceLevelFilter 
+          experienceLevel= {experienceLevel}
+          setExperienceLevel= {setExperienceLevel}
+        />
 
         <FilterCard 
           title='Required Skills'

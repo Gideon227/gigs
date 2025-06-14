@@ -2,10 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import JobBoardHeader from './JobBoardHeader'
-import { JobProps, Jobs } from '@/constants/Jobs'
+import { JobProps } from '@/constants/Jobs'
 import JobCard from './JobCard'
 import dynamic from 'next/dynamic'
 import JobCardSkeleton from './JobCardSkeleton';
+import SortFilter from './SortFilter';
+
+import { getJobs } from '@/libs/getJobs';
 
 
 const JobDrawer = dynamic(() => import('./JobDrawer'), {
@@ -25,9 +28,9 @@ const JobBoard = () => {
         setLoading(true); 
         try {
             const query = searchParams.toString();
-            const res = await fetch(`/api/browse-jobs?${query}`);
-            const data = await res.json();
-            setJobs(data.jobs); 
+            const data = await getJobs(query)
+            setJobs(data.data); 
+            
         } catch (error: any) {
             console.log(error.message)
         } finally {
@@ -44,8 +47,8 @@ const JobBoard = () => {
       
         if (id) {
           const index = parseInt(id, 10);
-          if (!isNaN(index) && Jobs[index]) {
-            setSelectedJob(Jobs[index]);
+          if (!isNaN(index) && jobs[index]) {
+            setSelectedJob(jobs[index]);
           }
         }
     }, [searchParams]);
@@ -81,29 +84,28 @@ const JobBoard = () => {
             <JobBoardHeader />
             <div className='py-4 px-6 w-full'>
                 <div className='flex w-full justify-between'>
-                    <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[16px] max-md:text-[14px] text-heading '>250 Jobs</h1>
+                    <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] text-heading '>{jobs.length} Jobs</h1>
                     <div className='flex space-x-4 items-center'>
-                        <p className='text-[16px] max-2xl:text-[14px] leading-6 text-start text-heading'>Sort by:</p>
-                        
+                        <p className='text-[18px] max-2xl:text-[16px] leading-6 text-start text-heading'>Sort by:</p>
+                        <SortFilter />
                     </div>
                 </div>
             </div>
-
             <div className='2xl:px-12 md:px-8 max-md:px-4 mt-2 cursor-pointer'>
                 {loading ? (
                     <div className='space-y-4'>
                         {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
                     </div>
-                    ) : Jobs.length > 0 ? (
-                    Jobs.map((job, index) => (
+                    ) : jobs.length > 0 ? (
+                    jobs.map((job, index) => (
                         <JobCard
-                        key={index}
-                        job={job}
-                        hasBorder={index !== Jobs.length - 1}
-                        onClick={() => {
-                            openJob(job)
-                            updateSearchParam("id", index.toString())
-                        }}
+                            key={index}
+                            job={job}
+                            hasBorder={index !== jobs.length - 1}
+                            onClick={() => {
+                                openJob(job)
+                                updateSearchParam("id", index.toString())
+                            }}
                         />
                     ))
                     ): (

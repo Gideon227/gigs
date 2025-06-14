@@ -5,6 +5,7 @@ import {
   RadioGroupItem,
 } from "@/components/ui/radio-group";
 import { Option } from './JobSidebar';
+import useClearFilter from '@/utils/clearFilter';
 
 interface FilterProps{
     title: string;
@@ -33,15 +34,14 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
     onChange?.(key, value);
   };
 
+  const clearFilter = useClearFilter()
+
   return (
     <div className={`py-6 space-y-4 ${hasBorderBottom && "border-b border-[#363636]"}`}> 
         <div className='flex justify-between'>
             <h1 className='text-heading text-[16px] font-medium'>{title}</h1>
             <button 
-              onClick={() => {
-                setState(null);
-                onChange?.(changeKey, null);
-              }}
+              onClick= {() => clearFilter(setState, changeKey)}
               className='text-[#FB4D5C] cursor-pointer text-[14px] leading-6'>
                 Clear all
             </button>
