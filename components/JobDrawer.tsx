@@ -27,7 +27,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
     if (!job || !hasMounted) return null;
 
-
+    const formattedCreatedDate = new Date(job.createdAt.replace(" ", "T")).toLocaleString();
 
     const variants = {
         initial: isMobile ? { y: '100%' } : { x: '100%' },
@@ -83,7 +83,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 <div className='border-b border-[#363636] flex max-sm:flex-col justify-between md:py-8 max-md:py-4'>
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
-                            <Image src={job.image} width={35} height={35} alt='company logo' className='rounded-lg'/>
+                            {job.companyLogo && <Image src={job.companyLogo} width={35} height={35} alt='company logo' className='rounded-lg'/>}
                             <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px] '>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
@@ -91,7 +91,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <span className='sm:hidden inline-block w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{job.companyName}</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{job.title}</p>
                                 </div>
                             </div>
 
@@ -107,13 +107,13 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <span className='inline-block w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/clock.svg' width={16} height={16} alt='clock icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{job.datePosted}</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{formattedCreatedDate}</p>
                                 </div>
                             </div>
                         </div> 
                     </div>
                     <div className='flex items-center max-sm:justify-end'>
-                        <Link href={job.shareLink} className='border-[#363636] border rounded-lg bg-[#151820] p-2'>
+                        <Link href={job.applicationUrl} className='border-[#363636] border rounded-lg bg-[#151820] p-2'>
                             <Image src='/share.svg' width={20} height={20} alt='share icon' />
                         </Link>
                     </div>
