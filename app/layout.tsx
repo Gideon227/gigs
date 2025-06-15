@@ -49,7 +49,7 @@ export default function RootLayout({
           ${geistMono.variable} 
           ${lora.variable}
           ${segoeUi.variable}
-          antialiased overflow-x-hidden min-h-screen`}
+          antialiased overflow-x-hidden min-h-screen hide-scrollbar`}
       >
         <Navbar />
         <main className="flex-1">

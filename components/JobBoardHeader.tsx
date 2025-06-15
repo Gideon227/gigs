@@ -1,11 +1,24 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import JobSidebar from './JobSidebar'
 
 const JobBoardHeader = () => {
     const [openModal, setOpenModal] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (openModal) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      
+        return () => {
+          document.body.style.overflow = '';
+        };
+      }, [openModal]);
+
   return (
     <div className='space-y-2 border-b border-[#363636] pb-3'>
         <div className='flex max-md:flex-col max-md:space-y-2 space-x-0 my-2 md:px-10 max-md:px-4'>
@@ -22,9 +35,9 @@ const JobBoardHeader = () => {
                 <input
                     type="text"
                     placeholder="Enter city, state, zip, or country"
-                    className="bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-full ml-4 placeholder-[#7E7E7E]"
+                    className="bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-2/3 ml-4 placeholder-[#7E7E7E]"
                 />
-                <button className='bg-primary leading-6 text-nowrap rounded-lg py-2 px-4 font-semibold 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] text-dark'>Find Jobs</button>
+                <button className='bg-primary leading-6 w-1/3 text-nowrap rounded-lg py-2 px-4 font-semibold 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] text-dark'>Find Jobs</button>
             </div>
         </div>
 
@@ -38,18 +51,23 @@ const JobBoardHeader = () => {
                     exit={{ y: '100%', opacity: 0 }}
                     transition={{ type: 'tween', duration: 0.25 }}
                     onClick={() => setOpenModal(false)}
-                    className='bg-[#181818] fixed bottom-0 top-0 right-0 left-0 w-full flex z-40 h-screen'
+                    className='fixed inset-0 pointer-events-auto overflow-hidden w-full flex z-40 h-screen'
                 >
-                        <motion.div
-                            initial={{ y: '100%' }}
-                            animate={{ y: '40%' }}
-                            exit={{ y: '100%' }}
-                            transition={{ type: 'tween', duration: 0.2 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className='rounded-t-2xl overflow-y-auto overflow-x-hidden z-50 px-4 py-8 min-h-[400px] w-[-webkit-fill-available]'
-                        >
-                            <JobSidebar />
-                        </motion.div>
+                    <div
+                        className="absolute inset-0 bg-black/30 backdrop-blur-sm pointer-events-auto"
+                        onClick={() => setOpenModal(false)}
+                    />
+
+                    <motion.div
+                        initial={{ y: '100%' }}
+                        animate={{ y: '25%' }}
+                        exit={{ y: '100%' }}
+                        transition={{ type: 'tween', duration: 0.2 }}
+                        onClick={(e) => e.stopPropagation()}
+                        className='rounded-t-2xl overflow-x-hidden z-50 px-4 w-[-webkit-fill-available]'
+                    >
+                        <JobSidebar />
+                    </motion.div>
                 </motion.div>
             )}
         </AnimatePresence>

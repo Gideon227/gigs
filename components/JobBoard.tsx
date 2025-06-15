@@ -21,7 +21,7 @@ const JobBoard = () => {
     const router = useRouter();
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [pagination, setPagination] = useState({ currentPage: 1, totalPages: 1 });
+    const [pagination, setPagination] = useState<number>(1);
 
 
     const fetchJobs = async () => {
@@ -82,11 +82,11 @@ const JobBoard = () => {
     <div className='flex flex-col space-y-4'>
         <div className='bg-[#1B1E28] border border-[#363636] py-4 rounded-lg gap-y-2.5'>
             <JobBoardHeader />
-            <div className='py-4 px-6 w-full'>
-                <div className='flex w-full justify-between'>
-                    <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] text-heading '>{jobs.length} Jobs</h1>
-                    <div className='flex space-x-4 items-center'>
-                        <p className='text-[18px] max-2xl:text-[16px] leading-6 text-start text-heading'>Sort by:</p>
+            <div className='py-4 max-sm:px-2 sm:px-6 w-full'>
+                <div className='flex w-full justify-between items-center'>
+                    <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobs.length} Jobs</h1>
+                    <div className='flex sm:space-x-4 max-sm:space-x-2 items-center'>
+                        <p className='max-sm:text-sm sm:text-[18px] max-2xl:text-[16px] leading-6 text-start text-heading'>Sort by:</p>
                         <SortFilter />
                     </div>
                 </div>
@@ -120,7 +120,8 @@ const JobBoard = () => {
         <button
             // disabled={jobs.length < 20}
             onClick={() => {
-                const newPage = pagination.currentPage + 1;
+                const newPage = pagination + 1;
+                setPagination((prev) => prev + 1)
                 const params = new URLSearchParams(searchParams.toString());
                 params.set('page', newPage.toString());
                 router.push(`?${params.toString()}`);

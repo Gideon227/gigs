@@ -6,6 +6,8 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 
 import useClearFilter from '@/utils/clearFilter';
 
+const roleOptions = ["engineering", "design", "marketing"];
+
 interface RoleFilterProps {
     role: string | null;
     setRole: React.Dispatch<React.SetStateAction<string | null>>;
@@ -30,6 +32,12 @@ const RoleFilter = ({ role, setRole }: RoleFilterProps) => {
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 
+    const handleSelect = (value: string) => {
+        setRole(value);
+        updateSearchParam("role", value);
+        setOpen(false);
+    };
+
     const clearFilter = useClearFilter()
 
   return (
@@ -50,17 +58,15 @@ const RoleFilter = ({ role, setRole }: RoleFilterProps) => {
             <PopoverContent className="w-auto p-0 border-none">
                 <div className='bg-[#101217] px-4 py-3 border-[#363636] border rounded-xl date_overlay min-w-[320px]'>
                     <div className='text-start w-full'>
-                        {/* <h1
-                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => {
-                                setExperienceLevel("beginner")
-                                setOpen(false)
-                                updateSearchParam("experienceLevel", "beginner" )
-                            }}
-                        >
-                            Beginner
-                        </h1> */}
-
+                        {roleOptions.map((role) => (
+                            <h1
+                                key={role}
+                                onClick={() => handleSelect(role)}
+                                className="py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] text-[14px] leading-6 capitalize"
+                            >
+                                {role.charAt(0).toUpperCase() + role.slice(1)}
+                            </h1>
+                        ))}
                     </div>
 
                 </div>

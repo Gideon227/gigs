@@ -27,12 +27,12 @@ const SortFilter = () => {
     };
 
   return (
-    <div className='min-w-60'>
+    <div className='lg:min-w-60 max-lg:min-w-48 max-sm:min-w-28'>
         <Popover open={open} onOpenChange={setOpen}>
 
             <PopoverTrigger asChild>
-                <div className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray py-2 px-4 flex items-center justify-between date_overlay'>
-                    <p className='text-neutral text-sm leading-6'> Relevancy </p>
+                <div className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray sm:py-2 max-sm:py-1.5 px-4 flex items-center justify-between date_overlay'>
+                    <p className='text-neutral text-sm leading-6 max-sm:text-[12px]'> Relevancy </p>
                     <Image src='/arrow-down.svg' width={16} height={16} alt='arrow down icon'/>
                 </div>
             </PopoverTrigger>

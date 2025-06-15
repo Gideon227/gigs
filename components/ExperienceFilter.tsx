@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 
 import useClearFilter from '@/utils/clearFilter';
+import useMultiSearchParams from '@/utils/updateSearchParams';
+
+const experienceOptions = ["beginner", "intermediate", "experienced"];
 
 interface ExperienceLevelFilterProps {
     experienceLevel: string | null;
@@ -14,25 +17,23 @@ interface ExperienceLevelFilterProps {
 const ExperienceLevelFilter = ({ experienceLevel, setExperienceLevel }: ExperienceLevelFilterProps) => {
     
     const [open, setOpen] = useState<boolean>(false)
-
     const router = useRouter();
     const searchParams = useSearchParams();
+    const clearFilter = useClearFilter()
 
     const updateSearchParam = (key: string, value: string | null) => {
         const params = new URLSearchParams(searchParams);
-
-        if (value) {
-        params.set(key, value);
-        } else {
-        params.delete(key);
-        }
-
-        params.set("page", "1"); // reset page to 1 on filter
+        value ? params.set(key, value) : params.delete(key);
+        params.set("page", "1");
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
-
-    const clearFilter = useClearFilter()
-
+    
+    const handleSelect = (value: string) => {
+        setExperienceLevel(value);
+        updateSearchParam("experienceLevel", value);
+        setOpen(false);
+    };
+    
   return (
     <div className='py-8 space-y-2 border-b border-[#363636]'>
         <div className='flex justify-between'>
@@ -51,39 +52,15 @@ const ExperienceLevelFilter = ({ experienceLevel, setExperienceLevel }: Experien
             <PopoverContent className="w-auto p-0 border-none">
                 <div className='bg-[#101217] px-4 py-3 border-[#363636] border rounded-xl date_overlay min-w-[320px]'>
                     <div className='text-start w-full'>
+                    {experienceOptions.map((level) => (
                         <h1
-                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => {
-                                setExperienceLevel("beginner")
-                                setOpen(false)
-                                updateSearchParam("experienceLevel", "beginner" )
-                            }}
+                            key={level}
+                            onClick={() => handleSelect(level)}
+                            className="py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] text-[14px] leading-6 capitalize"
                         >
-                            Beginner
+                            {level.charAt(0).toUpperCase() + level.slice(1)}
                         </h1>
-
-                        <h1
-                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => {
-                                setExperienceLevel("intermediate")
-                                setOpen(false)
-                                updateSearchParam("experienceLevel", "intermediate")
-                            }}
-                        >
-                            Intermediate
-                        </h1>
-
-                        <h1
-                            className='py-4 cursor-pointer border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => {
-                                setExperienceLevel("experienced")
-                                setOpen(false)
-                                updateSearchParam("experienceLevel", "experienced" )
-                            }}
-                        >
-                            Experienced
-                        </h1>
-
+                    ))}
                     </div>
 
                 </div>

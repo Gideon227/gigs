@@ -39,7 +39,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
     <div className='fixed inset-0 z-50 flex w-full'>
         <div
             onClick={onClose}
-            className="flex-1 bg-transparent bg-opacity-30 overflow-hidden"
+            className="flex-1 overflow-hidden bg-black/60 backdrop-blur-sm pointer-events-auto"
         />
         
         <motion.div

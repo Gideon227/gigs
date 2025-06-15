@@ -8,17 +8,18 @@ import { Option } from './JobSidebar';
 import useClearFilter from '@/utils/clearFilter';
 
 interface FilterProps{
-    title: string;
-    state: string | null;
-    setState: React.Dispatch<React.SetStateAction<string | null>>;
-    options: Option[];
-    changeKey: string;
-    onChange?: (key: string, value: string | null) => void;
-    extraStyles?: string
-    hasBorderBottom?: boolean
+  title: string;
+  options: Option[];
+  state: string[] | string | null;
+  setState: (value: any) => void;
+  changeKey: string;
+  onChange: (key: string, value: string) => void;
+  extraStyles?: string;
+  hasBorderBottom?: boolean;
+  isMulti?: boolean;
 }
 
-const FilterCard = ({ title, state, setState, options, changeKey, onChange, extraStyles, hasBorderBottom=true }: FilterProps) => {
+const FilterCard = ({ title, state, setState, options, changeKey, onChange, extraStyles, hasBorderBottom=true, isMulti = false }: FilterProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -28,10 +29,41 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
   //   params.set('page', '1'); // Reset to page 1 on filter change
   //   router.push(`/browse-jobs?${params.toString()}`);
   // };
+  const handleClick = (option: Option) => {
+    if (isMulti) {
+      const selected = new Set(state as string[]);
+      if (selected.has(option.value)) {
+        selected.delete(option.value);
+      } else {
+        selected.add(option.value);
+      }
+      const newState = Array.from(selected);
+      setState(newState);
+      const updatedParams = new URLSearchParams(searchParams);
+      updatedParams.delete(changeKey);
+      newState.forEach(value => updatedParams.append(changeKey, value));
+      updatedParams.set("page", "1");
+      router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
+    } else {
+      const current = state as string | null;
+      const newValue = current === option.value ? null : option.value;
+      setState(newValue);
+      onChange(changeKey, newValue!);
+    }
+  };
+
+  const isSelected = (optionValue: string): boolean => {
+    if (isMulti) {
+      return (state as string[]).includes(optionValue);
+    }
+    return state === optionValue;
+  };
 
   const handleChange = (key: string, value: string) => {
-    setState(value);
-    onChange?.(key, value);
+    if (!isMulti) {
+      setState(value);
+      onChange?.(key, value);
+    }
   };
 
   const clearFilter = useClearFilter()
@@ -41,38 +73,36 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
         <div className='flex justify-between'>
             <h1 className='text-heading text-[16px] font-medium'>{title}</h1>
             <button 
-              onClick= {() => clearFilter(setState, changeKey)}
+              onClick= {() => {
+                setState(isMulti ? [] : null);
+                const updatedParams = new URLSearchParams(searchParams);
+                updatedParams.delete(changeKey);
+                updatedParams.set("page", "1");
+                router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
+              }}
               className='text-[#FB4D5C] cursor-pointer text-[14px] leading-6'>
                 Clear all
             </button>
         </div>
 
-        <RadioGroup 
-          value={state || ""} 
-          onValueChange={(value) => handleChange(changeKey, value)} 
-          className='grid grid-cols-2 w-full px-2'>
-{/* data-[state=checked]:border-primary */}
+        <div className='grid grid-cols-2 w-full px-2 gap-y-2'>
             {options?.map((option) => (
-               <div key={option.value} className="flex items-center gap-x-2.5 gap-y-4">
-                    <RadioGroupItem
-                        value={option.value}
-                        id={`radio-${title}-${option.value}`}
-                        className={`
-                          relative w-3.5 h-3.5 border border-gray-300 flex items-center justify-center 
-                          appearance-none cursor-pointer transition 
-                          data-[state=checked]:outline-none ${extraStyles ? "rounded-full" : "rounded-xs"}
-                        `}    
-                      />
-                    <label
-                        htmlFor={`radio-${title}-${option.value}`}
-                        className="text-[16px] text-heading font-normal"
-                        >
-                        {option.label}
-                    </label>
-               </div> 
-            ))}
-
-        </RadioGroup>  
+              <div key={option.value} className="flex items-center gap-x-2.5 gap-y-4 cursor-pointer" onClick={() => handleClick(option)}>
+                  <div
+                    className={`
+                      relative w-3.5 h-3.5 border border-gray-300 flex items-center justify-center 
+                      ${extraStyles ? "rounded-full" : "rounded-xs"}
+                      ${isSelected(option.value) ? 'bg-primary' : 'bg-transparent'}
+                    `}
+                  />
+                  <label
+                    className="text-[16px] text-heading font-normal"
+                    >
+                    {option.label}
+                  </label>
+             </div> 
+          ))}
+        </div>
     </div>
   )
 }
