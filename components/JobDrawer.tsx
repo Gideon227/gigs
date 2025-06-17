@@ -27,7 +27,24 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
     if (!job || !hasMounted) return null;
 
-    const formattedCreatedDate = new Date(job.createdAt.replace(" ", "T")).toLocaleString();
+    function getTimeAgo(dateString: string): string {
+        const createdDate = new Date(dateString.replace(" ", "T"));
+        const now = new Date();
+        const diffMs = now.getTime() - createdDate.getTime();
+      
+        const seconds = Math.floor(diffMs / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+      
+        if (days > 0) return `${days} day${days > 1 ? "s" : ""}`;
+        if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""}`;
+        if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""}`;
+        return `${seconds} second${seconds !== 1 ? "s" : ""}`;
+      }
+      
+      // Usage:
+      const timeAgo = getTimeAgo(job.createdAt);
 
     const variants = {
         initial: isMobile ? { y: '100%' } : { x: '100%' },
@@ -56,8 +73,8 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
             w-full
             md:w-3/4 
             h-full
-            max-md:h-7/10
-            rounded-t-3xl
+            
+            lg:rounded-t-3xl
             bg-[#1B1E28] 
             browse-job_overlay
             z-50"
@@ -67,7 +84,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <RxCross2 size={24} color='#fff'/>
                 </button>
             </div>
-            <div className='overflow-y-auto p-6 max-sm:p-4 h-full'>
+            <div className='overflow-y-auto p-6 max-sm:p-5 h-full'>
                 <div className='max-md:hidden flex justify-between w-full items-center py-4 border-b border-[#363636]'>
                     <button onClick={onClose} className='cursor-pointer'>
                         <Image src='/arrow-left.svg' width={20} height={20} alt='left facing arrow' />
@@ -84,30 +101,30 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
                             {job.companyLogo && <Image src={job.companyLogo} width={35} height={35} alt='company logo' className='rounded-lg'/>}
-                            <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px] '>{job.title}</h2>
+                            <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px]'>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
                             <div className='flex items-center'>
-                                <span className='sm:hidden inline-block w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
+                                <span className='sm:hidden inline-block rounded-full w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{job.title}</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{job.companyName ? job.companyName.charAt(0).toUpperCase() + job.companyName.slice(1): "Company Name"}</p>
                                 </div>
                             </div>
 
                             <div className='flex items-center'>
-                                <span className='inline-block w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
+                                <span className='inline-block rounded-full w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{job.location}</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${job.country}, ${job.state}` }</p>
                                 </div>
                             </div>
 
                             <div className='flex items-center'>
-                                <span className='inline-block w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
+                                <span className='inline-block rounded-full w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/clock.svg' width={16} height={16} alt='clock icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{formattedCreatedDate}</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>Posted {timeAgo} ago</p>
                                 </div>
                             </div>
                         </div> 
@@ -120,16 +137,16 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 </div>
 
 
-                <div className='py-8 w-full flex max-md:flex-col max-md:space-y-4 space-x-4 hide-scrollbar overflow-y-auto'>
+                <div className='py-8 w-full flex max-md:flex-col max-md:space-y-4 space-x-4 hide-scrollbar overflow-y-auto pb-24'>
                     <div className='md:w-3/5 max-md:w-full space-y-6'>
                         <div className='space-y-4 text-start'>
                             <h1 className='font-semibold 2xl:text-[20px] max-2xl:text-[18px] text-white leading-[30px]'>About the job</h1>
                             <p className='text-[16px] max-2xl:text-[14px] leading-6 text-paragraph'>{job.description}</p>
                         </div>
 
-                        <div className='text-start'>
-                            <h2 className='text-[16px] max-2xl:text-[14px] leading-6 text-white'>Responsibilities</h2>
-
+                        <div className='text-start space-y-4'>
+                            <h2 className='text-[18px] max-2xl:text-[16px] font-medium leading-6 text-white'>Responsibilities</h2>
+                            <p className='text-[16px] max-2xl:text-[14px] leading-6 text-paragraph'>{job.responsibilities}</p>
                         </div>
                                     
                     </div>
@@ -147,7 +164,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/location-03.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.location}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{`${job.country}, ${job.state}` }</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Location</p>
                                     </div>
                                 </div>
@@ -163,7 +180,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/work-update.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.jobType}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.workSettings}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Work Settings</p>
                                     </div>
                                 </div>
@@ -171,7 +188,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/mentoring.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.jobType}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.roleCategory}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Role Category</p>
                                     </div>
                                 </div>
@@ -179,7 +196,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
                             
                             <div className='space-y-4 flex flex-col items-center'>
-                                <Link href='/' className='bg-primary py-3 sm:px-16  max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px] max-md:text-[14px]'>Apply for Job</Link>
+                                <Link target="_blank" href={job.applicationUrl} className='bg-primary py-3 sm:px-16  max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px] max-md:text-[14px]'>Apply for Job</Link>
                                 <button className='flex items-center space-x-2'>
                                     <Image src='/Bookmark.svg' width={24} height={24} alt='Bookmark icon' className='max-md:w-4'/>
                                     <h2 className='text-primary text-[16px] max-md:text-[14px] text-nowrap font-semibold leading-6'>Save job for later</h2>

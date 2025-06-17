@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import JobBoardHeader from './JobBoardHeader'
 import { JobProps } from '@/constants/Jobs'
@@ -18,21 +18,22 @@ const JobDrawer = dynamic(() => import('./JobDrawer'), {
 const JobBoard = () => {
     const [selectedJob, setSelectedJob] = useState<JobProps | null>(null)
     const searchParams = useSearchParams();
+
     const router = useRouter();
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState<number>(1);
 
+    const queryString = useMemo(() => searchParams.toString(), [searchParams]);
 
     const fetchJobs = async () => {
         setLoading(true); 
         try {
-            const query = searchParams.toString();
-            const data = await getJobs(query)
+            const data = await getJobs(queryString)
             setJobs(data.data); 
-            
         } catch (error: any) {
             console.log(error.message)
+            setJobs([])
         } finally {
             setLoading(false);
         }   
@@ -40,7 +41,7 @@ const JobBoard = () => {
     
     useEffect(() => {
         fetchJobs();
-    }, [searchParams]);
+    }, [queryString]);
 
     useEffect(() => {
         const id = searchParams.get("id");
@@ -82,7 +83,7 @@ const JobBoard = () => {
     <div className='flex flex-col space-y-4'>
         <div className='bg-[#1B1E28] border border-[#363636] py-4 rounded-lg gap-y-2.5'>
             <JobBoardHeader />
-            <div className='py-4 max-sm:px-2 sm:px-6 w-full'>
+            <div className='py-4 max-sm:px-4 sm:px-6 w-full'>
                 <div className='flex w-full justify-between items-center'>
                     <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobs.length} Jobs</h1>
                     <div className='flex sm:space-x-4 max-sm:space-x-2 items-center'>

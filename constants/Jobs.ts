@@ -21,6 +21,7 @@ export interface JobProps{
     roleCategory: string;
     qualifications: string[];
     companyLogo?: string;
+    companyName?: string;
     ipBlocked: boolean;
     createdAt: string;
     updatedAt: string;

@@ -15,15 +15,15 @@ export type Option = {
 };
 
 const jobTypeOptions: Option[] = [
-  { value: 'full-time', label: 'Full-time' },
-  { value: 'part-time', label: 'Part-time' },
-  { value: 'contract-to-hire', label: 'Contract to hire' },
-  { value: 'temp-contract', label: 'Temp contract' },
-  { value: 'gig-work', label: 'Gig-work' },
+  { value: 'fullTime', label: 'Full-time' },
+  { value: 'partTime', label: 'Part-time' },
+  { value: 'contractToHire', label: 'Contract to hire' },
+  { value: 'tempContract', label: 'Temp contract' },
+  { value: 'gigWork', label: 'Gig-work' },
 ] 
 
 const salaryRangeOptions: Option[] = [
-  { value: 'under-50k', label: 'Under $50K' },
+  { value: 'unders50k', label: 'Under $50K' },
   { value: '51k-100k', label: '$51K-$100K' },
   { value: '101k-150k', label: '$101K-$150K' },
   { value: '151k-200k', label: '$151K-$200K' },
@@ -32,7 +32,7 @@ const salaryRangeOptions: Option[] = [
 ] 
 
 const workSettingsOptions: Option[] = [
-  { value: 'on-site', label: 'On-site' },
+  { value: 'onSite', label: 'On-site' },
   { value: 'hybrid', label: 'Hybrid' },
   { value: 'remote', label: 'Remote' }
 ] 

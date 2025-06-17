@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/radio-group";
 import { Option } from './JobSidebar';
 import useClearFilter from '@/utils/clearFilter';
+import Image from 'next/image';
 
 interface FilterProps{
   title: string;
@@ -95,6 +96,8 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
                       ${isSelected(option.value) ? 'bg-primary' : 'bg-transparent'}
                     `}
                   />
+                    {/* <Image src='/' width={14} height={14} alt='check' className='text-primary'/>
+                  </div> */}
                   <label
                     className="text-[16px] text-heading font-normal"
                     >
