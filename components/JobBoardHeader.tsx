@@ -1,11 +1,14 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ReactEventHandler } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import JobSidebar from './JobSidebar'
 
 const JobBoardHeader = () => {
     const [openModal, setOpenModal] = useState<boolean>(false)
+    const [keyword, setKeyword] = useState("")
+    const [location, setLocation] = useState("")
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (openModal) {
@@ -17,7 +20,23 @@ const JobBoardHeader = () => {
         return () => {
           document.body.style.overflow = '';
         };
-      }, [openModal]);
+    }, [openModal]);
+
+    const handleClick = (e: React.ChangeEvent) => {
+        e.preventDefault()
+
+        setLoading(true)
+        try {
+           if (keyword) {
+
+           }
+        } catch (error) {
+            
+        }finally {
+            setLoading(false)
+        }
+
+    }
 
   return (
     <div className='space-y-2 border-b border-[#363636] pb-3'>
@@ -26,6 +45,8 @@ const JobBoardHeader = () => {
                 <Image src='/Rounded Magnifer.svg' width={20} height={20} alt='Search icon' className='ml-4' />
                 <input
                     type="text"
+                    value={keyword}
+                    onChange={(e) => handleClick(e)}
                     placeholder="Search job title or keyword..."
                     className="bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-full placeholder-[#7E7E7E]"
                 />
@@ -41,7 +62,10 @@ const JobBoardHeader = () => {
             </div>
         </div>
 
-        <button onClick={() => setOpenModal(true)} className='text-[16px] px-6 lg:hidden text-primary font-normal text-start py-2'>Advanced search</button>
+        <button 
+            
+            onClick={() => setOpenModal(true)} 
+            className='text-[16px] px-6 lg:hidden text-primary font-normal text-start py-2'>Advanced search</button>
 
         <AnimatePresence>
             {openModal && (

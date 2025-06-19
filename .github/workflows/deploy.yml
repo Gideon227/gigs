@@ -1,0 +1,45 @@
+name: Deploy Frontend to EC2
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Copy frontend to EC2 via SSH
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_DEPLOY_KEY }}
+          source: '.next,public,package.json,ecosystem.config.js'
+          target: '~/gigs-test-frontend'
+
+      - name: SSH into EC2 and restart PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_DEPLOY_KEY }}
+          script: |
+            cd ~/gigs-test-frontend
+            npm install --production
+            pm2 reload ecosystem.config.js || pm2 start ecosystem.config.js
