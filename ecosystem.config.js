@@ -5,7 +5,7 @@ module.exports = {
         name: "gigs-tech-frontend",
         script: "node_modules/next/dist/bin/next",
         args: "start -p 3000",
-        cwd: "/home/ec2-user/gigs-tech-frontend",
+        cwd: "/home/ec2-user/frontend",
         env: {
           NODE_ENV: "production",
         },
