@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect, ReactEventHandler } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import JobSidebar from './JobSidebar'
@@ -9,6 +10,10 @@ const JobBoardHeader = () => {
     const [keyword, setKeyword] = useState("")
     const [location, setLocation] = useState("")
     const [loading, setLoading] = useState(false)
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams.toString());
 
     useEffect(() => {
         if (openModal) {
@@ -26,16 +31,16 @@ const JobBoardHeader = () => {
         e.preventDefault()
 
         setLoading(true)
-        try {
-           if (keyword) {
+        const params = new URLSearchParams(searchParams.toString())
 
-           }
-        } catch (error) {
-            
-        }finally {
-            setLoading(false)
-        }
+        if (keyword.trim()) params.set("keyword", keyword.trim());
+        else params.delete("keyword");
 
+        if (location.trim()) params.set("location", location.trim());
+        else params.delete("location");
+
+        router.push(`/jobs?${params.toString()}`);
+        setLoading(false)
     }
 
   return (
@@ -63,9 +68,11 @@ const JobBoardHeader = () => {
         </div>
 
         <button 
-            
+            disabled={loading}
             onClick={() => setOpenModal(true)} 
-            className='text-[16px] px-6 lg:hidden text-primary font-normal text-start py-2'>Advanced search</button>
+            className='text-[16px] px-6 lg:hidden text-primary font-normal text-start py-2'>
+                Advanced search
+        </button>
 
         <AnimatePresence>
             {openModal && (
