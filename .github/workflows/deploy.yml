@@ -11,16 +11,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies and build
-        run: |
-          npm install
-          npm run build
-
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
         with:
@@ -28,17 +18,18 @@ jobs:
 
       - name: Sync files to EC2
         run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p ${{ secrets.FRONTEND_DIR }}"
           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude node_modules --exclude .next/cache \
+            --exclude node_modules --exclude .next \
             ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
 
-      - name: Install dependencies on EC2 and restart app with PM2
+      - name: Install, build, and restart on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ~/nextjs-app
+            cd ${{ secrets.FRONTEND_DIR }}
             export $(grep -v '^#' .env | xargs)
             npm install --production
+            npm run build
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save
           EOF
-
