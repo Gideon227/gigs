@@ -17,10 +17,12 @@ jobs:
         with:
           node-version: 18
 
-      # 🧪 Install & build the app on GitHub using your .env
-      - name: Build Next.js app
+      - name: Create .env.production
         run: |
-          cp .env .env.local    # Next.js reads .env.local during build
+          echo "NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL }}" > .env.production
+
+      - name: Install dependencies & build
+        run: |
           npm ci
           npm run build
 
@@ -29,19 +31,21 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_FRONTEND_KEY }}
 
-      - name: Sync files to EC2
+      - name: Deploy to EC2
         run: |
+          # ensure target folder exists
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
             "mkdir -p ${{ secrets.FRONTEND_DIR }}"
+          # copy everything except dev/ci artifacts
           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude node_modules --exclude .next/cache --exclude .git \
+            --exclude node_modules --exclude '.next/cache' --exclude .git \
             ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
 
-      - name: Install deps & restart app on EC2
+      - name: Install & restart on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-            npm ci --omit=dev
+            npm ci --omit=dev            # install only production deps
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save
           EOF
