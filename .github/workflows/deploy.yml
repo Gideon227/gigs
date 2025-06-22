@@ -33,22 +33,16 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          # create target directory
-          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "mkdir -p ${{ secrets.FRONTEND_DIR }}"
-          # sync files
+          ssh -tt -o ServerAliveInterval=60 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p ${{ secrets.FRONTEND_DIR }}"
           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
             --exclude node_modules --exclude .git \
             ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
 
       - name: Install & restart on EC2
         run: |
-          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -tt -o ServerAliveInterval=60 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-            # write .env on the server
-            cat > .env << 'EOL'
-${{ secrets.ENV_FILE }}
-EOL
+            echo "${{ secrets.ENV_FILE }}" > .env
             npm ci --omit=dev
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save
