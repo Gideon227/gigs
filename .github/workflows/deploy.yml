@@ -7,9 +7,22 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 🧪 Install & build the app on GitHub using your .env
+      - name: Build Next.js app
+        run: |
+          cp .env .env.local    # Next.js reads .env.local during build
+          npm ci
+          npm run build
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
@@ -18,18 +31,17 @@ jobs:
 
       - name: Sync files to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p ${{ secrets.FRONTEND_DIR }}"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "mkdir -p ${{ secrets.FRONTEND_DIR }}"
           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude node_modules --exclude .next \
+            --exclude node_modules --exclude .next/cache --exclude .git \
             ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
 
-      - name: Install, build, and restart on EC2
+      - name: Install deps & restart app on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-            export $(grep -v '^#' .env | xargs)
-            npm install --production
-            npm run build
+            npm ci --omit=dev
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save
           EOF
