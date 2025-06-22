@@ -17,9 +17,9 @@ jobs:
         with:
           node-version: 18
 
-      - name: Create .env.production
+      - name: Generate .env file
         run: |
-          echo "NEXT_PUBLIC_BACKEND_URL=${{ secrets.NEXT_PUBLIC_BACKEND_URL }}" > .env.production
+          echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Install dependencies & build
         run: |
@@ -33,19 +33,21 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          # ensure target folder exists
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+           ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
             "mkdir -p ${{ secrets.FRONTEND_DIR }}"
-          # copy everything except dev/ci artifacts
           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude node_modules --exclude '.next/cache' --exclude .git \
+            --exclude node_modules --exclude .git \
             ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
 
       - name: Install & restart on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-            npm ci --omit=dev            # install only production deps
+            # write .env on the server
+            cat > .env << 'EOL'
+   ${{ secrets.ENV_FILE }}
+   EOL
+            npm ci --omit=dev
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save
           EOF
