@@ -203,6 +203,17 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 </button>
                             </div>
                         </div>
+
+                        <div className='flex flex-col justify-start items-start space-y-6 pt-6'>
+                            <h1  className='text-white font-semibold text-[20px] leading-[30px]'></h1>
+                            
+                            <div className='flex-col flex'>
+                                <h1 className='text-heding font-semibold text-[18px] leading-7'>UI/UX Designer</h1>
+                                <p className='text-paragraph text-[16px] leading-6 max-2xl:text-[14px]'>At online transport and courier</p>
+                            </div>
+
+                            <hr className='bg-[#363636] h-0.5 ' /> 
+                        </div>
                     </div>
                 </div>
 

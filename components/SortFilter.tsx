@@ -26,13 +26,24 @@ const SortFilter = () => {
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 
+    const sortName = () => {
+        let name = "Relevancy";
+
+        if (sortBy === "date_posted"){
+            name = "Newest First"
+        } else if (sortBy === "relevancy"){
+            name = "Relevancy"
+        }
+        return name
+    }
+
   return (
     <div className='lg:min-w-60 max-lg:min-w-48 max-sm:min-w-28'>
         <Popover open={open} onOpenChange={setOpen}>
 
             <PopoverTrigger asChild>
                 <div className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray sm:py-2 max-sm:py-1.5 px-4 flex items-center justify-between date_overlay'>
-                    <p className='text-neutral text-sm leading-6 max-sm:text-[12px]'> Relevancy </p>
+                    <p className='text-neutral text-sm leading-6 max-sm:text-[12px]'> {sortName()} </p>
                     <Image src='/arrow-down.svg' width={16} height={16} alt='arrow down icon'/>
                 </div>
             </PopoverTrigger>

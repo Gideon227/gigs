@@ -1,50 +1,45 @@
-name: Deploy Frontend to EC2
+name: Deploy Next.js Frontend to EC2
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js & Build
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Generate .env file
+      - name: Prepare .env and build
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
-
-      - name: Install dependencies & build
-        run: |
           npm ci
           npm run build
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
         with:
-          ssh-private-key: ${{ secrets.EC2_FRONTEND_KEY }}
+          ssh-private-key: ${{ secrets.EC2_KEY }}
 
-      - name: Deploy to EC2
+      - name: Rsync build + node_modules to EC2
         run: |
-          ssh -tt -o ServerAliveInterval=60 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "mkdir -p ${{ secrets.FRONTEND_DIR }}"
+          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "mkdir -p ${{ secrets.FRONTEND_DIR }}"
           rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude node_modules --exclude .git \
+            --exclude .git \
             ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
 
-      - name: Install & restart on EC2
+      - name: Restart on EC2
         run: |
-          ssh -tt -o ServerAliveInterval=60 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-            echo "${{ secrets.ENV_FILE }}" > .env
-            npm ci --omit=dev
             pm2 startOrRestart ecosystem.config.js --env production
             pm2 save
           EOF
-

@@ -83,25 +83,25 @@ const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
                 {companyLogo && <Image src={companyLogo!} height={45} width={45} alt='company&apos;s logo' className='rounded-lg'/>}
                 
                 <div className='flex flex-col justify-between items-start'>
-                    <div className='flex justify-baseline items-start space-x-4'>
-                        <h1 className='2xl:text-[20px] max-2xl:text-[19px] max-md:text-[16px] leading-[27px] font-semibold flex flex-wrap items-start flex-1 text-start text-heading'>{title}</h1>
-                        <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center ${getJobTypeColor(jobType)}`}>
-                            <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px] text-nowrap'>{getJobTypeText(jobType)}</p>
-                        </span>
+                  <div className='flex justify-baseline items-start space-x-4'>
+                    <h1 className='2xl:text-[20px] max-2xl:text-[19px] max-md:text-[16px] leading-[27px] font-semibold flex flex-wrap items-start flex-1 text-start text-heading'>{title}</h1>
+                    <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center ${getJobTypeColor(jobType)}`}>
+                      <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px] text-nowrap'>{getJobTypeText(jobType)}</p>
+                    </span>
+                  </div>
+                  <div className='flex space-x-2 justify-start items-center flex-wrap pt-1 gap-y-0.5'>
+                    <div className='flex space-x-1.5'>
+                      <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
+                      <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{companyName ? companyName.charAt(0).toUpperCase() + companyName.slice(1): "Company Name"}</p>
                     </div>
-                    <div className='flex space-x-2 justify-start items-center flex-wrap pt-1 gap-y-0.5'>
-                        <div className='flex space-x-1.5'>
-                            <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
-                            <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{companyName ? companyName.charAt(0).toUpperCase() + companyName.slice(1): "Company Name"}</p>
-                        </div>
 
-                        <span className='inline-block w-1 h-1 bg-[#4F4F4F] rounded-full'></span>
+                    <span className='inline-block w-1 h-1 bg-[#4F4F4F] rounded-full'></span>
 
-                        <div className='flex space-x-1.5'>
-                            <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                            <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${country}, ${state}` }</p>
-                        </div>
+                    <div className='flex space-x-1.5'>
+                      <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
+                      <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${country}, ${state}` }</p>
                     </div>
+                  </div>
                 </div>
             </div>
 
@@ -126,14 +126,14 @@ const JobCard = ({ job, hasBorder, onClick }: JobCardProps) => {
             </p>
         </div>
 
-        <div className='flex items-center justify-between sm:hidden'>
+        <div className='flex justify-between sm:hidden items-start'>
            {salary && (
-             <h1 className='text-heading text-end text-[14px] font-semibold leading-8'>
+             <h1 className='text-heading text-start text-[14px] font-semibold leading-6'>
                 {salary}/
                 <span className='text-heading text-[16px] font-normal'>year</span>
              </h1>
            )}
-            <p className='text-neutral text-[12px] font-normal text-end'>Posted {timeAgo} ago</p>
+            <p className='text-neutral text-[12px] font-normal text-end leading-6'>Posted {timeAgo} ago</p>
         </div>
 
         <div className='flex justify-between items-center w-full flex-1'>
