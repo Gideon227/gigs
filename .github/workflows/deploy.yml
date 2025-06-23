@@ -38,15 +38,8 @@ jobs:
 
       - name: Restart on EC2
         run: |
-          ssh -tt -o ServerAliveInterval=60 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-
-            cat > .env << 'EOL'
-${{ secrets.ENV_FILE }}
-EOL
-
-            npm ci --omit=dev
             pm2 startOrRestart ecosystem.config.js --env production
-            pm2 save
-            exit 0
+            pm2 save || true 
           EOF
