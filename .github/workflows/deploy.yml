@@ -26,7 +26,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
         with:
-          ssh-private-key: ${{ secrets.EC2_KEY }}
+          ssh-private-key: ${{ secrets.EC2_FRONTEND_KEY }}
 
       - name: Rsync build + node_modules to EC2
         run: |
