@@ -40,6 +40,6 @@ jobs:
         run: |
           ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ${{ secrets.FRONTEND_DIR }}
-            pm2 startOrRestart ecosystem.config.js --env production
-            pm2 save
+            pm2 startOrRestart ecosystem.config.js --env 
+            pm2 save || true 
           EOF
