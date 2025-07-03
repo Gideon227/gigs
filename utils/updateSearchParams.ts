@@ -20,8 +20,6 @@ export default function useMultiSearchParams(){
         for (const v of values) {
         params.append(key, v);
         }
-
-        params.set("page", "1");
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 
@@ -31,8 +29,6 @@ export default function useMultiSearchParams(){
         } else {
           params.delete(key);
         }
-    
-        params.set("page", "1");
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
       };
 }

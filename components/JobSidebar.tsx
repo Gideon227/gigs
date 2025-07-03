@@ -1,13 +1,15 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
 import FilterDate from './FilterDate';
 import FilterCard from './FilterCard';
 import ExperienceLevelFilter from './ExperienceFilter';
 import dynamic from 'next/dynamic';
 import RoleFilter from './RoleFilter';
 import useUpdateSearchParams from '@/utils/updateSearchParams';
-// const CountryFilter = dynamic(() => import('./CountryFilter'), { ssr: false })
+import CountryFilter from './CountryFilter';
+import CustomSalarySlider from './CustomSalarySlider';
 
 export type Option = {
   value: string;
@@ -23,13 +25,13 @@ const jobTypeOptions: Option[] = [
 ] 
 
 const salaryRangeOptions: Option[] = [
-  { value: 'unders50k', label: 'Under $50K' },
-  { value: '51k-100k', label: '$51K-$100K' },
-  { value: '101k-150k', label: '$101K-$150K' },
-  { value: '151k-200k', label: '$151K-$200K' },
-  { value: '200k', label: '$200K+' },
+  { value: '0-50000', label: 'Under $50K' },
+  { value: '51000-100000', label: '$51K-$100K' },
+  { value: '101000-150000', label: '$101K-$150K' },
+  { value: '151000-200000', label: '$151K-$200K' },
+  { value: '200000-', label: '$200K+' },
   { value: 'custom', label: 'Custom' }
-] 
+];
 
 const workSettingsOptions: Option[] = [
   { value: 'onSite', label: 'On-site' },
@@ -46,12 +48,17 @@ const skillsOptions: Option[] = [
   { value: 'javascript', label: 'JavaScript' },
 ] 
 
+interface Props{
+  page: number;
+  setPage: (value: any) => void
+}
 
-const JobSidebar = () => {
+const JobSidebar = ({ page, setPage }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
-  
+
+  const [date, setDate] = useState<string | null>(null);
   const [jobType, setJobType] = useState<string[]>([]);
   const [skills, setSkills] = useState<string[]>([]);
   const [workSettings, setWorkSettings] = useState<string[]>([]);
@@ -79,22 +86,61 @@ const JobSidebar = () => {
     for (const v of values) {
       params.append(key, v);
     }
-
-    params.set("page", "1");
     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
   };
 
   // Single-select update
   const updateSingleParam = (key: string, value: string | null) => {
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.delete("page");
+
+    if (key === "salary") {
+      updatedParams.delete("minSalary");
+      updatedParams.delete("maxSalary");
+
+      if (value && value !== "custom") {
+        const [min, max] = value.split("-");
+        if (min) updatedParams.set("minSalary", min);
+        if (max) updatedParams.set("maxSalary", max);
+        updatedParams.set("salary", value); 
+      } else {
+        updatedParams.delete("salary");
+      }
+    } else if (key === "minSalary" || key === "maxSalary") {
+  if (value) {
+          updatedParams.set(key, value);
+          updatedParams.delete("salary");  // remove preset because user is using custom
+        } else {
+          updatedParams.delete(key);
+          if (!updatedParams.get("minSalary") && !updatedParams.get("maxSalary")) {
+            updatedParams.delete("salary");
+          }
+        }
+      }else {
+      if (value) {
+        updatedParams.set(key, value);
+      } else {
+        updatedParams.delete(key);
+      }
     }
 
-    params.set("page", "1");
-    router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+    router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
   };
+
+  const updateSalaryRange = (range: [number, number]) => {
+    const updatedParams = new URLSearchParams(searchParams);
+
+    updatedParams.delete("salary"); // remove preset salary key
+    updatedParams.delete("minSalary");
+    updatedParams.delete("maxSalary");
+
+    updatedParams.set("salary", "custom"); // set custom flag
+    updatedParams.set("minSalary", range[0].toString());
+    updatedParams.set("maxSalary", range[1].toString());
+
+    router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
+  };
+  
 
   useEffect(() => {
     setJobType(searchParams.getAll('jobType'));
@@ -109,6 +155,8 @@ const JobSidebar = () => {
     setCity(searchParams.get('city'));
   }, [searchParams]);
 
+  const minSalary = searchParams.get("minSalary");
+  const maxSalary = searchParams.get("maxSalary");
 
   return (
     <div className='bg-[#1B1E28] border border-[#363636] rounded-lg gap-y-2.5 max-lg:pb-48 '>
@@ -116,30 +164,40 @@ const JobSidebar = () => {
         <h1 className='text-heading text-[18px] font-medium'>Filter</h1>
         <button 
           onClick={() => {
+            setDate(null);
+            setCountry(null);
+            setState(null);
+            setCity(null);
+            setRole(null);
             setJobType([]);
+            setSalaryRange(null);
             setSkills([]);
             setWorkSettings([]);
-            setSalaryRange(null);
             setExperienceLevel(null);
-            setRole(null);
-            router.replace('/browse-jobs');
+
+            const updatedParams = new URLSearchParams();
+            router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
           }}
-          className='text-[#FB4D5C] text-[16px] leading-6'>
+          className='text-neutral text-[16px] leading-6 cursor-pointer'>
             Clear all
         </button>
       </div>
 
       <div className='max-lg:overflow-y-auto max-lg:max-h-[calc(100vh-80px)] max-lg:hide-scrollbar'>
         <div className='px-4'>
-          <FilterDate />
+          <FilterDate 
+            date={date}
+            setDate={setDate}
+            setPage={setPage}
+          />
 
-          {/* <CountryFilter
+          <CountryFilter
             onChange={({ country, state, city }) => {
               setCountry(country);
               setState(state);
               setCity(city);
             }}
-          /> */}
+          />
 
           <RoleFilter 
             role={role} 
@@ -159,18 +217,50 @@ const JobSidebar = () => {
             isMulti
           />
 
-          <FilterCard
-            title='Salary Range'
-            state={salaryRange}
-            setState={setSalaryRange}
-            options={salaryRangeOptions}
-            changeKey='salary'
-            onChange={updateSingleParam}
-            extraStyles='rounded-full'
-          />
+          <div className='border-b border-[#363636] pb-4'>
+            <FilterCard
+              title='Salary Range'
+              state={salaryRange}
+              setState={setSalaryRange}
+              options={salaryRangeOptions}
+              changeKey='salary'
+              onChange={updateSingleParam}
+              extraStyles='rounded-full'
+              hasBorderBottom={false}
+            />
+
+            {salaryRange === 'custom' && (
+              <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ type: "tween", duration: 0.5 }}
+                  className='py-5 px-3'
+                >
+                  <CustomSalarySlider
+                    min={0}
+                    max={500000}
+                    defaultValue={[60000, 210000]}
+                    disabled = {salaryRange !== 'custom'}
+                    currentMinSalary={minSalary ? Number(minSalary) : undefined}
+                    currentMaxSalary={maxSalary ? Number(maxSalary) : undefined}
+                    onChangeCommitted={(range) => {
+                      updateSalaryRange(range);
+                    }}
+                    // onChangeCommitted={(range) => {
+                    //   console.log('Selected salary range:', range);
+                    //   updateSingleParam('minSalary', range[0].toString());
+                    //   updateSingleParam('maxSalary', range[1].toString());
+                    // }}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </div>
 
           <FilterCard
-            title='Work Settings'
+            title='Work Setting'
             state={workSettings}
             setState={setWorkSettings}
             options={workSettingsOptions}

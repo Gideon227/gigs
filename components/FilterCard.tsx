@@ -24,12 +24,6 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // const handleChange = (key: string, value: string) => {
-  //   const params = new URLSearchParams(searchParams);
-  //   params.set(key, value);
-  //   params.set('page', '1'); // Reset to page 1 on filter change
-  //   router.push(`/browse-jobs?${params.toString()}`);
-  // };
   const handleClick = (option: Option) => {
     if (isMulti) {
       const selected = new Set(state as string[]);
@@ -43,7 +37,6 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
       const updatedParams = new URLSearchParams(searchParams);
       updatedParams.delete(changeKey);
       newState.forEach(value => updatedParams.append(changeKey, value));
-      updatedParams.set("page", "1");
       router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
     } else {
       const current = state as string | null;
@@ -78,11 +71,10 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
                 setState(isMulti ? [] : null);
                 const updatedParams = new URLSearchParams(searchParams);
                 updatedParams.delete(changeKey);
-                updatedParams.set("page", "1");
                 router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
               }}
-              className='text-[#FB4D5C] cursor-pointer text-[14px] leading-6'>
-                Clear all
+              className='text-neutral cursor-pointer text-[14px] leading-6'>
+                Clear
             </button>
         </div>
 

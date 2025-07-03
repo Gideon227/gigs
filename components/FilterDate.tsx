@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
@@ -11,13 +11,22 @@ enum DateOptions {
     LAST_7_DAYS = "last_7_days",
     LAST_15_DAYS = "last_15_days"
 }
-const FilterDate = () => {
-    const [date, setDate] = useState<string | null>(null);
+
+interface DateProps {
+    date:  string | null;
+    setDate: (value: any) => void;
+    setPage: (value: any) => void;
+}
+const FilterDate = ({ date, setDate, setPage }: DateProps) => {
     const [open, setOpen] = useState<boolean>(false);
 
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    useEffect(() => {
+        // setPage(1);
+    }, [searchParams.toString()]);
+      
     const updateSearchParam = (key: string, value: string | null) => {
         const params = new URLSearchParams(searchParams);
 
@@ -26,8 +35,6 @@ const FilterDate = () => {
         } else {
         params.delete(key);
         }
-
-        params.set("page", "1"); // reset page to 1 on filter
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 
@@ -72,28 +79,28 @@ const FilterDate = () => {
                 <div className='bg-[#101217] px-4 py-3 border-[#363636] border rounded-xl date_overlay min-w-[320px]'>
                     <div className='text-start w-full'>
                         <h1
-                            className='py-4 border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
+                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
                             onClick={() => handleClick("today")}
                         >
                             Today
                         </h1>
 
                         <h1
-                            className='py-4 border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
+                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
                             onClick={() => handleClick("last_3_days")}
                         >
                             Last 3 days
                         </h1>
 
                         <h1
-                            className='py-4 border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
+                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
                             onClick={() => handleClick("last_7_days")}
                         >
                             Last 7 days
                         </h1>
 
                         <h1
-                            className='py-4 border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
+                            className='py-4 cursor-pointer border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
                             onClick={() => handleClick("last_15_days")}
                         >
                             Last 15 days

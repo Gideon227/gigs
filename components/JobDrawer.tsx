@@ -5,8 +5,12 @@ import { JobProps } from '@/constants/Jobs';
 import Image from 'next/image';
 import Link from 'next/link';
 import useIsMobile from '@/hooks/useIsMobile'
+import { getRelatedJobs } from '@/libs/getRelatedJobs';
+import { formatNumber } from '@/utils/formatNumber';
 
 import { RxCross2 } from "react-icons/rx";
+import { URL } from 'url';
+import ShareModal from './ShareModal';
 
 type JobDrawerProps = {
     job: JobProps | null;
@@ -16,6 +20,9 @@ type JobDrawerProps = {
 const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
     const isMobile = useIsMobile(); // screens < 768px
     const [hasMounted, setHasMounted] = useState(false);
+    const [loading, setLoading] = useState(false)
+    const [relatedJobs, setRelatedJobs] = useState([])
+    const [openShareModal, setOpenShareModal] = useState<JobProps | null>(null)
 
     useEffect(() => {
         setHasMounted(true);
@@ -25,10 +32,26 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         }
     }, [])
 
-    if (!job || !hasMounted) return null;
+    useEffect(() => {
+        const fetchRelatedJobs = async () => {
+            setLoading(true); 
+            try {
+                const data = await getRelatedJobs(job!.id)
+                setRelatedJobs(data.data); 
+            } catch (error: any) {
+                console.log(error.message)
+                setRelatedJobs([])
+            } finally {
+                setLoading(false);
+            } 
+        }
+        
+        fetchRelatedJobs()
+    }, [])
 
-    function getTimeAgo(dateString: string): string {
-        const createdDate = new Date(dateString.replace(" ", "T"));
+    const timeAgo = React.useMemo(() => {
+        if (!job?.createdAt) return '';
+        const createdDate = new Date(job.createdAt.replace(' ', 'T'));
         const now = new Date();
         const diffMs = now.getTime() - createdDate.getTime();
       
@@ -37,14 +60,47 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         const hours = Math.floor(minutes / 60);
         const days = Math.floor(hours / 24);
       
-        if (days > 0) return `${days} day${days > 1 ? "s" : ""}`;
-        if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""}`;
-        if (minutes > 0) return `${minutes} minute${minutes > 1 ? "s" : ""}`;
-        return `${seconds} second${seconds !== 1 ? "s" : ""}`;
-      }
-      
-      // Usage:
-      const timeAgo = getTimeAgo(job.createdAt);
+        if (days > 0) return `${days} day${days > 1 ? 's' : ''}`;
+        if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''}`;
+        if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        return `${seconds} second${seconds !== 1 ? 's' : ''}`;
+    }, [job?.createdAt]);  
+
+    if (!hasMounted) return null;
+
+    if (!job) {
+        return (
+          <motion.div className="flex items-center justify-center">
+            <div className="p-6 text-lg">This Job is no longer available</div>
+          </motion.div>
+        );
+    }
+
+    const getJobTypeText = (jobType: string): string => {
+        switch (jobType?.toLowerCase()) {
+          case 'gigswork':
+            return 'Gigs-work';
+          case 'fulltime':
+            return 'Full-time';
+          case 'contracttohire':
+            return 'Contract to Hire';
+          case 'parttime':
+            return 'Part-time';
+          case 'tempcontract':
+            return 'Temp Contract';
+          default:
+            return '';
+        }
+    };
+
+    const getWorkSettingsText = (workSettings: string): string => {
+        switch (workSettings.toLowerCase()) {
+          case 'onsite':
+            return 'On-Site';
+          default:
+            return '';
+        }
+    };
 
     const variants = {
         initial: isMobile ? { y: '100%' } : { x: '100%' },
@@ -73,7 +129,6 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
             w-full
             md:w-3/4 
             h-full
-            
             lg:rounded-t-3xl
             bg-[#1B1E28] 
             browse-job_overlay
@@ -90,7 +145,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                         <Image src='/arrow-left.svg' width={20} height={20} alt='left facing arrow' />
                     </button>
 
-                    <Link href='/' className='text-[16px] items-center space-x-2 font-normal text-primary leading-6 flex'>
+                    <Link target="_blank" href={job.applicationUrl} className='text-[16px] items-center space-x-2 font-normal text-primary leading-6 flex'>
                         <Image src='/link.svg' width={18} height={18} alt='link icon'/>
                         <p>Open in a new window</p>
                     </Link>
@@ -130,10 +185,19 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                         </div> 
                     </div>
                     <div className='flex items-center max-sm:justify-end'>
-                        <Link href={job.applicationUrl} className='border-[#363636] border rounded-lg bg-[#151820] p-2'>
+                        <button onClick={() => setOpenShareModal(job)} className='border-[#363636] border rounded-lg bg-[#151820] p-2'>
                             <Image src='/share.svg' width={20} height={20} alt='share icon' />
-                        </Link>
+                        </button>
                     </div>
+
+                    {openShareModal && (
+                        <ShareModal
+                            job={openShareModal}
+                            onClose={() => {
+                            setOpenShareModal(null);
+                        }}
+                        />
+                    )}
                 </div>
 
 
@@ -141,12 +205,31 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='md:w-3/5 max-md:w-full space-y-6'>
                         <div className='space-y-4 text-start'>
                             <h1 className='font-semibold 2xl:text-[20px] max-2xl:text-[18px] text-white leading-[30px]'>About the job</h1>
-                            <p className='text-[16px] max-2xl:text-[14px] leading-6 text-paragraph'>{job.description}</p>
+                            <p className='text-[18px] max-2xl:text-[16px] leading-6 text-paragraph'>{job.description}</p>
                         </div>
 
                         <div className='text-start space-y-4'>
-                            <h2 className='text-[18px] max-2xl:text-[16px] font-medium leading-6 text-white'>Responsibilities</h2>
-                            <p className='text-[16px] max-2xl:text-[14px] leading-6 text-paragraph'>{job.responsibilities}</p>
+                            <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Responsibilities</h2>
+                            <ul className='flex flex-col space-y-2 list-disc pl-4'>
+                                {job.responsibilities.map((item, index) => (
+                                    <li key={index} className='text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p className='text-[16px] font-light text-paragraph text-nowrap px-4'></p>
+                        </div>
+
+                        <div className='text-start space-y-4'>
+                            <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Qualifications</h2>
+                            <ul className='flex flex-col space-y-2 list-disc pl-4'>
+                                {job.qualifications.map((item, index) => (
+                                    <li key={index} className='text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p className='text-[16px] font-light text-paragraph text-nowrap px-4'></p>
                         </div>
                                     
                     </div>
@@ -172,16 +255,16 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/building-2.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.jobType}</h1>
-                                        <p className='text-neutral text-[14px] leading-5'>Job-type</p>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job && getJobTypeText(job.jobType)}</h1>
+                                        <p className='text-neutral text-[14px] leading-5'>Job Type</p>
                                     </div>
                                 </div>
 
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/work-update.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.workSettings}</h1>
-                                        <p className='text-neutral text-[14px] leading-5'>Work Settings</p>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{getWorkSettingsText(job.workSettings)}</h1>
+                                        <p className='text-neutral text-[14px] leading-5'>Work Setting</p>
                                     </div>
                                 </div>
 
@@ -196,7 +279,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
                             
                             <div className='space-y-4 flex flex-col items-center'>
-                                <Link target="_blank" href={job.applicationUrl} className='bg-primary py-3 sm:px-16  max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px] max-md:text-[14px]'>Apply for Job</Link>
+                            {job.applicationUrl && (<Link target="_blank" href={job.applicationUrl} className='bg-primary py-3 sm:px-16  max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px] max-md:text-[14px]'>Apply for Job</Link>)}
                                 <button className='flex items-center space-x-2'>
                                     <Image src='/Bookmark.svg' width={24} height={24} alt='Bookmark icon' className='max-md:w-4'/>
                                     <h2 className='text-primary text-[16px] max-md:text-[14px] text-nowrap font-semibold leading-6'>Save job for later</h2>
@@ -204,15 +287,19 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             </div>
                         </div>
 
-                        <div className='flex flex-col justify-start items-start space-y-6 pt-6'>
-                            <h1  className='text-white font-semibold text-[20px] leading-[30px]'></h1>
+                        <div className='flex flex-col justify-start items-start'>
+                            <h1 className='text-white font-semibold text-[20px] leading-[30px] pt-8'>Related Jobs</h1>
                             
-                            <div className='flex-col flex'>
-                                <h1 className='text-heding font-semibold text-[18px] leading-7'>UI/UX Designer</h1>
-                                <p className='text-paragraph text-[16px] leading-6 max-2xl:text-[14px]'>At online transport and courier</p>
-                            </div>
-
-                            <hr className='bg-[#363636] h-0.5 ' /> 
+                            {relatedJobs.length > 0 ? (
+                                relatedJobs.map((relatedJob: JobProps, index) => (
+                                    <Link href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs?id=${relatedJob.id}`} className={`flex flex-col space-y-1.5 py-6 w-full cursor-pointer ${index !== relatedJobs.length - 1 ? 'border-b border-[#4F4F4F]' : ""}`} key={index}>
+                                        <h1 className='font-semibold 2xl:text-[20px] text-[18px] leading-7 text-heading'>{relatedJob.title}</h1>
+                                        <p className='text-paragraph text-[18px] leading-6 max-2xl:text-[16px]'>{`At ${ relatedJob && relatedJob.companyName!.charAt(0).toUpperCase() + relatedJob.companyName!.slice(1)}`}</p>
+                                    </Link>
+                                ))
+                            ): (
+                                <h1 className='text-paragraph text-[21px] max-2xl:text-[16px]'>No Related Job Found</h1>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -19,8 +19,10 @@
     "country-state-city": "^3.2.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.16.0",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.513.0",
     "next": "15.3.2",
+    "rc-slider": "^11.1.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
@@ -30,6 +32,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

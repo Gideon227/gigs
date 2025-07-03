@@ -22,7 +22,6 @@ const SortFilter = () => {
         params.delete(key);
         }
 
-        params.set("page", "1"); // reset page to 1 on filter
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 

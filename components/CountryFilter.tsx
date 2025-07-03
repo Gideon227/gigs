@@ -2,113 +2,111 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
-import { RadioGroupItem } from "@radix-ui/react-radio-group";
 
-import { getAllCountries, getStatesOfCountry, getCitiesOfState } from "@/libs/location-utils";
-import { Radio } from "lucide-react";
+import { GiCheckMark } from "react-icons/gi";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import Image from "next/image";
 
 interface CountryFilterCardProps {
-    
-    onChange: (filters: {
-        country: string | null;
-        state: string | null;
-        city: string | null;
-    }) => void;
+  onChange: (filters: {
+    country: string | null;
+    state: string | null;
+    city: string | null;
+  }) => void;
 }
 
 const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
-    const router = useRouter();
-    const searchParams = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-    const [countries, setCountries] = useState<{ name: string; isoCode: string }[]>([]);
-    const [states, setStates] = useState<{ name: string; isoCode: string }[]>([]);
-    const [cities, setCities] = useState<{ name: string }[]>([]);
+  const [countries, setCountries] = useState<{ name: string }[]>([]);
+  const [states, setStates] = useState<{ name: string }[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
 
-    const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-    const [selectedState, setSelectedState] = useState<string | null>(null);
-    const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>("United States");
+  const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const [openState, setOpenState] = useState<boolean>(false);
+  const [openCity, setOpenCity] = useState<boolean>(false);
 
-
-    useEffect(() => {
-      fetch("/api/location/countries")
-        .then((res) => res.json())
-        .then((data) => setCountries(data));
-    }, []);
+  useEffect(() => {
+    fetch("https://countriesnow.space/api/v0.1/countries/positions")
+      .then((res) => res.json())
+      .then((data) => setCountries(data.data || []));
+  }, []);
     
+  const params = new URLSearchParams(searchParams);
 
-    useEffect(() => {
-      const params = new URLSearchParams(searchParams);
-      if (selectedCountry) params.set('country', selectedCountry);
-      else params.delete('country');
-      
-      if (selectedState) params.set('state', selectedState);
-      else params.delete('state');
-      
-      if (selectedCity) params.set('city', selectedCity);
-      else params.delete('city');
-      
-      params.set('page', '1'); // Reset page
-      router.push(`/browse-jobs?${params.toString()}`);
-    }, [selectedCountry, selectedState, selectedCity]);
+  useEffect(() => {
+    if (selectedCountry) {
+      fetch("https://countriesnow.space/api/v0.1/countries/states", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country: selectedCountry }),
+      })
+        .then(res => res.json())
+        .then(data => setStates(data.data?.states || []));
 
-    useEffect(() => {
-      const params = new URLSearchParams(searchParams);
-      if (selectedCountry) {
-        fetch(`/api/location/states?countryCode=${selectedCountry}`)
-          .then((res) => res.json())
-          .then((data) => setStates(data));
-        setSelectedState(null);
-        setCities([]);
-        setSelectedCity(null);
-        params.set('country', selectedCountry);
-      } else params.delete('country');
+      setSelectedState(null);
+      setSelectedCity(null);
+      setCities([]);
+    }
+  }, [selectedCountry]);
 
-      params.set('page', '1'); // Reset page
-      router.push(`/browse-jobs?${params.toString()}`);
-    }, [selectedCountry]);
-      
-    useEffect(() => {
-      const params = new URLSearchParams(searchParams);
-      if (selectedCountry && selectedState) {
-        fetch(`/api/location/cities?countryCode=${selectedCountry}&stateCode=${selectedState}`)
-          .then((res) => res.json())
-          .then((data) => setCities(data));
-        setSelectedCity(null);
-      params.set('country', selectedCountry);
-      } else params.delete('country');
+  // Fetch cities when state is selected
+  useEffect(() => {
+    if (selectedCountry && selectedState) {
+      fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ country: selectedCountry, state: selectedState }),
+      })
+        .then(res => res.json())
+        .then(data => setCities(data.data || []));
 
-      params.set('page', '1'); // Reset page
-      router.push(`/browse-jobs?${params.toString()}`);
-    }, [selectedState]);      
-    
-    useEffect(() => {
-        if (selectedCountry) {
-          setStates(getStatesOfCountry(selectedCountry));
-          setSelectedState(null);
-          setCities([]);
-          setSelectedCity(null);
-        }
-    }, [selectedCountry]);
-    
-    useEffect(() => {
-        if (selectedCountry && selectedState) {
-          setCities(getCitiesOfState(selectedCountry, selectedState));
-          setSelectedCity(null);
-        }
-    }, [selectedState]);
-    
-    useEffect(() => {
-        onChange({ country: selectedCountry, state: selectedState, city: selectedCity });
-    }, [selectedCountry, selectedState, selectedCity]);
-    
-    const clearAll = () => {
-        setSelectedCountry(null);
-        setSelectedState(null);
-        setSelectedCity(null);
-        setStates([]);
-        setCities([]);
-        onChange({ country: null, state: null, city: null });
-    };
+      setSelectedCity(null);
+    }
+  }, [selectedState]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    let countryQueryValue: string | null = selectedCountry;
+
+    if (selectedCountry === "United States") {
+      countryQueryValue = "USA";
+    } else if (selectedCountry === "United Kingdom") {
+      countryQueryValue = "England";
+    }
+
+    if (selectedCountry) params.set("country", countryQueryValue!);
+    else params.delete("country");
+
+    if (selectedState) params.set("state", selectedState);
+    else params.delete("state");
+
+    if (selectedCity) params.set("city", selectedCity);
+    else params.delete("city");
+
+    router.push(`/browse-jobs?${params.toString()}`, { scroll: false });
+    onChange({ country: selectedCountry, state: selectedState, city: selectedCity });
+  }, [selectedCountry, selectedState, selectedCity]);
+
+const clearAll = () => {
+    setSelectedCountry(null);
+    setSelectedState(null);
+    setSelectedCity(null);
+    setStates([]);
+    setCities([]);
+    onChange({ country: null, state: null, city: null });
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("country");
+    params.delete("state");
+    params.delete("city");
+    router.push(`/browse-jobs?${params.toString()}`);
+  };
     
 
   return (
@@ -116,69 +114,136 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
         <div className='flex justify-between'>
             <h1 className='text-heading 2xl:text-[16px] max-2xl:text-[14px] font-medium'>Location</h1>
             <button
-                onClick={() => {clearAll}}
-                className='text-[#FB4D5C] text-[14px] leading-6 cursor-pointer'>
-                    Clear all
+                onClick={clearAll}
+                className='text-neutral text-[14px] leading-6 cursor-pointer'>
+                    Clear
             </button>
         </div>
 
-        <Select value={selectedCountry ?? ''} onValueChange={(val) => setSelectedCountry(val)}>
-          <SelectTrigger className="w-full outline rounded-lg cursor-pointer bg-[#101217] border border-gray py-5.5 px-4 flex items-center justify-between date_overlay text-neutral text-sm leading-6">
-            <SelectValue placeholder="Enter city, state, or country" />
-          </SelectTrigger>
+        {/* Select Country */}
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild >
+            <div className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray py-2.5 px-4 flex items-center justify-between date_overlay'>
+              <p className="text-neutral text-sm leading-6">{selectedCountry ? selectedCountry : "Enter city, state, or country"}</p> 
+              <Image src='/arrow-down.svg' width={14} height={14} alt='arrow down icon'/>
+
+            </div>
+          </PopoverTrigger>
             
-          <SelectContent className="bg-[#101217]">
-            {countries.map((country) => (
-              <div className="space-y-6 p-4">
-                <SelectItem
-                  key={country.isoCode} value={country.name}
-                  className="hover:bg-zinc-dark hover:shadow-md hover:rounded hover:text-dark text-white animate-accordion-down">
-                    <div className="flex space-x-2 items-center justify-start cursor-pointer">
-                      <p className="">{country.name}</p>
-                    </div>
-                </SelectItem>
-              </div>
-            ))}
-          </SelectContent>
-        </Select>
+          <PopoverContent className="w-auto p-0 border-none">
+            <div className="bg-[#101217] px-6 py-3 border-[#363636] border rounded-xl date_overlay min-w-[220px] max-h-[420px] overflow-y-auto hide-scrollbar">
+              {countries.map((country) => (
+                <div className="text-start w-full cursor-pointer" key={country.name}>
+                  <div
+                    key={country.name} 
+                    onClick={() => {
+                        setOpen(false)
+                        setSelectedCountry(country.name)
+                      }
+                    }
+                    className="py-4 border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px] space-x-4 flex items-center">
+                      <div
+                        className={`
+                          relative w-3.5 h-3.5 border border-gray-300 flex items-center justify-center 
+                          ${selectedCountry === country.name && 'border-primary'}
+                        `}
+                      >
+                        {selectedCountry === country.name && <GiCheckMark color="#D1FF17" size={12}/>}
+                      </div>
+                      <p>{country.name}</p>
+                      
+                  </div>
+                </div>
+              ))}
+
+            </div>
+          </PopoverContent>
+        </Popover>
 
 
         {states.length > 0 && (
-        <Select value={selectedState ?? ''} onValueChange={(val) => setSelectedState(val)}>
-          <SelectTrigger className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray py-5.5 px-4 flex items-center justify-between date_overlay text-neutral text-sm leading-6'>
-            <SelectValue placeholder='Select State' />
-          </SelectTrigger>
+        <Popover open={openState} onOpenChange={setOpenState}>
+          <PopoverTrigger asChild >
+            <div className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray py-2.5 px-4 flex items-center justify-between date_overlay'>
 
-          <SelectContent>
-            {states.map((state) => (
-              <SelectItem key={state.isoCode} value={state.isoCode}> 
-                <div className="flex space-x-2 items-center justify-start bg-[#101217]">
-                  <p className="">{state.name}</p>
+              <p className="text-neutral text-sm leading-6">{selectedState ? selectedState : "Select State"}</p> 
+              <Image src='/arrow-down.svg' width={14} height={14} alt='arrow down icon'/>
+
+            </div>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-auto p-0 border-none">
+            <div className="bg-[#101217] px-6 py-3 border-[#363636] border rounded-xl date_overlay min-w-[220px] max-h-[420px] overflow-y-auto hide-scrollbar">
+              {states.map((state) => (
+                <div className="text-start w-full cursor-pointer" key={state.name}>
+                  <div
+                    key={state.name} 
+                    onClick={() => {
+                        setOpenState(false)
+                        setSelectedState(state.name)
+                      }
+                    }
+                    className="py-4 border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px] space-x-4 flex items-center">
+                      <div
+                        className={`
+                          relative w-3.5 h-3.5 border border-gray-300 flex items-center justify-center 
+                          ${selectedState && 'border-primary'}
+                        `}
+                      >
+                        {selectedState === state.name && <GiCheckMark color="#D1FF17" size={12}/>}
+                      </div>
+                      <p>{state.name}</p>
+                      
+                  </div>
                 </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+              ))}
+
+            </div>
+          </PopoverContent>
+        </Popover>
       )}
 
       {/* City Select */}
       {cities.length > 0 && (
-        <Select value={selectedCity ?? ''} onValueChange={(val) => setSelectedCity(val)}>
-          <SelectTrigger className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray py-5.5 px-4 flex items-center justify-between date_overlay text-neutral text-sm leading-6'>
-            <SelectValue placeholder='Select City' />
-          </SelectTrigger>
+        <Popover open={openCity} onOpenChange={setOpenCity}>
+          <PopoverTrigger asChild >
+            <div className='w-full rounded-lg cursor-pointer bg-[#101217] border border-gray py-2.5 px-4 flex items-center justify-between date_overlay'>
 
-          <SelectContent>
-            {cities.map((city) => (
-              <SelectItem key={city.name} value={city.name}>
-                <div className="flex space-x-2 items-center justify-start bg-[#101217]">
-                  <p className="">{city.name}</p>
+              <p className="text-neutral text-sm leading-6">{selectedCity ? selectedCity : "Select City"}</p> 
+              <Image src='/arrow-down.svg' width={14} height={14} alt='arrow down icon'/>
+
+            </div>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-auto p-0 border-none">
+            <div className="bg-[#101217] px-6 py-3 border-[#363636] border rounded-xl date_overlay min-w-[220px] max-h-[420px] overflow-y-auto hide-scrollbar">
+              {cities.map((city) => (
+                <div className="text-start w-full cursor-pointer" key={city}>
+                  <div
+                    key={city} 
+                    onClick={() => {
+                        setOpenCity(false)
+                        setSelectedCity(city)
+                      }
+                    }
+                    className="py-4 border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px] space-x-4 flex items-center">
+                      <div
+                        className={`
+                          relative w-3.5 h-3.5 border border-gray-300 flex items-center justify-center 
+                          ${selectedCity && 'border-primary'}
+                        `}
+                      >
+                        {selectedCity === city && <GiCheckMark color="#D1FF17" size={12}/>}
+                      </div>
+                      <p>{city}</p>
+                      
+                  </div>
                 </div>
-                {city.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+              ))}
+
+            </div>
+          </PopoverContent>
+        </Popover>
       )}
 
         
