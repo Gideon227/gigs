@@ -16,8 +16,8 @@ interface CustomSalarySliderProps {
 
 const CustomSalarySlider = ({
     min = 0,
-    max = 1000000,
-    defaultValue = [60000, 210000],
+    max = 350000,
+    defaultValue = [60000, 120000],
     disabled = false,
     onChangeCommitted,
     currentMinSalary,
@@ -46,7 +46,7 @@ const CustomSalarySlider = ({
 
         debounceRef.current = debounce((val: [number, number]) => {
             onChangeCommitted(val);
-        }, 3000);
+        }, 2000);
 
         debounceRef.current(value as [number, number]);
     }, [onChangeCommitted]);

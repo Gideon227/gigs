@@ -205,14 +205,14 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='md:w-3/5 max-md:w-full space-y-6'>
                         <div className='space-y-4 text-start'>
                             <h1 className='font-semibold 2xl:text-[20px] max-2xl:text-[18px] text-white leading-[30px]'>About the job</h1>
-                            <p className='text-[18px] max-2xl:text-[16px] leading-6 text-paragraph'>{job.description}</p>
+                            <p className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph'>{job.description}</p>
                         </div>
 
                         <div className='text-start space-y-4'>
                             <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Responsibilities</h2>
                             <ul className='flex flex-col space-y-2 list-disc pl-4'>
                                 {job.responsibilities.map((item, index) => (
-                                    <li key={index} className='text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
+                                    <li key={index} className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
                                         {item}
                                     </li>
                                 ))}
@@ -224,7 +224,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Qualifications</h2>
                             <ul className='flex flex-col space-y-2 list-disc pl-4'>
                                 {job.qualifications.map((item, index) => (
-                                    <li key={index} className='text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
+                                    <li key={index} className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
                                         {item}
                                     </li>
                                 ))}
@@ -236,8 +236,8 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='md:w-2/5 max-md:w-full'>
                         <div className='bg-[#151820] border border-gray p-6 rounded-2xl space-y-6 text-start'>
                             <div className=''>
-                                <h1 className='text-heading text-start 2xl:text-[24px] max-2xl:text-[22px] font-semibold leading-8'>
-                                    {job.salary}/
+                                <h1 className='text-heading text-start 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[18px] font-semibold leading-8'>
+                                    {formatNumber(job.salary)} /
                                     <span className='text-heading text-[16px] font-normal'>year</span>
                                 </h1>
                                 <p className='text-neutral text-[16px] leading-6'>Salary range</p>

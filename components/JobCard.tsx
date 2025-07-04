@@ -96,7 +96,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
                 
                 <div className='flex flex-col justify-between items-start'>
                   <div className='flex justify-baseline items-start space-x-4'>
-                    <h1 className='2xl:text-[20px] max-2xl:text-[19px] max-md:text-[16px] leading-[27px] font-semibold flex flex-wrap items-start flex-1 text-start text-heading max-w-4/5'>{title}</h1>
+                    <h1 className='text-[20px] max-md:text-[16px] leading-[27px] max-md:leading-6 font-semibold flex flex-wrap items-start flex-1 text-start text-heading md:max-w-4/5'>{title}</h1>
                     <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center ${getJobTypeColor(jobType)}`}>
                       <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px] text-nowrap'>{getJobTypeText(jobType)}</p>
                     </span>
@@ -118,12 +118,12 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
             </div>
 
             <div className='flex text-end flex-col justify-between max-sm:hidden'>
-               {salary === "NaN" ? "" : (
-                 <h1 className='text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8'>
+               {salary && salary !== "" ? (
+                  <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
                     {formatNumber(salary)}/
-                    <span className='text-heading text-[16px] font-normal'>year</span>
-                 </h1>
-               )}
+                    <span className="text-heading text-[16px] font-normal">year</span>
+                  </h1>
+                ) : null}
                <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>Posted {timeAgo} ago</p>
             </div>
         </div>
@@ -138,19 +138,22 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
             </p>
         </div>
 
-        <div className='flex justify-between sm:hidden items-start'>
-           {salary && (
-             <h1 className={`text-heading text-start text-[14px] font-semibold leading-6 ${salary === "NaN" && "hidden"}`}>
-                {salary === "NaN" ? "" : formatNumber(salary)}/
-                <span className='text-heading text-[16px] font-normal'>year</span>
-             </h1>
-           )}
-            <p className='text-neutral text-[12px] font-normal text-end leading-6'>Posted {timeAgo} ago</p>
+        <div className="flex justify-between sm:hidden items-start">
+          {salary && salary !== "" ? (
+            <h1 className="text-heading text-start text-[14px] font-semibold leading-6">
+              {formatNumber(salary)}/
+              <span className="text-heading text-[16px] font-normal">year</span>
+            </h1>
+          ) : null}
+          
+          <p className="text-neutral text-[12px] font-normal text-end leading-6">
+            Posted {timeAgo} ago
+          </p>
         </div>
 
         <div className='flex justify-between items-center w-full flex-1'>
            <div className='gap-2 flex flex-wrap w-9/10'>
-            {skills.map((skill: string) => (
+            {skills && skills.map((skill: string) => (
                 <button onClick={() => handleSkillClick(skill)} className='rounded-full border-neutral border py-0.5 px-4 cursor-pointer' key={skill}>
                     <p className='text-heading items-center flex 2xl:text-[16px] max-2xl:text-[14px] leading-[21px]'>{skill}</p>
                 </button>

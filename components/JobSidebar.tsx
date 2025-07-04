@@ -40,12 +40,12 @@ const workSettingsOptions: Option[] = [
 ] 
 
 const skillsOptions: Option[] = [
-  { value: 'ui/ux-design', label: 'UI/UX Design' },
-  { value: 'lavarel', label: 'Lavarel' },
-  { value: 'webflow', label: 'Webflow' },
-  { value: 'framer', label: 'Framer' },
-  { value: 'php', label: 'PHP' },
-  { value: 'javascript', label: 'JavaScript' },
+  { value: 'communication', label: 'Communication' },
+  { value: 'excel', label: 'Excel' },
+  { value: 'sql', label: 'SQL' },
+  { value: 'microsoft', label: 'Microsoft' },
+  { value: 'java', label: 'Java' },
+  { value: 'python', label: 'Python' },
 ] 
 
 interface Props{
@@ -240,8 +240,8 @@ const JobSidebar = ({ page, setPage }: Props) => {
                 >
                   <CustomSalarySlider
                     min={0}
-                    max={500000}
-                    defaultValue={[60000, 210000]}
+                    max={350000}
+                    defaultValue={[60000, 120000]}
                     disabled = {salaryRange !== 'custom'}
                     currentMinSalary={minSalary ? Number(minSalary) : undefined}
                     currentMaxSalary={maxSalary ? Number(maxSalary) : undefined}

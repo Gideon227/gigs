@@ -59,6 +59,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
     // }, [jobId]);
 
     const fetchJobs = async () => {
+        const params = new URLSearchParams(searchParams.toString());
         setLoading(true); 
 
         try {
@@ -67,6 +68,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
 
             setJobs(newJobs);
             setJobLength(data?.data.totalJobs)
+            params.set("page", page.toString())
         } catch (error: any) {
             console.log(error.message)
             if (page === 1) setJobs([])
@@ -187,7 +189,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
             <div className='2xl:px-12 md:px-8 max-md:px-4 mt-2 cursor-pointer'>
                 {loading ? (
                     <div className='space-y-4'>
-                        {Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)}
+                        {Array.from({ length: 10 }).map((_, i) => <JobCardSkeleton key={i} />)}
                     </div>
                     ) : jobs.length > 0 ? (
                     jobs.map((job:JobProps, index) => (

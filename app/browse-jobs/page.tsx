@@ -14,7 +14,7 @@ const Jobs = () => {
                     <div className='flex space-x-1 items-center'>
                         <p className='text-sm leading-[24px] text-[#E3E3E3]'>Welcome to Gigs.Tech</p>
                         <Image src='/waving.png' alt='waving emoji' width={18} height={18} className='flex items-center object-contain -mt-1 max-md:hidden'/>
-                        <Image src='/waving.png' alt='waving emoji' width={14} height={14} className='flex items-center object-contain -mt-1 md:hidden'/>
+                        <Image src='/waving.png' alt='waving emoji' width={16} height={16} className='flex items-center object-contain -mt-1 md:hidden'/>
                     </div>
 
                     <h1 className='font-semibold text-[40px] lg:leading-[60px] text-heading max-lg:text-[27px] max-lg:leading-[32px] max-sm:text-[24px] max-sm:leading-8'>Power Platform & Dynamics <br /> 365 jobs all in one place.</h1>

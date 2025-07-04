@@ -49,7 +49,7 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
           exit={{ y: "50%", opacity: 0 }}
         >
           <div className="flex items-center justify-between space-x-4">
-            <h1 className="text-[27px] max-md:text-[18px] font-medium text-heading">Share {job.title}</h1>
+            <h1 className="text-[27px] max-md:text-[18px] font-medium max-md:font-semibold text-heading">Share {job.title}</h1>
             <button onClick={onClose} className="text-paragraph cursor-pointer">
               <RxCross2 size={24} />
             </button>
@@ -61,10 +61,10 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
                 <h1 className='font-medium text-heading text-[18px] max-md:text-[16px]'>{job.companyName?.toUpperCase()}</h1>
                 <h1 className='text-paragraph font-medium text-[19px] space-y-3 max-md:text-[14px]'>
                     {job.title} 
-                    <div className='flex flex-wrap items-center'>
+                    <div className='flex md:flex-wrap items-center'>
                         {job.skills.map((item, index) => ( 
-                            <div key={item} className={`space-x-2 flex items-center h-3 mt-2 ${index !== job.skills.length - 1 && "border-r-1 border-paragraph"}`}>
-                              <p className={`text-[16px] font-light text-paragraph text-nowrap ${index !== 0 ? 'px-4': 'pr-4' }`}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
+                            <div key={item} className={`space-x-2 max-md:space-x-1 flex items-center h-3 mt-2 ${index !== job.skills.length - 1 && "border-r-1 border-paragraph"}`}>
+                              <p className={`text-[16px] max-md:text-[12px] font-light text-paragraph text-nowrap ${index !== 0 ? 'px-4': 'pr-4' }`}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
                             </div>
                         ))}
                     </div>
@@ -72,35 +72,35 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
             </div>
           </div>
 
-          <p className="text-[16px] font-normal mb-4 text-paragraph leading-7">{truncateText(job.description, 36)}</p>
+          <p className="text-[16px] max-md:text-[14px] max-md:leading-6 font-normal mb-4 text-paragraph leading-7">{truncateText(job.description, 36)}</p>
           
-          <div className="flex justify-around max-md:justify-between max-md:pt-2">
+          <div className="flex justify-around max-md:justify-between max-md:pt-2 max-md:px-4">
             <button 
               onClick={() => window.open(whatsappLink, '_blank')} 
-              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 items-center justify-center bg-transparent md:p-4 cursor-pointer">
+              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
                 <FaWhatsapp color="white" size={20} />
-                <p className='text-[14px] text-heading leading-7 text-nowrap'>WhatsApp</p>
+                <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>WhatsApp</p>
             </button>
 
             <button 
               onClick={async () => await navigator.clipboard.writeText(displayLink)} 
-              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 items-center justify-center bg-transparent md:p-4 cursor-pointer">
+              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
               <FaRegClipboard color="white" size={20} />
-              <p className='text-[14px] text-heading leading-7 text-nowrap'>Copy Link</p>
+              <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>Copy Link</p>
             </button>
 
             <button 
               onClick={() => window.open(twitterLink, '_blank')} 
-              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 items-center justify-center bg-transparent md:p-4 cursor-pointer">
+              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
                 <FaXTwitter color="white" size={18} />
-                <p className='text-[14px] text-heading leading-7 text-nowrap'>Twiter</p>
+                <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>Twiter</p>
             </button>
 
             <button 
               onClick={() => window.open(facebookLink, '_blank')} 
-              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 items-center justify-center bg-transparent md:p-4 cursor-pointer">
+              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
               <FaFacebookF color="white" size={20} />
-              <p className='text-[14px] text-heading leading-7 text-nowrap'>Facebook</p>
+              <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>Facebook</p>
             </button>
           </div>
         </motion.div>
