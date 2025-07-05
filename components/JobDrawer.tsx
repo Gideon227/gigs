@@ -155,7 +155,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 <div className='border-b border-[#363636] flex max-sm:flex-col justify-between md:py-8 max-md:py-4'>
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
-                            {job.companyLogo && <Image src={job.companyLogo} width={35} height={35} alt='company logo' className='rounded-lg'/>}
+                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className='w-12 h-12 rounded-lg object-contain'/>
                             <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px]'>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
@@ -237,8 +237,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                         <div className='bg-[#151820] border border-gray p-6 rounded-2xl space-y-6 text-start'>
                             <div className=''>
                                 <h1 className='text-heading text-start 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[18px] font-semibold leading-8'>
-                                    {formatNumber(job.salary)} /
-                                    <span className='text-heading text-[16px] font-normal'>year</span>
+                                    {formatNumber(job.salary)} 
                                 </h1>
                                 <p className='text-neutral text-[16px] leading-6'>Salary range</p>
                             </div>

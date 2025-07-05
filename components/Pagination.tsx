@@ -2,6 +2,7 @@
 import React, { useMemo, useCallback, useState } from 'react';
 import Image from 'next/image';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
@@ -26,6 +27,9 @@ const Pagination: React.FC<Props> = React.memo(({
   })  => {
     const [open, setOpen] = useState<boolean>(false)
     const totalPages = useMemo(() => Math.ceil(totalItems / pageSize), [totalItems, pageSize]);
+
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
     const pageButtons = useMemo(() => {
         const pages: (number | "...")[] = [];
@@ -56,6 +60,15 @@ const Pagination: React.FC<Props> = React.memo(({
     const handlePageClick = useCallback((p: number | "...") => {
         if (typeof p === "number" && p !== currentPage) {
           onPageChange(p);
+
+        const params = new URLSearchParams(searchParams.toString());
+        if (currentPage > 1) {
+            params.set("page", currentPage.toString());
+        } else {
+            params.delete("page");
+        }
+
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
         }
     }, [currentPage, onPageChange]);
     

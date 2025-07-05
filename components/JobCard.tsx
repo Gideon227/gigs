@@ -92,7 +92,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
     <div className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
         <div onClick={() => onClick(job)} className='flex items-start justify-between w-full'>
             <div className='flex space-x-4 justify-start items-start'>
-                <Image src={companyLogo ? companyLogo : "/symbol.png"} height={45} width={45} alt='company&apos;s logo' className='rounded-lg object-contain'/>
+                <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className='w-12 h-12 rounded-lg object-contain'/>
                 
                 <div className='flex flex-col justify-between items-start'>
                   <div className='flex justify-baseline items-start space-x-4'>
@@ -120,8 +120,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
             <div className='flex text-end flex-col justify-between max-sm:hidden'>
                {salary && salary !== "" ? (
                   <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
-                    {formatNumber(salary)}/
-                    <span className="text-heading text-[16px] font-normal">year</span>
+                    {formatNumber(salary)}
                   </h1>
                 ) : null}
                <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>Posted {timeAgo} ago</p>
@@ -141,8 +140,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
         <div className="flex justify-between sm:hidden items-start">
           {salary && salary !== "" ? (
             <h1 className="text-heading text-start text-[14px] font-semibold leading-6">
-              {formatNumber(salary)}/
-              <span className="text-heading text-[16px] font-normal">year</span>
+              {formatNumber(salary)}
             </h1>
           ) : null}
           

@@ -43,7 +43,11 @@ const JobBoard = ({ page, setPage }: Props ) => {
     const queryString = useMemo(() => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete("id"); 
-        params.set("page", page.toString());
+        if (page > 1) {
+            params.set("page", page.toString());
+        } else {
+            params.delete("page");
+        }
         params.set("limit", pageSize.toString()); 
         return params.toString();
     }, [searchParams, page, pageSize]);
@@ -187,7 +191,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
                 </div>
             </div>
             <div className='2xl:px-12 md:px-8 max-md:px-4 mt-2 cursor-pointer'>
-                {loading ? (
+                {loading || jobs.length === 0 ? (
                     <div className='space-y-4'>
                         {Array.from({ length: 10 }).map((_, i) => <JobCardSkeleton key={i} />)}
                     </div>
@@ -210,7 +214,6 @@ const JobBoard = ({ page, setPage }: Props ) => {
                 }
 
             </div>
-            {/* <div ref={preloadRef} className="w-full h-1" /> */}
             {selectedJob && <JobDrawer job={selectedJob} onClose={closeDrawer} />}
         </div>
 
