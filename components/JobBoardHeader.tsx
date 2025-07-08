@@ -13,7 +13,7 @@ interface Props{
 const JobBoardHeader = ({ page, setPage }: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [keyword, setKeyword] = useState("")
-    const [location, setLocation] = useState("")
+    const [location, setLocation] = useState("USA")
     const [loading, setLoading] = useState(false)
 
     const router = useRouter();
@@ -68,7 +68,7 @@ const JobBoardHeader = ({ page, setPage }: Props) => {
             <div className='w-full border-[#363636] border bg-[#101217] py-1 md:rounded-e-lg max-md:rounded-lg flex justify-center items-center space-x-2'>
                 <input
                     type="text"
-                    value={location || "USA"}
+                    value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="Enter city, state, zip, or country"
                     className="bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-2/3 ml-4 placeholder-[#7E7E7E]"

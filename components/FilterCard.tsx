@@ -71,6 +71,10 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
                 setState(isMulti ? [] : null);
                 const updatedParams = new URLSearchParams(searchParams);
                 updatedParams.delete(changeKey);
+                if (changeKey === 'salary'){
+                  updatedParams.delete('minSalary');
+                  updatedParams.delete('maxSalary')
+                }
                 router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
               }}
               className='text-neutral cursor-pointer text-[14px] leading-6'>

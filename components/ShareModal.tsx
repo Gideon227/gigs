@@ -3,12 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RxCross2 } from 'react-icons/rx';
-import { FaWhatsapp, FaFacebookF, FaRegClipboard } from "react-icons/fa";
+import { FaWhatsapp, FaFacebookF, FaRegClipboard, FaLinkedinIn } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import toast from 'react-hot-toast';
 import { PiLinkSimpleLight } from "react-icons/pi";
 import { createPortal } from 'react-dom';
 import { JobProps } from '@/constants/Jobs';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 const truncateText = (text: string, wordLimit: number) => {
    const words = text.trim().split(/\s+/);
@@ -23,10 +25,12 @@ interface ShareModalProps {
 
 const ShareModal = ({ job, onClose }: ShareModalProps) => {
   const [mounted, setMounted] = useState(false);
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams.toString());
 
   useEffect(() => setMounted(true), []);
 
-  const displayLink = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs?id=${job.id}`;
+  const displayLink = `${process.env.NEXT_PUBLIC_FRONTEND_URL}?${params}`;
   const whatsappLink = `https://wa.me/?text=${encodeURIComponent(displayLink)}`;
   const twitterLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(displayLink)}&hashtags=gigs-tech`;
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(displayLink)}`;
@@ -55,16 +59,16 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
             </button>
           </div>
 
-          <div className='flex space-x-6 max-sm:space-x-3 items-center'>
-            <Image src={job.companyLogo ? job.companyLogo : "/symbol.png"} height={45} width={45} alt='company&apos;s logo' className='rounded-lg'/>
+          <div className='flex space-x-6 max-sm:space-x-3 items-start'>
+            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company&apos;s logo' className={`w-12 h-12 rounded-full p-2 object-contain ${job.companyLogo ? "bg-white" : "bg-transparent"}`}/>
             <div className='flex flex-col text-start'>
                 <h1 className='font-medium text-heading text-[18px] max-md:text-[16px]'>{job.companyName?.toUpperCase()}</h1>
-                <h1 className='text-paragraph font-medium text-[19px] space-y-3 max-md:text-[14px]'>
-                    {job.title} 
-                    <div className='flex md:flex-wrap items-center'>
-                        {job.skills.map((item, index) => ( 
-                            <div key={item} className={`space-x-2 max-md:space-x-1 flex items-center h-3 mt-2 ${index !== job.skills.length - 1 && "border-r-1 border-paragraph"}`}>
-                              <p className={`text-[16px] max-md:text-[12px] font-light text-paragraph text-nowrap ${index !== 0 ? 'px-4': 'pr-4' }`}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
+                <h1 className='text-paragraph text-[16px] space-y-6 max-md:space-y-4 max-md:text-[14px]'>
+                    {job.title}
+                    <div className='flex md:flex-wrap items-center -ml-2'>
+                        {job.skills.slice(0, 10).map((item, index) => (
+                            <div key={item} className={`flex items-center h-3 mt-2 ${index !== job.skills.length - 1 && "border-r-1 border-paragraph"}`}>
+                              <p className={`text-[14px] max-md:text-[12px] font-light text-paragraph text-nowrap px-2 `}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
                             </div>
                         ))}
                     </div>
@@ -72,9 +76,16 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
             </div>
           </div>
 
-          <p className="text-[16px] max-md:text-[14px] max-md:leading-6 font-normal mb-4 text-paragraph leading-7">{truncateText(job.description, 36)}</p>
+          <p className="text-[16px] max-md:text-[14px] max-md:leading-6 font-normal mb-4 text-paragraph leading-6">{truncateText(job.description, 36)}</p>
           
           <div className="flex justify-around max-md:justify-between max-md:pt-2 max-md:px-4">
+            <button 
+              onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(displayLink)}`, '_blank')} 
+              className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
+              <FaLinkedinIn color="white" size={20} />
+              <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>LinkedIn</p>
+            </button>
+
             <button 
               onClick={() => window.open(whatsappLink, '_blank')} 
               className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
@@ -83,7 +94,16 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
             </button>
 
             <button 
-              onClick={async () => await navigator.clipboard.writeText(displayLink)} 
+              onClick={async () => {
+                await navigator.clipboard.writeText(displayLink)
+                toast.success(`Successfully copied job url link`, {
+                  style: {
+                    fontSize: "14px",
+                    background: "#101217",
+                    color: "#fff"
+                  }
+                })
+              }} 
               className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
               <FaRegClipboard color="white" size={20} />
               <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>Copy Link</p>
@@ -96,12 +116,12 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
                 <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>Twiter</p>
             </button>
 
-            <button 
+            {/* <button 
               onClick={() => window.open(facebookLink, '_blank')} 
               className="rounded-lg md:border-[#363636] md:min-w-32 max-md:min-w-12 md:border flex flex-col space-y-2 max-md:space-y-1 items-center justify-center bg-transparent md:p-4 cursor-pointer">
               <FaFacebookF color="white" size={20} />
               <p className='text-[14px] max-md:text-[12px] text-heading leading-7 text-nowrap'>Facebook</p>
-            </button>
+            </button> */}
           </div>
         </motion.div>
       </motion.div>

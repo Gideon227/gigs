@@ -92,7 +92,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
     <div className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
         <div onClick={() => onClick(job)} className='flex items-start justify-between w-full'>
             <div className='flex space-x-4 justify-start items-start'>
-                <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className='w-12 h-12 rounded-lg object-contain'/>
+                <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${companyLogo ? "bg-white" : "bg-transparent"}`} />
                 
                 <div className='flex flex-col justify-between items-start'>
                   <div className='flex justify-baseline items-start space-x-4'>
@@ -118,7 +118,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
             </div>
 
             <div className='flex text-end flex-col justify-between max-sm:hidden'>
-               {salary && salary !== "" ? (
+               {salary && salary !== "" && salary !== 'NA' ? (
                   <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
                     {formatNumber(salary)}
                   </h1>
@@ -151,11 +151,12 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
 
         <div className='flex justify-between items-center w-full flex-1'>
            <div className='gap-2 flex flex-wrap w-9/10'>
-            {skills && skills.map((skill: string) => (
+            {skills && skills.slice(0, 10).map((skill: string) => (
                 <button onClick={() => handleSkillClick(skill)} className='rounded-full border-neutral border py-0.5 px-4 cursor-pointer' key={skill}>
                     <p className='text-heading items-center flex 2xl:text-[16px] max-2xl:text-[14px] leading-[21px]'>{skill}</p>
                 </button>
             ))}
+            {skills.length > 10 && <span className='text-neutral-500'>...</span>}
            </div>
 
            <button onClick={() => setOpenShareModal(job)} className='cursor-pointer'>

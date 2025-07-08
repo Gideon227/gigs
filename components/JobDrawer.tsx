@@ -11,6 +11,7 @@ import { formatNumber } from '@/utils/formatNumber';
 import { RxCross2 } from "react-icons/rx";
 import { URL } from 'url';
 import ShareModal from './ShareModal';
+import JobBoard from './JobBoard';
 
 type JobDrawerProps = {
     job: JobProps | null;
@@ -155,7 +156,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 <div className='border-b border-[#363636] flex max-sm:flex-col justify-between md:py-8 max-md:py-4'>
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
-                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className='w-12 h-12 rounded-lg object-contain'/>
+                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${job.companyLogo ? "bg-white" : "bg-transparent"}`}/>
                             <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px]'>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
@@ -208,7 +209,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             <p className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph'>{job.description}</p>
                         </div>
 
-                        <div className='text-start space-y-4'>
+                        {job.responsibilities.length > 0 && <div className='text-start space-y-4'>
                             <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Responsibilities</h2>
                             <ul className='flex flex-col space-y-2 list-disc pl-4'>
                                 {job.responsibilities.map((item, index) => (
@@ -218,9 +219,9 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 ))}
                             </ul>
                             <p className='text-[16px] font-light text-paragraph text-nowrap px-4'></p>
-                        </div>
+                        </div>}
 
-                        <div className='text-start space-y-4'>
+                        {job.qualifications.length > 0 && <div className='text-start space-y-4'>
                             <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Qualifications</h2>
                             <ul className='flex flex-col space-y-2 list-disc pl-4'>
                                 {job.qualifications.map((item, index) => (
@@ -230,7 +231,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 ))}
                             </ul>
                             <p className='text-[16px] font-light text-paragraph text-nowrap px-4'></p>
-                        </div>
+                        </div>}
                                     
                     </div>
                     <div className='md:w-2/5 max-md:w-full'>
@@ -245,32 +246,32 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             <div className='space-y-6 text-start max-md:grid max-md:grid-cols-2 max-sm:grid-cols-1 max-md:justify-between'>
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/location-03.svg' width={20} height={20} alt='building icon'/>
-                                    <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{`${job.country}, ${job.state}` }</h1>
+                                    <div className='flex flex-col'>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{`${job.country}, ${job.state}` }</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Location</p>
                                     </div>
                                 </div>
 
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/building-2.svg' width={20} height={20} alt='building icon'/>
-                                    <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job && getJobTypeText(job.jobType)}</h1>
+                                    <div className='flex flex-col'>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job && getJobTypeText(job.jobType)}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Job Type</p>
                                     </div>
                                 </div>
 
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/work-update.svg' width={20} height={20} alt='building icon'/>
-                                    <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{getWorkSettingsText(job.workSettings)}</h1>
+                                    <div className='flex flex-col'>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings)}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Work Setting</p>
                                     </div>
                                 </div>
 
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/mentoring.svg' width={20} height={20} alt='building icon'/>
-                                    <div className='flex flex-col space-y-1'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] font-lora font-medium text-white leading-6'>{job.roleCategory}</h1>
+                                    <div className='flex flex-col'>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job.roleCategory}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Role Category</p>
                                     </div>
                                 </div>
@@ -291,7 +292,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             
                             {relatedJobs.length > 0 ? (
                                 relatedJobs.map((relatedJob: JobProps, index) => (
-                                    <Link href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs?id=${relatedJob.id}`} className={`flex flex-col space-y-1.5 py-6 w-full cursor-pointer ${index !== relatedJobs.length - 1 ? 'border-b border-[#4F4F4F]' : ""}`} key={index}>
+                                    <Link target="_blank" href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs?id=${relatedJob.id}`} className={`flex flex-col space-y-1.5 py-6 w-full cursor-pointer ${index !== relatedJobs.length - 1 ? 'border-b border-[#4F4F4F]' : ""}`} key={index}>
                                         <h1 className='font-semibold 2xl:text-[20px] text-[18px] leading-7 text-heading'>{relatedJob.title}</h1>
                                         <p className='text-paragraph text-[18px] leading-6 max-2xl:text-[16px]'>{`At ${ relatedJob && relatedJob.companyName!.charAt(0).toUpperCase() + relatedJob.companyName!.slice(1)}`}</p>
                                     </Link>

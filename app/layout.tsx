@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Lora } from "next/font/google";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast"
 
 import "./globals.css";
 import Footer from "@/components/Footer";
@@ -51,6 +52,7 @@ export default function RootLayout({
           ${segoeUi.variable}
           antialiased overflow-x-hidden min-h-screen hide-scrollbar`}
       >
+        <Toaster />
         <Navbar />
         <main className="flex-1">
           {children}

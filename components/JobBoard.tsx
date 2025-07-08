@@ -34,33 +34,45 @@ const JobBoard = ({ page, setPage }: Props ) => {
     const [jobLength, setJobLength] = useState<number>(0);
     // const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const [countryReady, setCountryReady] = useState(false);
 
     const [openShareModal, setOpenShareModal] = useState<JobProps | null>(null)
-    const jobId = searchParams.get("id");
+    const id = searchParams.get("id");
 
     const preloadRef = useRef<HTMLDivElement | null>(null);
 
     const queryString = useMemo(() => {
         const params = new URLSearchParams(searchParams.toString());
         params.delete("id"); 
-        if (page > 1) {
-            params.set("page", page.toString());
-        } else {
-            params.delete("page");
-        }
+        // if (page > 0) {
+        //     params.set("page", page.toString());
+        // } else {
+        //     params.delete("page");
+        // }
+        params.set("page", page.toString());
         params.set("limit", pageSize.toString()); 
         return params.toString();
     }, [searchParams, page, pageSize]);
 
-    // useEffect(() => {
-    //     if (!jobId) {
-    //       setSelectedJob(null);
-    //       return;
-    //     }
-    //     getJobById(jobId).then((job) => setSelectedJob(job)).catch(() => {
-    //       setSelectedJob(null);
-    //     });
-    // }, [jobId]);
+    useEffect(() => {
+        if (!id) {
+            setSelectedJob(null);
+            return;
+        }
+
+        let cancelled = false;
+        (async () => {
+        try {
+            const job = await getJobById(id);
+            if (!cancelled) setSelectedJob(job.data);
+        } catch (err) {
+            console.error('Failed to load job by ID', err);
+            if (!cancelled) setSelectedJob(null);
+        }
+        })();
+        return () => { cancelled = true };
+    }, [id]);
+
 
     const fetchJobs = async () => {
         const params = new URLSearchParams(searchParams.toString());
@@ -79,12 +91,12 @@ const JobBoard = ({ page, setPage }: Props ) => {
         } finally {
             setLoading(false);
         }   
-
     };
     
     useEffect(() => {
+        if (!countryReady) return;
         fetchJobs();
-    }, [queryString]);
+    }, [queryString, countryReady]);
 
 
     useEffect(() => {
@@ -124,10 +136,18 @@ const JobBoard = ({ page, setPage }: Props ) => {
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
         if (!params.get("country")) {
-          params.set("country", "USA");
-          router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+            params.set("country", "USA");
+            router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+        } else {
+            setCountryReady(true);
         }
     }, []);
+
+    useEffect(() => {
+        if (searchParams.get("country")) {
+            setCountryReady(true);
+        }
+    }, [searchParams]);
 
 
     
@@ -170,12 +190,12 @@ const JobBoard = ({ page, setPage }: Props ) => {
     }
 
     const closeDrawer = () => {
-        setSelectedJob(null)
         const params = new URLSearchParams(searchParams.toString());
         params.delete("id");
         const pageFromURL = Number(searchParams.get("page") || 1);
         setPage(pageFromURL);
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+        setSelectedJob(null)
     }
   return (
     <div className='flex flex-col space-y-4'>

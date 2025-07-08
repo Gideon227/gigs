@@ -59,16 +59,17 @@ const Pagination: React.FC<Props> = React.memo(({
     
     const handlePageClick = useCallback((p: number | "...") => {
         if (typeof p === "number" && p !== currentPage) {
-          onPageChange(p);
+            onPageChange(p);
+            const pageNumber = currentPage + 1
+            console.log(currentPage)
+            const params = new URLSearchParams(searchParams.toString());
+            if (currentPage > 1) {
+                params.set("page", pageNumber.toString());
+            } else {
+                params.delete("page");
+            }
 
-        const params = new URLSearchParams(searchParams.toString());
-        if (currentPage > 1) {
-            params.set("page", currentPage.toString());
-        } else {
-            params.delete("page");
-        }
-
-        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+            router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
         }
     }, [currentPage, onPageChange]);
     
@@ -115,7 +116,16 @@ const Pagination: React.FC<Props> = React.memo(({
                 <button
                     disabled={currentPage <= 1}
                     className='text-heading disabled:opacity-50 cursor-pointer'
-                    onClick={() => onPageChange(currentPage - 1)}
+                    onClick={() => {
+                        onPageChange(currentPage - 1);
+
+                        const params = new URLSearchParams(searchParams.toString());
+                        if (currentPage > 1) {
+                            params.set("page", currentPage.toString());
+                        } else {
+                            params.delete("page");
+                        }
+                    }}
                 >
                     <MdKeyboardArrowLeft size={18}/>
                 </button>
@@ -137,7 +147,16 @@ const Pagination: React.FC<Props> = React.memo(({
                 <button
                     disabled={currentPage >= totalPages}
                     className='text-heading disabled:opacity-50 cursor-pointer'
-                    onClick={() => onPageChange(currentPage + 1)}
+                    onClick={() => {
+                        onPageChange(currentPage + 1)
+
+                        const params = new URLSearchParams(searchParams.toString());
+                        if (currentPage > 1) {
+                            params.set("page", currentPage.toString());
+                        } else {
+                            params.delete("page");
+                        }
+                    }}
                 >
                     <MdKeyboardArrowRight size={18}/>
                 </button>
