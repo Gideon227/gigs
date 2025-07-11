@@ -4,18 +4,19 @@ import JobDrawerClient from '@/components/JobDrawerClient';
 import { getJobById } from '@/libs/getJobById';
 import type { JobProps } from '@/constants/Jobs';
 
-type Props = {
-  params: { id: string }
-}
+const page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params
+  const getJob = await getJobById(id)
+  const job = getJob.data
 
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const job = await getJobById(slug)
+  console.log(job)
   if (!job) notFound()
 
   return (
     <div className="px-4 pt-6 pb-12">
-      <JobDrawerClient job={job.data} />
+      <JobDrawerClient job={job} />
     </div>
   )
 }
+
+export default page
