@@ -8,8 +8,9 @@ type Props = {
   params: { id: string }
 }
 
-export default async function Page({ params }: Props) {
-  const job = await getJobById(params.id)
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const job = await getJobById(slug)
   if (!job) notFound()
 
   return (
