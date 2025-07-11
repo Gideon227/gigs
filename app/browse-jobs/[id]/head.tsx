@@ -5,9 +5,10 @@ type Props = {
   params: { id: string }
 }
 
-export default async function Head({ params }: Props) {
-  const getJobs = await getJobById(params.id)
-  const job: JobProps | null = getJobs.data;
+export default async function Head(props: { params: { id: string } }) {
+   const jobId = props.params.id
+  const job = await getJobById(jobId)
+//   const job: JobProps | null = getJobs.data;
   if (!job) {
     return (
       <>
