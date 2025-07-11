@@ -13,7 +13,7 @@ interface Props{
 const JobBoardHeader = ({ page, setPage }: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [keyword, setKeyword] = useState("")
-    const [location, setLocation] = useState("USA")
+    const [location, setLocation] = useState("United States")
     const [loading, setLoading] = useState(false)
 
     const router = useRouter();

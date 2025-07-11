@@ -11,6 +11,7 @@ export interface JobProps{
     salary: string;
     skills: string[];
     experienceLevel: string;
+    currency: string;
     applicationUrl: string;
     benefits?: string;
     approvaalStatus?: string;

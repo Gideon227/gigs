@@ -75,7 +75,7 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
     let countryQueryValue: string | null = selectedCountry;
 
     if (selectedCountry === "United States") {
-      countryQueryValue = "USA";
+      countryQueryValue = "United States";
     } else if (selectedCountry === "United Kingdom") {
       countryQueryValue = "England";
     }

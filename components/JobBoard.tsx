@@ -136,7 +136,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
         if (!params.get("country")) {
-            params.set("country", "USA");
+            params.set("country", "United States");
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
         } else {
             setCountryReady(true);
@@ -222,8 +222,9 @@ const JobBoard = ({ page, setPage }: Props ) => {
                             job={job}
                             hasBorder={index !== jobs.length - 1}
                             onClick={() => {
-                                openJob(job)
-                                updateSearchParam("id", job.id.toString())
+                                // openJob(job)
+                                // updateSearchParam("id", job.id.toString())
+                                router.push(`/browse-jobs/${job.id}`);
                             }}
                             setOpenShareModal={setOpenShareModal}
                         />

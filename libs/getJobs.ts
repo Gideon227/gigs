@@ -17,7 +17,6 @@ export async function getJobs (query : String | String[] | number | number[] | b
             const errorText = await response.text();
             throw new Error(`Failed to fetch jobs: ${response.status} ${response.statusText} - ${errorText}`);
         }
-        
         return response.json()
     } catch (error: any) {
         console.error('Error fetching jobs:', error.message || error);

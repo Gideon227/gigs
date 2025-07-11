@@ -6,7 +6,7 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 
 import useClearFilter from '@/utils/clearFilter';
 
-const roleOptions = ["engineering", "design", "marketing"];
+const roleOptions = ["developer", "consultant", "analyst", "administration", "architect", "business analyst"];
 
 interface RoleFilterProps {
     role: string | null;
