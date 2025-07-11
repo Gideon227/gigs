@@ -271,7 +271,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/mentoring.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job.roleCategory}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job.roleCategory.charAt(0).toUpperCase() + job.roleCategory.slice(1)}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Role Category</p>
                                     </div>
                                 </div>
