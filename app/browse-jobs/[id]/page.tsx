@@ -4,7 +4,11 @@ import JobDrawerClient from '@/components/JobDrawerClient';
 import { getJobById } from '@/libs/getJobById';
 import type { JobProps } from '@/constants/Jobs';
 
-export default async function Page({ params }: { params: { id: string } }) {
+type Props = {
+  params: { id: string }
+}
+
+export default async function Page({ params }: Props) {
   const job = await getJobById(params.id)
   if (!job) notFound()
 
