@@ -22,7 +22,7 @@ const TermPage = () => {
         if (!ref.current || !containerRef.current) return;
         const top = ref.current.offsetTop;
         containerRef.current.scrollTo({ top, behavior: 'smooth' });
-      }, []);
+    }, []);
 
 
     useEffect(() => {

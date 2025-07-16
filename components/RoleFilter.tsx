@@ -6,14 +6,15 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 
 import useClearFilter from '@/utils/clearFilter';
 
-const roleOptions = ["developer", "consultant", "analyst", "administration", "architect", "business analyst"];
+const roleOptions = ["developer", "consultant", "analyst", "administrator", "engineer", "business analyst"];
 
 interface RoleFilterProps {
     role: string | null;
     setRole: React.Dispatch<React.SetStateAction<string | null>>;
+    setPage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-const RoleFilter = ({ role, setRole }: RoleFilterProps) => {
+const RoleFilter = ({ role, setRole, setPage }: RoleFilterProps) => {
     const [open, setOpen] = useState<boolean>(false);
 
     const router = useRouter();
@@ -32,7 +33,7 @@ const RoleFilter = ({ role, setRole }: RoleFilterProps) => {
 
     const handleSelect = (value: string) => {
         setRole(value);
-        updateSearchParam("role", value);
+        updateSearchParam("roleCategory", value);
         setOpen(false);
     };
 
@@ -42,7 +43,7 @@ const RoleFilter = ({ role, setRole }: RoleFilterProps) => {
     <div className='py-8 space-y-2 border-b border-[#363636]'>
         <div className='flex justify-between'>
             <h1 className='text-heading 2xl:text-[16px] max-2xl:text-[14px] font-medium'>Role Category</h1>
-            <button onClick={() => clearFilter(setRole, "role")} className='text-neutral cursor-pointer text-[14px] leading-6'>Clear</button>
+            <button onClick={() => clearFilter(setRole, "roleCategory")} className='text-neutral cursor-pointer text-[14px] leading-6'>Clear</button>
         </div>
 
         <Popover open={open} onOpenChange={setOpen}>

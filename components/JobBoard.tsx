@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useLayoutEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import JobBoardHeader from './JobBoardHeader'
 import { JobProps } from '@/constants/Jobs'
@@ -14,6 +14,8 @@ import { getJobs } from '@/libs/getJobs';
 import ShareModal from './ShareModal';
 import { getJobById } from '@/libs/getJobById';
 import Pagination from './Pagination';
+import { generateJobSlug } from '@/utils/generateSlug';
+import Link from 'next/link';
 
 const JobDrawer = dynamic(() => import('./JobDrawer'), {
     ssr: false
@@ -35,24 +37,26 @@ const JobBoard = ({ page, setPage }: Props ) => {
     // const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [countryReady, setCountryReady] = useState(false);
+    const [hasFetched, setHasFetched] = useState(false);
+
 
     const [openShareModal, setOpenShareModal] = useState<JobProps | null>(null)
     const id = searchParams.get("id");
 
     const preloadRef = useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const queryString = useMemo(() => {
         const params = new URLSearchParams(searchParams.toString());
-        params.delete("id"); 
-        // if (page > 0) {
-        //     params.set("page", page.toString());
-        // } else {
-        //     params.delete("page");
-        // }
+        // params.delete("id"); 
+        
         params.set("page", page.toString());
-        params.set("limit", pageSize.toString()); 
+        params.set("limit", pageSize.toString());
+        
         return params.toString();
     }, [searchParams, page, pageSize]);
+
+    // const queryString = searchParams.toString();
 
     useEffect(() => {
         if (!id) {
@@ -77,17 +81,20 @@ const JobBoard = ({ page, setPage }: Props ) => {
     const fetchJobs = async () => {
         const params = new URLSearchParams(searchParams.toString());
         setLoading(true); 
-
+        console.log(queryString)
+        
         try {
             const data = await getJobs(queryString);
-            const newJobs = data?.data.jobs || [];
-
+            const newJobs = data?.data.jobs || data.data || [];
+            console.log(data)
             setJobs(newJobs);
             setJobLength(data?.data.totalJobs)
-            params.set("page", page.toString())
+            setHasFetched(true);
         } catch (error: any) {
             console.log(error.message)
             if (page === 1) setJobs([])
+            setJobLength(0)
+            setHasFetched(true);
         } finally {
             setLoading(false);
         }   
@@ -96,7 +103,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
     useEffect(() => {
         if (!countryReady) return;
         fetchJobs();
-    }, [queryString, countryReady]);
+    }, [searchParams.toString(), countryReady, pageSize]);
 
 
     useEffect(() => {
@@ -135,21 +142,39 @@ const JobBoard = ({ page, setPage }: Props ) => {
 
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
-        if (!params.get("country")) {
+        const hasLocation = params.has("location");
+        const hasCountry = params.has("country");
+
+        if (hasLocation && hasCountry) {
+            params.delete("country");
+            setCountryReady(true);
+            router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+            return;
+        }
+
+        if (!hasLocation && !hasCountry) {
             params.set("country", "United States");
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-        } else {
-            setCountryReady(true);
+            return;
         }
-    }, []);
+
+        setCountryReady(true);
+    }, [searchParams.toString(), page]);
+
 
     useEffect(() => {
         if (searchParams.get("country")) {
             setCountryReady(true);
+        } else {
+            setCountryReady(false);
         }
     }, [searchParams]);
 
-
+    const scrollToSection = useCallback((ref: React.RefObject<HTMLElement | null>) => {
+        if (!ref.current || !containerRef.current) return;
+        const top = ref.current.offsetTop;
+        containerRef.current.scrollTo({ top, behavior: 'smooth' });
+    }, []);
     
     const rawUpdateSearchParam = (key: string, value: string | null) => {
         const params = new URLSearchParams(searchParams);
@@ -171,20 +196,6 @@ const JobBoard = ({ page, setPage }: Props ) => {
         [searchParams]
     );
 
-    
-
-    // const updateSearchParam = (key: string, value: string | null) => {
-    //     const params = new URLSearchParams(searchParams);
-    
-    //     if (value) {
-    //       params.set(key, value);
-    //     } else {
-    //       params.delete(key);
-    //     }
-    //     setPagination(1);
-    //     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-    // };
-
     const openJob = (job: JobProps) => {
         setSelectedJob(job)
     }
@@ -197,11 +208,12 @@ const JobBoard = ({ page, setPage }: Props ) => {
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
         setSelectedJob(null)
     }
+    
   return (
     <div className='flex flex-col space-y-4'>
         <div className='bg-[#1B1E28] border border-[#363636] py-4 rounded-lg gap-y-2.5'>
             <JobBoardHeader page={page} setPage={setPage}/>
-            <div className='py-4 max-sm:px-4 sm:px-6 w-full'>
+            <div className='py-4 max-sm:px-4 sm:px-6 w-full' ref={containerRef}>
                 <div className='flex w-full justify-between items-center'>
                     <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobLength} Jobs</h1>
                     <div className='flex sm:space-x-4 max-sm:space-x-2 items-center'>
@@ -211,31 +223,39 @@ const JobBoard = ({ page, setPage }: Props ) => {
                 </div>
             </div>
             <div className='2xl:px-12 md:px-8 max-md:px-4 mt-2 cursor-pointer'>
-                {loading || jobs.length === 0 ? (
+                {loading ? (
                     <div className='space-y-4'>
                         {Array.from({ length: 10 }).map((_, i) => <JobCardSkeleton key={i} />)}
                     </div>
                     ) : jobs.length > 0 ? (
-                    jobs.map((job:JobProps, index) => (
-                        <JobCard
-                            key={index}
-                            job={job}
-                            hasBorder={index !== jobs.length - 1}
-                            onClick={() => {
-                                // openJob(job)
-                                // updateSearchParam("id", job.id.toString())
-                                router.push(`/browse-jobs/${job.id}`);
-                            }}
-                            setOpenShareModal={setOpenShareModal}
-                        />
-                    ))
-                    ): (
-                        <h1 className='text-heading text-[18px] py-4 text-center'>No jobs found</h1>
-                    )
-                }
+                    jobs.map((job:JobProps, index) => {
+                        const slug = generateJobSlug(job.title, job.companyName!, job.country, job.id);
 
+                        return (
+                            <Link
+                                href={`/browse-jobs/${slug}`}
+                                prefetch={true}
+                            >
+                                <JobCard
+                                    key={index}
+                                    job={job}
+                                    hasBorder={index !== jobs.length - 1}
+                                    onClick={() => {
+                                        // openJob(job)
+                                        // updateSearchParam("id", job.id.toString())
+                                        // router.push(`/browse-jobs/${slug}`);
+                                    }}
+                                    setOpenShareModal={setOpenShareModal}
+                                />
+                            </Link>
+                        )
+                    })
+                    ): hasFetched ? (
+                        <h1 className='text-heading text-[18px] py-4 text-center'>No jobs found</h1>
+                    ) : null
+                }
             </div>
-            {selectedJob && <JobDrawer job={selectedJob} onClose={closeDrawer} />}
+            {/* {selectedJob && <JobDrawer job={selectedJob} onClose={closeDrawer} />} */}
         </div>
 
         {/* <button
@@ -249,13 +269,16 @@ const JobBoard = ({ page, setPage }: Props ) => {
             {loading ? "Loading..." : "Load More"}
         </button> */}
 
-        {jobs && <Pagination 
-            totalItems={jobLength}
-            currentPage={page}
-            pageSize={pageSize}
-            onPageChange={setPage}
-            onPageSizeChange={setPageSize}
-        />}
+        {!loading && jobs.length > 0 && (
+            <Pagination 
+                totalItems={jobLength}
+                currentPage={page}
+                pageSize={pageSize}
+                onPageChange={setPage}
+                onPageSizeChange={setPageSize}
+                scrollToSection={() => scrollToSection(containerRef)}
+            />
+        )}
 
         {openShareModal && (
             <ShareModal

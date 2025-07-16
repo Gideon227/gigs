@@ -12,6 +12,7 @@ import { RxCross2 } from "react-icons/rx";
 import { URL } from 'url';
 import ShareModal from './ShareModal';
 import JobBoard from './JobBoard';
+import { PiShareNetworkFill } from "react-icons/pi";
 
 type JobDrawerProps = {
     job: JobProps | null;
@@ -99,7 +100,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
           case 'onsite':
             return 'On-Site';
           default:
-            return '';
+            return workSettings;
         }
     };
 
@@ -280,9 +281,10 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             
                             <div className='space-y-4 flex flex-col items-center'>
                             {job.applicationUrl && (<Link target="_blank" href={job.applicationUrl} className='bg-primary py-3 sm:px-16  max-sm:px-4 text-nowrap w-full text-center rounded-lg font-semibold text-dark text-[16px] max-md:text-[14px]'>Apply for Job</Link>)}
-                                <button className='flex items-center space-x-2'>
-                                    <Image src='/Bookmark.svg' width={24} height={24} alt='Bookmark icon' className='max-md:w-4'/>
-                                    <h2 className='text-primary text-[16px] max-md:text-[14px] text-nowrap font-semibold leading-6'>Save job for later</h2>
+                                <button onClick={() => setOpenShareModal(job)} className='flex items-center space-x-2'>
+                                    {/* <Image src='/Bookmark.svg' width={24} height={24} alt='Bookmark icon' className='max-md:w-4'/> */}
+                                    <span className='text-primary max-md:w-4'><PiShareNetworkFill size={24}/></span>
+                                    <h2 className='text-primary text-[16px] max-md:text-[14px] text-nowrap font-semibold leading-6'>Share Job</h2>
                                 </button>
                             </div>
                         </div>

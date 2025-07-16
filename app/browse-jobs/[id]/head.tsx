@@ -1,8 +1,8 @@
 import { getJobById } from '@/libs/getJobById'
 import type { JobProps } from '@/constants/Jobs'
 
-export default async function Head({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function Head ({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   const getJobs = await getJobById(id)
   const job: JobProps | null = getJobs.data;
@@ -25,7 +25,7 @@ export default async function Head({ params }: { params: Promise<{ id: string }>
       name: "GIGS.TECH",
       value: job.id
     },
-    datePosted: job.createdAt,
+    datePosted: job.postedDate,
     employmentType: job.workSettings,
     hiringOrganization: {
       "@type": "Organization",

@@ -9,6 +9,7 @@ import useClearFilter from '@/utils/clearFilter';
 import Image from 'next/image';
 
 interface FilterProps{
+  setPage: (value: any) => void;
   title: string;
   options: Option[];
   state: string[] | string | null;
@@ -20,7 +21,7 @@ interface FilterProps{
   isMulti?: boolean;
 }
 
-const FilterCard = ({ title, state, setState, options, changeKey, onChange, extraStyles, hasBorderBottom=true, isMulti = false }: FilterProps) => {
+const FilterCard = ({ setPage, title, state, setState, options, changeKey, onChange, extraStyles, hasBorderBottom=true, isMulti = false }: FilterProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -69,12 +70,15 @@ const FilterCard = ({ title, state, setState, options, changeKey, onChange, extr
             <button 
               onClick= {() => {
                 setState(isMulti ? [] : null);
-                const updatedParams = new URLSearchParams(searchParams);
+                const updatedParams = new URLSearchParams(searchParams.toString());
                 updatedParams.delete(changeKey);
                 if (changeKey === 'salary'){
                   updatedParams.delete('minSalary');
-                  updatedParams.delete('maxSalary')
+                  updatedParams.delete('maxSalary');
+                  
                 }
+                updatedParams.set("page", "1");
+                // setPage(1);
                 router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
               }}
               className='text-neutral cursor-pointer text-[14px] leading-6'>

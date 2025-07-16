@@ -16,9 +16,14 @@ const JobBoardHeader = ({ page, setPage }: Props) => {
     const [location, setLocation] = useState("United States")
     const [loading, setLoading] = useState(false)
 
-    const router = useRouter();
     const searchParams = useSearchParams();
-    const params = new URLSearchParams(searchParams.toString());
+
+    useEffect(() => {
+        const params = new URLSearchParams(searchParams.toString());
+        setLocation(params.get("country") || params.get("location") || "United States");
+    }, [searchParams.toString()]);
+
+    const router = useRouter();
 
     useEffect(() => {
         if (openModal) {
@@ -41,13 +46,16 @@ const JobBoardHeader = ({ page, setPage }: Props) => {
         if (keyword.trim()) params.set("keyword", keyword.trim());
         else params.delete("keyword");
 
-        if (location.trim()) params.set("location", location.trim());
+        if (location.trim()) {
+            params.set("location", location.trim());
+            params.delete("country")
+        }
         else params.delete("location");
 
         params.set("page", "1"); 
         setPage(1);
 
-        router.push(`/browse-jobs?${params.toString()}`, { scroll: false });
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
         setLoading(false)
     }
 
@@ -110,7 +118,7 @@ const JobBoardHeader = ({ page, setPage }: Props) => {
                         exit={{ y: '100%' }}
                         transition={{ type: 'tween', duration: 0.2 }}
                         onClick={(e) => e.stopPropagation()}
-                        className='rounded-t-2xl overflow-x-hidden z-50 px-4 w-[-webkit-fill-available]'
+                        className='rounded-t-2xl overflow-x-hidden z-50 px-4 w-[-webkit-fill-available] pb-20'
                     >
                         <JobSidebar page={page} setPage={setPage}/>
                     </motion.div>

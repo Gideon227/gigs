@@ -6,10 +6,11 @@ import type { JobProps } from '@/constants/Jobs';
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
-  const getJob = await getJobById(id)
+  const jobId = id.split('-').slice(-5).join('-').toString();
+
+  const getJob = await getJobById(jobId!)
   const job = getJob.data
 
-  console.log(job)
   if (!job) notFound()
 
   return (

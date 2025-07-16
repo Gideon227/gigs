@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import JobDrawer from '@/components/JobDrawer'
 import type { JobProps } from '@/constants/Jobs'
+import { AnimatePresence } from 'framer-motion'
 
 export default function JobDrawerClient({ job }: { job: JobProps }) {
   const router = useRouter()
@@ -11,5 +12,9 @@ export default function JobDrawerClient({ job }: { job: JobProps }) {
     router.back()   
   }
 
-  return <JobDrawer job={job} onClose={handleClose} />
+  return (
+    <AnimatePresence mode='wait'>
+      <JobDrawer key={job?.id} job={job} onClose={handleClose} />
+    </AnimatePresence>
+  )
 }

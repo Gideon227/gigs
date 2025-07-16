@@ -15,6 +15,7 @@ interface Props {
     onPageSizeChange: (size: number) => void;
     pageSizeOptions?: number[];
     maxPageButtons?: number;
+    scrollToSection: () => void
 }
 const Pagination: React.FC<Props> = React.memo(({
     totalItems,
@@ -24,6 +25,7 @@ const Pagination: React.FC<Props> = React.memo(({
     onPageSizeChange,
     pageSizeOptions = [10, 25, 50],
     maxPageButtons = 5,
+    scrollToSection
   })  => {
     const [open, setOpen] = useState<boolean>(false)
     const totalPages = useMemo(() => Math.ceil(totalItems / pageSize), [totalItems, pageSize]);
@@ -60,18 +62,17 @@ const Pagination: React.FC<Props> = React.memo(({
     const handlePageClick = useCallback((p: number | "...") => {
         if (typeof p === "number" && p !== currentPage) {
             onPageChange(p);
-            const pageNumber = currentPage + 1
-            console.log(currentPage)
             const params = new URLSearchParams(searchParams.toString());
-            if (currentPage > 1) {
-                params.set("page", pageNumber.toString());
-            } else {
-                params.delete("page");
-            }
-
+            // if (p > 1) {
+            //     params.set("page", p.toString());
+            // } else {
+            //     params.delete("page");
+            // }
+            params.set("page", p.toString());
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+            scrollToSection()
         }
-    }, [currentPage, onPageChange]);
+    }, [currentPage, onPageChange, searchParams, router]);
     
     // const resultsFrom = useMemo(() => (currentPage - 1) * pageSize + 1, [currentPage, pageSize]);
     // const resultsTo = useMemo(() => Math.min(totalItems, currentPage * pageSize), [currentPage, pageSize, totalItems]);
@@ -117,14 +118,16 @@ const Pagination: React.FC<Props> = React.memo(({
                     disabled={currentPage <= 1}
                     className='text-heading disabled:opacity-50 cursor-pointer'
                     onClick={() => {
-                        onPageChange(currentPage - 1);
+                        const newPage = currentPage - 1;
+                        onPageChange(newPage);
 
                         const params = new URLSearchParams(searchParams.toString());
                         if (currentPage > 1) {
-                            params.set("page", currentPage.toString());
+                            params.set("page", newPage.toString());
                         } else {
                             params.delete("page");
                         }
+                        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
                     }}
                 >
                     <MdKeyboardArrowLeft size={18}/>
@@ -135,9 +138,9 @@ const Pagination: React.FC<Props> = React.memo(({
                         <span key={`dots-${i}`} className="px-2 py-1 text-white ">…</span>
                     ) : (
                         <button
-                        key={p}
-                        onClick={() => handlePageClick(p)}
-                        className={`px-3 py-1 cursor-pointer text-white text-[14px] active:text-[15px] ${p === currentPage ? "border rounded-full border-white " : ""}`}
+                            key={p}
+                            onClick={() => handlePageClick(p)}
+                            className={`px-3 py-1 cursor-pointer text-white text-[14px] active:text-[15px] ${p === currentPage ? "border rounded-full border-white " : ""}`}
                         >
                         {p}
                         </button>
@@ -148,14 +151,16 @@ const Pagination: React.FC<Props> = React.memo(({
                     disabled={currentPage >= totalPages}
                     className='text-heading disabled:opacity-50 cursor-pointer'
                     onClick={() => {
-                        onPageChange(currentPage + 1)
+                        const newPage = currentPage + 1;
+                        onPageChange(newPage);
 
                         const params = new URLSearchParams(searchParams.toString());
                         if (currentPage > 1) {
-                            params.set("page", currentPage.toString());
+                            params.set("page", newPage.toString());
                         } else {
                             params.delete("page");
                         }
+                        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
                     }}
                 >
                     <MdKeyboardArrowRight size={18}/>

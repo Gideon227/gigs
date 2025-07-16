@@ -34,7 +34,7 @@ const salaryRangeOptions: Option[] = [
 ];
 
 const workSettingsOptions: Option[] = [
-  { value: 'onSite', label: 'On-site' },
+  { value: 'On-site', label: 'On-site' },
   { value: 'hybrid', label: 'Hybrid' },
   { value: 'remote', label: 'Remote' }
 ] 
@@ -149,7 +149,7 @@ const JobSidebar = ({ page, setPage }: Props) => {
 
     setSalaryRange(searchParams.get('salary'));
     setExperienceLevel(searchParams.get('experienceLevel'));
-    setRole(searchParams.get('role'));
+    setRole(searchParams.get('roleCategory'));
     setCountry(searchParams.get('country'));
     setState(searchParams.get('state'));
     setCity(searchParams.get('city'));
@@ -164,6 +164,7 @@ const JobSidebar = ({ page, setPage }: Props) => {
         <h1 className='text-heading text-[18px] font-medium'>Filter</h1>
         <button 
           onClick={() => {
+            const updatedParams = new URLSearchParams();
             setDate(null);
             setCountry(null);
             setState(null);
@@ -175,7 +176,7 @@ const JobSidebar = ({ page, setPage }: Props) => {
             setWorkSettings([]);
             setExperienceLevel(null);
 
-            const updatedParams = new URLSearchParams();
+            updatedParams.set("country", "United States");
             router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
           }}
           className='text-neutral text-[16px] leading-6 cursor-pointer'>
@@ -205,9 +206,12 @@ const JobSidebar = ({ page, setPage }: Props) => {
               setRole(val);
               const resolvedVal = typeof val === 'function' ? val(experienceLevel) : val;
               updateSingleParam("role", resolvedVal);
-            }} />
+            }} 
+            setPage={setPage}
+          />
 
           <FilterCard
+            setPage={setPage}
             title='Job Type'
             state={jobType}
             setState={setJobType}
@@ -219,6 +223,7 @@ const JobSidebar = ({ page, setPage }: Props) => {
 
           <div className='border-b border-[#363636] pb-4'>
             <FilterCard
+              setPage={setPage}
               title='Salary Range'
               state={salaryRange}
               setState={setSalaryRange}
@@ -260,6 +265,7 @@ const JobSidebar = ({ page, setPage }: Props) => {
           </div>
 
           <FilterCard
+            setPage={setPage}
             title='Work Setting'
             state={workSettings}
             setState={setWorkSettings}
@@ -279,6 +285,7 @@ const JobSidebar = ({ page, setPage }: Props) => {
           />
 
           <FilterCard
+            setPage={setPage}
             title='Required Skills'
             state={skills}
             setState={setSkills}

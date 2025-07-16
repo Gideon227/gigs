@@ -54,7 +54,7 @@ function truncateText(text: string, wordLimit: number) {
 }
 
 const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) => {
-  const { title, description, location, country, state, city, jobType, salary, skills, applicationUrl, companyLogo, companyName, createdAt } = job
+  const { title, description, location, country, state, city, jobType, salary, skills, applicationUrl, companyLogo, companyName, postedDate } = job
 
   function getTimeAgo(dateString: string): string {
     const createdDate = new Date(dateString.replace(" ", "T"));
@@ -73,7 +73,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
   }
   
   // Usage:
-  const timeAgo = getTimeAgo(createdAt); 
+  const timeAgo = getTimeAgo(postedDate); 
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -111,7 +111,7 @@ const JobCard = ({ job, hasBorder, onClick, setOpenShareModal }: JobCardProps) =
 
                     <div className='flex space-x-1.5'>
                       <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                      <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${country}, ${state}` }</p>
+                      <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${country} ${state && `, ${state}`}` }</p>
                     </div>
                   </div>
                 </div>

@@ -94,7 +94,7 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
   }, [selectedCountry, selectedState, selectedCity]);
 
 const clearAll = () => {
-    setSelectedCountry(null);
+    setSelectedCountry("United States");
     setSelectedState(null);
     setSelectedCity(null);
     setStates([]);
@@ -102,9 +102,11 @@ const clearAll = () => {
     onChange({ country: null, state: null, city: null });
 
     const params = new URLSearchParams(searchParams.toString());
-    params.delete("country");
+    params.set("country", "United States");
     params.delete("state");
     params.delete("city");
+
+
     router.push(`/browse-jobs?${params.toString()}`);
   };
     
