@@ -90,7 +90,7 @@ const JobDrawerSkeleton = () => {
               <div className="space-y-4">
                 <SkeletonLine width="w-40" height="h-6" />
                 {[...Array(2)].map((_, i) => (
-                  <div key={i} className="space-y-1 border-b border-[#363636] pb-4">
+                  <div key={i} className="space-y-1 border-b border-gray-600 pb-4">
                     <SkeletonLine width="w-3/4" height="h-5" />
                     <SkeletonLine width="w-2/3" height="h-4" />
                   </div>

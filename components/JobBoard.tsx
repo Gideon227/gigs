@@ -217,7 +217,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
                 <div className='flex w-full justify-between items-center'>
                     <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobLength} Jobs</h1>
                     <div className='flex sm:space-x-4 max-sm:space-x-2 items-center'>
-                        <p className='max-sm:text-sm sm:text-[18px] max-2xl:text-[16px] leading-6 text-start text-heading'>Sort by:</p>
+                        <p className='max-sm:text-sm sm:text-[16px] 2xl:text-[18px] leading-6 text-start text-heading'>Sort by:</p>
                         <SortFilter />
                     </div>
                 </div>
@@ -232,11 +232,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
                         const slug = generateJobSlug(job.title, job.companyName!, job.country, job.id);
 
                         return (
-                            <Link
-                                href={`/browse-jobs/${slug}`}
-                                prefetch={true}
-                            >
-                                <JobCard
+                            <JobCard
                                     key={index}
                                     job={job}
                                     hasBorder={index !== jobs.length - 1}
@@ -245,9 +241,9 @@ const JobBoard = ({ page, setPage }: Props ) => {
                                         // updateSearchParam("id", job.id.toString())
                                         // router.push(`/browse-jobs/${slug}`);
                                     }}
+                                    slug={`/browse-jobs/${slug}`}
                                     setOpenShareModal={setOpenShareModal}
-                                />
-                            </Link>
+                            />
                         )
                     })
                     ): hasFetched ? (

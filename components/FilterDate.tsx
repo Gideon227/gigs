@@ -5,12 +5,18 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 
 
-enum DateOptions {
-    TODAY= "today",
-    LAST_3_DAYS = "last_3_days",
-    LAST_7_DAYS = "last_7_days",
-    LAST_15_DAYS = "last_15_days"
-}
+type OptionValue =
+  'today'
+  | 'last_3_days'
+  | 'last_7_days'
+  | 'last_15_days'
+
+const options: { label: string; value: OptionValue }[] = [
+    { label: 'Today', value: 'today' },
+    { label: 'Last 3 days', value: 'last_3_days' },
+    { label: 'Last 7 days', value: 'last_7_days' },
+    { label: 'Last 15 days', value: 'last_15_days' }
+]
 
 interface DateProps {
     date:  string | null;
@@ -52,7 +58,7 @@ const FilterDate = ({ date, setDate, setPage }: DateProps) => {
             case 'last_15_days':
               setDate('Last 15 days') 
               break;
-          }
+        }
         setOpen(false)
         updateSearchParam("datePosted", value)
     }
@@ -78,33 +84,13 @@ const FilterDate = ({ date, setDate, setPage }: DateProps) => {
             <PopoverContent className="w-auto p-0 border-none">
                 <div className='bg-[#101217] px-4 py-3 border-[#363636] border rounded-xl date_overlay min-w-[320px]'>
                     <div className='text-start w-full'>
-                        <h1
-                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => handleClick("today")}
-                        >
-                            Today
-                        </h1>
-
-                        <h1
-                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => handleClick("last_3_days")}
-                        >
-                            Last 3 days
-                        </h1>
-
-                        <h1
-                            className='py-4 cursor-pointer border-b border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => handleClick("last_7_days")}
-                        >
-                            Last 7 days
-                        </h1>
-
-                        <h1
-                            className='py-4 cursor-pointer border-[#363636] text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px]'
-                            onClick={() => handleClick("last_15_days")}
-                        >
-                            Last 15 days
-                        </h1>
+                        {options.map((option, index) => (
+                            <h1
+                                key={index}
+                                className={`py-4 cursor-pointer text-[#F8F6F0] leading-6 2xl:text-[16px] max-2xl:text-[14px] ${index !== options.length - 1 && 'border-b border-gray'}`}
+                                onClick={() => handleClick(option.value)}
+                            >{option.label}</h1>
+                        ))}
                     </div>
 
                 </div>

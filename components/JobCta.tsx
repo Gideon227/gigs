@@ -51,7 +51,7 @@ const JobCta = () => {
             <button 
                 disabled={loading}
                 onClick={(e) => handleClick(e)} 
-                className={`font-semibold text-heading 2xl:text-[16px] max-2xl:text-[14px] leading-6 bg-dark w-full py-3 rounded-lg ${loading && 'opacity-85'}`}>
+                className={`cursor-pointer font-semibold text-heading 2xl:text-[16px] max-2xl:text-[14px] leading-6 bg-dark w-full py-3 rounded-lg ${loading && 'opacity-85'}`}>
                     {loading ? 'Sending...' : 'Send'}
                 </button>
         </div>

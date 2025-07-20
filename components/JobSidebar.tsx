@@ -10,6 +10,7 @@ import RoleFilter from './RoleFilter';
 import useUpdateSearchParams from '@/utils/updateSearchParams';
 import CountryFilter from './CountryFilter';
 import CustomSalarySlider from './CustomSalarySlider';
+import { RxCross2  } from 'react-icons/rx';
 
 export type Option = {
   value: string;
@@ -51,9 +52,10 @@ const skillsOptions: Option[] = [
 interface Props{
   page: number;
   setPage: (value: any) => void
+  setOpenModal?: (value: boolean) => void
 }
 
-const JobSidebar = ({ page, setPage }: Props) => {
+const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
@@ -159,9 +161,15 @@ const JobSidebar = ({ page, setPage }: Props) => {
   const maxSalary = searchParams.get("maxSalary");
 
   return (
-    <div className='bg-[#1B1E28] border border-[#363636] rounded-lg gap-y-2.5 max-lg:pb-48 '>
-      <div className='max-lg:sticky max-lg:-top-1 max-lg:bg-[#1B1E28] max-lg:rounded-t-lg max-lg:z-50 flex justify-between px-4 py-4 border-b border-[#363636] overflow-y-clip'>
-        <h1 className='text-heading text-[18px] font-medium'>Filter</h1>
+    <div className='bg-[#1B1E28] border border-[#363636] rounded-lg gap-y-2.5 max-md:pb-10'>
+      <div className='max-lg:fixed max-lg:-top-1 max-lg:bg-[#1B1E28] max-lg:rounded-t-lg max-lg:z-50 flex justify-between px-4 py-4 border-b border-[#363636] overflow-y-clip w-full'>
+        <div className='flex items-center justify-between space-x-2 lg:hidden'>
+          <button onClick={() => setOpenModal && setOpenModal(false)}>
+            <RxCross2  size={18} color='#FCFCFC'/>
+          </button>
+          <h1 className='text-[16px] font-medium text-heading'>Filter</h1>
+        </div>
+        <h1 className='text-heading text-[18px] font-medium max-lg:hidden'>Filter</h1>
         <button 
           onClick={() => {
             const updatedParams = new URLSearchParams();
@@ -179,12 +187,12 @@ const JobSidebar = ({ page, setPage }: Props) => {
             updatedParams.set("country", "United States");
             router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
           }}
-          className='text-neutral text-[16px] leading-6 cursor-pointer'>
+          className='text-neutral text-[16px] max-md:text-[14px] leading-6 cursor-pointer'>
             Clear all
         </button>
       </div>
 
-      <div className='max-lg:overflow-y-auto max-lg:max-h-[calc(100vh-80px)] max-lg:hide-scrollbar'>
+      <div className='max-lg:overflow-y-auto max-lg:hide-scrollbar'>
         <div className='px-4'>
           <FilterDate 
             date={date}
@@ -296,6 +304,40 @@ const JobSidebar = ({ page, setPage }: Props) => {
             isMulti
           />
         </div>
+      </div>
+
+
+      <div className='max-lg:fixed max-lg:bottom-0 lg:hidden max-lg:bg-[#1B1E28] max-lg:z-50 flex justify-between items-center space-x-4 px-4 py-4 border-t border-[#363636] overflow-y-clip w-full'>
+        <button
+          className='w-1/4 text-primary text-[12px] cursor-pointer font-semibold'
+          onClick={() => {
+            const updatedParams = new URLSearchParams();
+            setDate(null);
+            setCountry(null);
+            setState(null);
+            setCity(null);
+            setRole(null);
+            setJobType([]);
+            setSalaryRange(null);
+            setSkills([]);
+            setWorkSettings([]);
+            setExperienceLevel(null);
+
+            updatedParams.set("country", "United States");
+            router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
+            setOpenModal && setOpenModal(false)
+          }}
+        >
+          RESET
+        </button>
+
+        <button 
+          onClick={() => {
+            setOpenModal && setOpenModal(false)
+          }}
+          className='cursor-pointer font-semibold text-dark text-[12px] leading-6 bg-primary py-2 rounded-md w-3/4'>
+            SHOW 
+        </button>
       </div>
 
     </div>

@@ -99,7 +99,7 @@ const FilterCard = ({ setPage, title, state, setState, options, changeKey, onCha
                     {/* <Image src='/' width={14} height={14} alt='check' className='text-primary'/>
                   </div> */}
                   <label
-                    className="text-[16px] text-heading font-normal"
+                    className="text-[16px] max-md:text-[14px] text-heading font-normal"
                     >
                     {option.label}
                   </label>

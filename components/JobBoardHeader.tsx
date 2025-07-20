@@ -21,6 +21,8 @@ const JobBoardHeader = ({ page, setPage }: Props) => {
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
         setLocation(params.get("country") || params.get("location") || "United States");
+        setKeyword(params.get("keyword") || "");
+
     }, [searchParams.toString()]);
 
     const router = useRouter();
@@ -114,13 +116,13 @@ const JobBoardHeader = ({ page, setPage }: Props) => {
 
                     <motion.div
                         initial={{ y: '100%' }}
-                        animate={{ y: '25%' }}
+                        animate={{ y: '0%' }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'tween', duration: 0.2 }}
                         onClick={(e) => e.stopPropagation()}
-                        className='rounded-t-2xl overflow-x-hidden z-50 px-4 w-[-webkit-fill-available] pb-20'
+                        className='rounded-t-2xl overflow-x-hidden z-50 w-[-webkit-fill-available] pb-16 pt-10'
                     >
-                        <JobSidebar page={page} setPage={setPage}/>
+                        <JobSidebar page={page} setPage={setPage} setOpenModal={setOpenModal}/>
                     </motion.div>
                 </motion.div>
             )}

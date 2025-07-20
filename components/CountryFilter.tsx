@@ -74,11 +74,11 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
 
     let countryQueryValue: string | null = selectedCountry;
 
-    if (selectedCountry === "United States") {
-      countryQueryValue = "United States";
-    } else if (selectedCountry === "United Kingdom") {
-      countryQueryValue = "England";
-    }
+    // if (selectedCountry === "United States") {
+    //   countryQueryValue = "United States";
+    // } else if (selectedCountry === "United Kingdom") {
+    //   countryQueryValue = "England";
+    // }
 
     if (selectedCountry) params.set("country", countryQueryValue!);
     else params.delete("country");
