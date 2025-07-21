@@ -5,21 +5,30 @@ import { getJobById } from '@/libs/getJobById';
 import { getJobs } from '@/libs/getJobs';
 import type { JobProps } from '@/constants/Jobs';
 
-export async function getStaticPaths() {
-  const jobs = await getJobs("limit=10000"); // all job IDs
+import { Metadata } from 'next';
+
+export async function generateStaticParams() {
+  const jobs = await getJobs("limit=1000");
+
+  return jobs.map((job: JobProps) => ({
+    id: job.id, 
+  }));
+}
+
+// Optional: SEO Metadata (recommended)
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const job = await getJobById(params.id);
   return {
-    paths: jobs.map((job: JobProps) => ({ params: { id: job.id } })),
-    fallback: 'blocking',
+    title: `${job.title} at ${job.company}`,
+    description: job.description.slice(0, 160),
+    robots: 'index, follow',
+    alternates: {
+      canonical: `https://test.gigs.tech/browse-jobs/${job.id}`,
+    },
   };
 }
 
-export async function getStaticProps({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const jobId = id.split('-').slice(-5).join('-').toString();
 
-  const job = await getJobById(jobId);
-  return { props: { job } };
-}
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
