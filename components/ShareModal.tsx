@@ -65,7 +65,7 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
                 <h1 className='font-medium text-heading text-[18px] max-md:text-[16px]'>{job.companyName?.toUpperCase()}</h1>
                 <h1 className='text-paragraph text-[16px] space-y-6 max-md:space-y-4 max-md:text-[14px]'>
                     {job.title}
-                    <div className='flex md:flex-wrap items-center -ml-2'>
+                    <div className='flex flex-wrap items-center -ml-2'>
                         {job.skills.slice(0, 10).map((item, index) => (
                             <div key={item} className={`flex items-center h-3 mt-2 ${index !== job.skills.length - 1 && "border-r-1 border-paragraph"}`}>
                               <p className={`text-[14px] max-md:text-[12px] font-light text-paragraph text-nowrap px-2 `}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>

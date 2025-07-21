@@ -158,7 +158,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
                             <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${job.companyLogo ? "bg-white" : "bg-transparent"}`}/>
-                            <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px]'>{job.title}</h2>
+                            <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px] max-ms:text-[18px]'>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
                             <div className='flex items-center'>
@@ -207,14 +207,14 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     <div className='md:w-3/5 max-md:w-full space-y-6'>
                         <div className='space-y-4 text-start'>
                             <h1 className='font-semibold 2xl:text-[20px] max-2xl:text-[18px] text-white leading-[30px]'>About the job</h1>
-                            <p className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph'>{job.description}</p>
+                            <p className='2xl:text-[18px] max-2xl:text-[16px] max-sm:text-sm leading-6 text-paragraph'>{job.description}</p>
                         </div>
 
                         {job.responsibilities.length > 0 && <div className='text-start space-y-4'>
                             <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Responsibilities</h2>
                             <ul className='flex flex-col space-y-2 list-disc pl-4'>
                                 {job.responsibilities.map((item, index) => (
-                                    <li key={index} className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
+                                    <li key={index} className='2xl:text-[18px] max-2xl:text-[16px] max-sm:text-sm leading-6 text-paragraph text-start'>
                                         {item}
                                     </li>
                                 ))}
@@ -226,7 +226,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                             <h2 className='text-[20px] max-2xl:text-[18px] font-medium leading-6 text-white'>Qualifications</h2>
                             <ul className='flex flex-col space-y-2 list-disc pl-4'>
                                 {job.qualifications.map((item, index) => (
-                                    <li key={index} className='2xl:text-[18px] max-2xl:text-[16px] leading-6 text-paragraph text-start'>
+                                    <li key={index} className='2xl:text-[18px] max-2xl:text-[16px] max-sm:text-sm leading-6 text-paragraph text-start'>
                                         {item}
                                     </li>
                                 ))}
@@ -241,7 +241,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <h1 className='text-heading text-start 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[18px] font-semibold leading-8'>
                                     {formatNumber(job.salary)} 
                                 </h1>
-                                <p className='text-neutral text-[16px] leading-6'>Salary range</p>
+                                <p className='text-neutral text-[16px] max-sm:text-sm leading-6'>Salary range</p>
                             </div>
 
                             <div className='space-y-6 text-start max-md:grid max-md:grid-cols-2 max-sm:grid-cols-1 max-md:justify-between'>
@@ -264,7 +264,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/work-update.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings)}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings).charAt(0).toUpperCase() + getWorkSettingsText(job.workSettings).slice(1)}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Work Setting</p>
                                     </div>
                                 </div>
@@ -290,13 +290,13 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                         </div>
 
                         <div className='flex flex-col justify-start items-start'>
-                            <h1 className='text-white font-semibold text-[20px] leading-[30px] pt-8'>Related Jobs</h1>
+                            <h1 className='text-white font-semibold text-[20px] max-sm:text-[16px] leading-[30px] pt-8'>Related Jobs</h1>
                     
                             {relatedJobs.length > 0 ? (
                                 relatedJobs.map((relatedJob: JobProps, index) => (
                                     <Link target="_blank" href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs/${relatedJob.id}`} className={`flex flex-col space-y-1.5 py-6 w-full cursor-pointer ${index !== relatedJobs.length - 1 ? 'border-b border-[#4F4F4F]' : ""}`} key={index}>
-                                        <h1 className='font-semibold 2xl:text-[20px] text-[18px] leading-7 text-heading'>{relatedJob.title}</h1>
-                                        <p className='text-paragraph text-[18px] leading-6 max-2xl:text-[16px]'>{`At ${ relatedJob && relatedJob.companyName!.charAt(0).toUpperCase() + relatedJob.companyName!.slice(1)}`}</p>
+                                        <h1 className='font-semibold 2xl:text-[20px] max-2xl:text-[18px] max-sm:text-[16px] leading-7 text-heading'>{relatedJob.title}</h1>
+                                        <p className='text-paragraph text-[18px] max-sm:text-sm leading-6 max-2xl:text-[16px]'>{`At ${ relatedJob && relatedJob.companyName!.charAt(0).toUpperCase() + relatedJob.companyName!.slice(1)}`}</p>
                                     </Link>
                                 ))
                             ): (

@@ -162,10 +162,10 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
 
   return (
     <div className='bg-[#1B1E28] border border-[#363636] rounded-lg gap-y-2.5 max-md:pb-10'>
-      <div className='max-lg:fixed max-lg:-top-1 max-lg:bg-[#1B1E28] max-lg:rounded-t-lg max-lg:z-50 flex justify-between px-4 py-4 border-b border-[#363636] overflow-y-clip w-full'>
-        <div className='flex items-center justify-between space-x-2 lg:hidden'>
+      <div className='max-lg:fixed max-lg:-top-1 max-lg:bg-[#1B1E28] max-lg:z-50 flex justify-between px-4 py-4 border-b border-[#363636] overflow-y-clip w-full'>
+        <div className='flex items-center justify-between space-x-4 lg:hidden'>
           <button onClick={() => setOpenModal && setOpenModal(false)}>
-            <RxCross2  size={18} color='#FCFCFC'/>
+            <RxCross2  size={21} color='#FCFCFC'/>
           </button>
           <h1 className='text-[16px] font-medium text-heading'>Filter</h1>
         </div>
@@ -192,7 +192,7 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
         </button>
       </div>
 
-      <div className='max-lg:overflow-y-auto max-lg:hide-scrollbar'>
+      <div className='max-lg:overflow-y-auto max-lg:hide-scrollbar max-lg:pb-12'>
         <div className='px-4'>
           <FilterDate 
             date={date}
