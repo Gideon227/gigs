@@ -7,7 +7,7 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover';
 import useClearFilter from '@/utils/clearFilter';
 import useMultiSearchParams from '@/utils/updateSearchParams';
 
-const experienceOptions = ["beginner", "intermediate", "senior"];
+const experienceOptions = ["beginner", "intermediate", "expert", "experienced"];
 
 interface ExperienceLevelFilterProps {
     experienceLevel: string | null;

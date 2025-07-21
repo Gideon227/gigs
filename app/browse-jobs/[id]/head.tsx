@@ -61,6 +61,7 @@ export default async function Head ({ params }: { params: Promise<{ id: string }
   return (
     <>
       <title>{`${job.title} at ${job.companyName} | GIGS.TECH`}</title>
+      <meta name="robots" content="index, follow" />
       <meta name="description" content={job.description.slice(0, 160)} />
       <script
         type="application/ld+json"

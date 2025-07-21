@@ -173,18 +173,40 @@ const Pagination: React.FC<Props> = React.memo(({
             <button
                 disabled={currentPage <= 1}
                 className='text-heading disabled:opacity-50'
-                onClick={() => onPageChange(currentPage - 1)}
+                onClick={() => {
+                    const newPage = currentPage - 1;
+                    onPageChange(newPage);
+
+                    const params = new URLSearchParams(searchParams.toString());
+                    if (currentPage > 1) {
+                        params.set("page", newPage.toString());
+                    } else {
+                        params.delete("page");
+                    }
+                    router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+                }}
             >
-                <MdKeyboardArrowLeft size={14}/>
+                <MdKeyboardArrowLeft size={18}/>
             </button>
             <h1 className='text-heading text-[16px] '>{currentPage} of {totalPages}</h1>
 
             <button
                 disabled={currentPage >= totalPages}
                 className='text-heading disabled:opacity-50'
-                onClick={() => onPageChange(currentPage + 1)}
+                onClick={() => {
+                    const newPage = currentPage + 1;
+                    onPageChange(newPage);
+
+                    const params = new URLSearchParams(searchParams.toString());
+                    if (currentPage > 1) {
+                        params.set("page", newPage.toString());
+                    } else {
+                        params.delete("page");
+                    }
+                    router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+                }}
             >
-                <MdKeyboardArrowRight size={14}/>
+                <MdKeyboardArrowRight size={18}/>
             </button>
 
         </div>

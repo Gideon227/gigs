@@ -156,7 +156,7 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
         <div className='gap-2 flex flex-wrap w-9/10'>
           {skills && skills.slice(0, 10).map((skill: string) => (
             <button onClick={() => handleSkillClick(skill)} className='rounded-full border-neutral border py-0.5 px-4 cursor-pointer' key={skill}>
-              <p className='text-heading items-center flex 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] leading-[21px]'>{skill}</p>
+              <p className='text-heading items-center flex 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] leading-[21px]'>{skill.slice(0, 33)}{skill.split('').length > 33 && '...'}</p>
             </button>
           ))}
           {skills.length > 10 && <span className='text-neutral-500'>...</span>}

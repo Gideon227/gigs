@@ -41,11 +41,11 @@ const workSettingsOptions: Option[] = [
 ] 
 
 const skillsOptions: Option[] = [
-  { value: 'communication', label: 'Communication' },
-  { value: 'excel', label: 'Excel' },
+  { value: 'power platform', label: 'Power Platform' },
+  { value: 'power apps', label: 'Power Apps' },
   { value: 'sql', label: 'SQL' },
   { value: 'microsoft', label: 'Microsoft' },
-  { value: 'java', label: 'Java' },
+  { value: 'javascript', label: 'JavaScript' },
   { value: 'python', label: 'Python' },
 ] 
 
