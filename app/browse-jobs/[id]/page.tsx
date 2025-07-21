@@ -30,9 +30,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
 
 
-const page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params
-  const jobId = id.split('-').slice(-5).join('-').toString();
+const page = async ({ params }: { params: { id: string } }) => {
+  // const { id } =  params
+  const jobId = params.id.split('-').slice(-5).join('-').toString();
 
   const getJob = await getJobById(jobId!)
   const job = getJob.data
