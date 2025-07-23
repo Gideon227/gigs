@@ -28,12 +28,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-type PageProps = {
-  params: { id: string };
-};
-
-const Page = async ({ params }: PageProps) => {
-  const { id } =  params
+const Page = async (props: any) => {
+  const { id } =  await props.params;
   const jobId = id.split('-').slice(-5).join('-').toString();
 
   const getJob = await getJobById(jobId!)
