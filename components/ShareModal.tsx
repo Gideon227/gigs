@@ -68,7 +68,7 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
                     <div className='flex flex-wrap items-center -ml-2'>
                         {job.skills.slice(0, 10).map((item, index) => (
                             <div key={item} className={`flex items-center h-3 mt-2 ${index !== job.skills.length - 1 && "border-r-1 border-paragraph"}`}>
-                              <p className={`text-[14px] max-md:text-[12px] font-light text-paragraph text-nowrap px-2 `}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
+                              <p className={`text-[14px] max-md:text-[12px] font-light text-paragraph text-wrap px-2 `}>{item.charAt(0).toUpperCase() + item.slice(1)}</p>
                             </div>
                         ))}
                     </div>
