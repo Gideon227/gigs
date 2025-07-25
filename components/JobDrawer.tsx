@@ -294,7 +294,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                     
                             {relatedJobs.length > 0 ? (
                                 relatedJobs.map((relatedJob: JobProps, index) => (
-                                    <Link target="_blank" href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs/${relatedJob.id}`} className={`flex flex-col space-y-1.5 py-6 w-full cursor-pointer ${index !== relatedJobs.length - 1 ? 'border-b border-[#4F4F4F]' : ""}`} key={index}>
+                                    <Link target="_blank" href={`/browse-jobs/${relatedJob.id}`} className={`flex flex-col space-y-1.5 py-6 w-full cursor-pointer ${index !== relatedJobs.length - 1 ? 'border-b border-[#4F4F4F]' : ""}`} key={index}>
                                         <h1 className='font-semibold 2xl:text-[20px] max-2xl:text-[18px] max-sm:text-[16px] leading-7 text-heading'>{relatedJob.title}</h1>
                                         <p className='text-paragraph text-[18px] max-sm:text-sm leading-6 max-2xl:text-[16px]'>{`At ${ relatedJob && relatedJob.companyName!.charAt(0).toUpperCase() + relatedJob.companyName!.slice(1)}`}</p>
                                     </Link>
