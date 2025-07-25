@@ -4,7 +4,6 @@ import JobDrawerClient from '@/components/JobDrawerClient';
 import { getJobById } from '@/libs/getJobById';
 import { getJobs } from '@/libs/getJobs';
 import type { JobProps } from '@/constants/Jobs';
-import type { PageProps } from '@/.next/types/app/browse-jobs/[id]/page';
 
 import { Metadata } from 'next';
 
@@ -26,7 +25,7 @@ export async function generateMetadata({
     const jobId = id.split('-').slice(-5).join('-').toString();
     
     const getJob = await getJobById(jobId);
-    const job = getJob?.data || getJob;
+    const job: JobProps = getJob?.data || getJob;
     
     if (!job) {
       return {
@@ -37,8 +36,21 @@ export async function generateMetadata({
     }
     
     return {
-      title: `${job.title} at ${job.company}`,
-      description: job.description?.slice(0, 160) || `${job.title} position at ${job.company}`,
+      title: `${job.title} at ${job.companyName}`,
+      description: job.description?.slice(0, 160) || `${job.title} position at ${job.companyName}`,
+      openGraph: {
+        title: job.title,
+        description: job.description,
+        images: [
+          {
+            url: job.companyLogo!,
+            width: 800,
+            height: 600,
+            alt: job.title
+          }
+        ],
+        type: 'website'
+      },
       robots: 'index, follow',
       alternates: {
         canonical: `https://test.gigs.tech/browse-jobs/${job.id}`,

@@ -66,7 +66,7 @@ const SortFilter = () => {
                             onClick={() => {
                                 setSortBy("date_posted")
                                 setOpen(false)
-                                updateSearchParam("sort", "-datePosted")
+                                updateSearchParam("sort", "-postedDate")
                             }}
                         >
                             Newest First

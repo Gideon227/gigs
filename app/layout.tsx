@@ -33,8 +33,14 @@ const segoeUi = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Gigs-Tech",
-  description: "Gigs.Tech is a hyper-focused job aggregation platform",
+  title: {
+    default: "Gigs Tech",
+    template: "%s - Gigs Tech"
+  },
+  description: "Power Platform & Dynamics 365 jobs all in one place.",
+  twitter: {
+    card: "summary_large_image"
+  }
 };
 
 export default function RootLayout({

@@ -2,6 +2,11 @@ import ContactMain from '@/components/ContactMain';
 import Cta from '@/components/Cta';
 import Image from 'next/image';
 import React from 'react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Contact"
+}
 
 const Contact = () => {
   return (

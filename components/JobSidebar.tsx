@@ -41,12 +41,12 @@ const workSettingsOptions: Option[] = [
 ] 
 
 const skillsOptions: Option[] = [
-  { value: 'power platform', label: 'Power Platform' },
-  { value: 'power apps', label: 'Power Apps' },
-  { value: 'sql', label: 'SQL' },
-  { value: 'microsoft', label: 'Microsoft' },
-  { value: 'javascript', label: 'JavaScript' },
-  { value: 'python', label: 'Python' },
+  { value: 'Power Platform', label: 'Power Platform' },
+  { value: 'Power Apps', label: 'Power Apps' },
+  { value: 'SQL', label: 'SQL' },
+  { value: 'Microsoft Power Apps', label: 'Microsoft Power Apps' },
+  { value: 'JavaScript', label: 'JavaScript' },
+  { value: 'Python', label: 'Python' },
 ] 
 
 interface Props{

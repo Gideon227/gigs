@@ -3,6 +3,11 @@ import React from 'react'
 import Image from 'next/image'
 import JobCta from '@/components/JobCta'
 import JobMain from '@/components/JobMain'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Browse Jobs"
+}
 
 const Jobs = () => {
 

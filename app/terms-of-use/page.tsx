@@ -2,6 +2,11 @@
 import Link from 'next/link';
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Term of use"
+}
 
 const TermPage = () => {
     const [activeId, setActiveId] = useState('about-gig')
@@ -26,35 +31,6 @@ const TermPage = () => {
 
 
     useEffect(() => {
-        // const handleScroll = () => {
-        //   const scrollY = window.scrollY;
-    
-        //   const buffer = 100; // offset for header spacing
-        //   const refs = [
-        //     { id: 'about-gig', ref: aboutGigRef },
-        //     { id: 'use-platform', ref: usePlatformRef },
-        //     { id: 'job-listing', ref: jobListingRef },
-        //     { id: 'user-account', ref: userAccountRef },
-        //     { id: 'intellectual-property', ref: intellectualPropertyRef },
-        //     { id: 'liability', ref: liabilityRef },
-        //     { id: 'term-changes', ref: termRef },
-        //     { id: 'law', ref: lawRef },
-        //     { id: 'contact', ref: contactRef },
-        //   ];
-    
-        //   for (let i = refs.length - 1; i >= 0; i--) {
-        //     const el = refs[i].ref.current;
-        //     if (el && el.offsetTop <= scrollY + buffer) {
-        //       setActiveId(refs[i].id);
-        //       break;
-        //     }
-        //   }
-        // };
-    
-        // window.addEventListener('scroll', handleScroll);
-        // return () => window.removeEventListener('scroll', handleScroll);
-
-
         const container = containerRef.current;
     if (!container) return;
 

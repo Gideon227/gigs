@@ -3,7 +3,12 @@ import AboutMain from '@/components/AboutMain';
 import AboutSection from '@/components/AboutSection';
 import Card from '@/components/Card';
 import Cta from '@/components/Cta';
-import React from 'react'
+import React from 'react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "About"
+}
 
 const About = () => {
   return (

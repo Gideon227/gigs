@@ -2,6 +2,11 @@
 import Link from 'next/link';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Privacy Policy"
+}
 
 const PrivacyPage = () => {
     const [activeId, setActiveId] = useState('data')
