@@ -100,7 +100,7 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
           <div className='flex flex-col justify-between items-start'>
             <div className='flex justify-between items-start space-x-4'>
               <h1 className='text-[20px] max-md:text-[16px] leading-[27px] max-md:leading-6 font-semibold flex-1 text-start text-heading pr-2'>{title}</h1>
-              <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center ${getJobTypeColor(jobType)}`}>
+              <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center mt-1 ${getJobTypeColor(jobType)}`}>
                 <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px] text-nowrap'>{getJobTypeText(jobType)}</p>
               </span>
             </div>
