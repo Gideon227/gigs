@@ -6,9 +6,12 @@ import { Lora } from "next/font/google";
 import localFont from "next/font/local";
 import { Toaster } from "react-hot-toast"
 
+import Script from "next/script";
+
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import Analytics from "@/components/Analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,6 +53,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics Script */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){ dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body
         className={`
           ${geistSans.variable} 
@@ -59,6 +79,7 @@ export default function RootLayout({
           antialiased overflow-x-hidden min-h-screen hide-scrollbar`}
       >
         <Toaster />
+        <Analytics />
         <Navbar />
         <main className="flex-1">
           {children}
