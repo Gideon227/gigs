@@ -13,6 +13,8 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Analytics from "@/components/Analytics";
 
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -51,8 +53,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
-  
+
   return (
     <html lang="en">
       <head>
