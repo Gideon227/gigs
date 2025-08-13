@@ -1,4 +1,4 @@
-name: Deploy Backend to EC2 - Production
+name: Deploy Next.js Frontend to EC2 - Production
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Get code
         uses: actions/checkout@v3
@@ -16,27 +17,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
 
-      - name: Sync to Server
-        run: |
-          ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -o ServerAliveCountMax=10 ec2-user@3.148.249.47 << 'EOF'
-            name: Deploy Backend to EC2 - Production
-
-on:
-  push:
-    branches: [ prod ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.6.0
-        with:
-          ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
-          
       - name: Test SSH Connection
         run: |
           echo "Testing SSH connection..."
