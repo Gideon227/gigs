@@ -12,6 +12,17 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
+      - name: Setup Node.js & Build
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Prepare .env and build
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+          npm ci
+          npm run build
+
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
         with:
