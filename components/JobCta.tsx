@@ -27,7 +27,9 @@ const JobCta = () => {
             setEmail("");
             setMessage("");
         } catch (error) {
-            toast.error("Failed to send message");
+            toast.error("Failed to send message", {
+                style: { fontSize: "14px", background: "#101217", color: "#fff" },
+            });
         } finally {
             setLoading(false);
         }
@@ -46,7 +48,7 @@ const JobCta = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     placeholder='Enter your email'
-                    className='text-[16px] py-2.5 max-2xl:text-[14px] leading-6 text-[#4F4F4F] pl-4 outline-none'
+                    className='text-[16px] py-2.5 max-2xl:text-[14px] leading-6 text-dark placeholder-[#4F4F4F] pl-4 outline-none'
                 />
             </div>
 
@@ -56,7 +58,7 @@ const JobCta = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     value={message}
                     placeholder='Write us your message here...'
-                    className='text-[16px] py-2.5 max-2xl:text-[14px] leading-6 text-[#4F4F4F] pl-4 w-full outline-none'
+                    className='text-[16px] py-2.5 max-2xl:text-[14px] leading-6 text-dark placeholder-[#4F4F4F] pl-4 w-full outline-none'
                 />
             </div>
 
