@@ -5,6 +5,7 @@ import React from 'react';
 import { JobProps } from '@/constants/Jobs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { formatNumber } from '@/utils/formatNumber';
+import { Country, State } from 'country-state-city';
 
 const getJobTypeColor = (jobType: string): string => {
     switch (jobType.toLowerCase()) {
@@ -19,7 +20,7 @@ const getJobTypeColor = (jobType: string): string => {
       case 'tempcontract':
         return 'bg-[#A52A2A]';
       default:
-        return 'bg-[#CC007A]';
+        return '';
     }
 };
 
@@ -53,6 +54,7 @@ function truncateText(text: string, wordLimit: number) {
   if (words.length <= wordLimit) return text;
   return words.slice(0, wordLimit).join(' ') + '...';
 }
+
 
 const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardProps) => {
   const { title, description, location, country, state, city, jobType, salary, skills, applicationUrl, companyLogo, companyName, postedDate } = job
@@ -91,15 +93,40 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
 
 // onClick={() => onClick(job)}
 
+const getStateAbbreviation = (countryName: string, stateName: string): string | null => {
+  const countries = Country.getAllCountries();
+  const country = countries.find(c => c.name.toLowerCase() === countryName.toLowerCase());
+
+  if (!country) return null;
+
+  const states = State.getStatesOfCountry(country.isoCode);
+  const state = states.find(s => s.name.toLowerCase() === stateName.toLowerCase());
+
+  return state?.isoCode || null;
+};
+
+
+const stateAbbr = React.useMemo(() => {
+    const countries = Country.getAllCountries();
+    const countryName = countries.find(c => c.name.toLowerCase() === country.toLowerCase());
+
+    if (!countryName) return null;
+
+    const states = State.getStatesOfCountry(countryName.isoCode);
+    const found = states.find(s => s.name.toLowerCase() === state.toLowerCase());
+
+    return found?.isoCode;
+}, [country, state]);
+
   return (
     <div className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
-      <Link href={slug} prefetch={true} className='flex items-start space-x-5 justify-between w-full'>
+      <Link href={slug} prefetch={true} className='flex items-start gap-x-5 justify-between w-full'>
         <div className='flex space-x-4 justify-start items-start '>
           <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${companyLogo ? "bg-white" : "bg-transparent"}`} />
                 
           <div className='flex flex-col justify-between items-start'>
-            <div className='flex justify-between items-start space-x-4'>
-              <h1 className='text-[20px] max-md:text-[16px] leading-[27px] max-md:leading-6 font-semibold flex-1 text-start text-heading pr-2'>{title}</h1>
+            <div className='flex justify-between items-start gap-x-2'>
+              <h1 className='text-[20px] max-md:text-[16px] leading-[27px] max-md:leading-6 font-semibold flex-1 text-start text-wrap text-heading pr-2'>{title}</h1>
               <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center mt-1 ${getJobTypeColor(jobType)}`}>
                 <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px] text-nowrap'>{getJobTypeText(jobType)}</p>
               </span>
@@ -107,23 +134,26 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
             <div className='flex space-x-2 justify-start items-center flex-wrap pt-1 gap-y-0.5'>
               <div className='flex space-x-1.5'>
                 <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
-                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{companyName ? companyName.charAt(0).toUpperCase() + companyName.slice(1): "Company Name"}</p>
+                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>
+                  {companyName ? companyName.charAt(0).toUpperCase() + companyName.slice(1, 28): "Company Name"}
+                  {companyName && companyName.length > 28 && <span className='text-neutral-500'>...</span>}
+                </p>
               </div>
 
               <span className='inline-block w-1 h-1 bg-[#4F4F4F] rounded-full'></span>
 
               <div className='flex space-x-1.5'>
                 <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${country} ${state && `, ${state}`}` }</p>
+                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${city} ${state && `, ${stateAbbr}`}`} {!city && !state && country}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className='flex text-end flex-col justify-between max-sm:hidden'>
+        <div className='flex text-end flex-col justify-between max-sm:hidden text-nowrap'>
           {salary && salary !== "" && salary !== 'NA' ? (
             <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
-              {formatNumber(salary)}
+              {formatNumber(salary.slice(0, 26))}
             </h1>
           ) : null}
           <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>Posted {timeAgo} ago</p>

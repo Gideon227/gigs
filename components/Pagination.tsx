@@ -80,7 +80,16 @@ const Pagination: React.FC<Props> = React.memo(({
     const handleSelect = (size: number, e: React.FormEvent) => {
         e.preventDefault()
         setOpen(false);
-        onPageSizeChange(size)
+
+        onPageChange(1);
+        onPageSizeChange(size);
+
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", "1");
+        params.set("pageSize", size.toString());
+
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+        scrollToSection();
     }
   return (
     <div className='flex items-center justify-between w-full space-y-2 md:space-y-0'>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 
@@ -7,7 +7,7 @@ import { Popover, PopoverTrigger, PopoverContent } from './ui/popover'
 
 
 const SortFilter = () => {
-    const [sortBy, setSortBy] = useState<"relevancy" | "date_posted">("relevancy")
+    const [sortBy, setSortBy] = useState<"relevancy" | "date_posted">("date_posted")
     const [open, setOpen] = useState<boolean>(false)
 
     const searchParams = useSearchParams()
@@ -17,16 +17,21 @@ const SortFilter = () => {
         const params = new URLSearchParams(searchParams);
 
         if (value) {
-        params.set(key, value);
+            params.set(key, value);
         } else {
-        params.delete(key);
+            params.delete(key);
         }
 
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 
+
+    useLayoutEffect(() => {
+        updateSearchParam("sort", "-postedDate")
+    }, [])
+    
     const sortName = () => {
-        let name = "Relevancy";
+        let name = "Newest First";
 
         if (sortBy === "date_posted"){
             name = "Newest First"

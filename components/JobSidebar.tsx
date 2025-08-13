@@ -43,9 +43,9 @@ const workSettingsOptions: Option[] = [
 const skillsOptions: Option[] = [
   { value: 'Power Platform', label: 'Power Platform' },
   { value: 'Power Apps', label: 'Power Apps' },
-  { value: 'SQL', label: 'SQL' },
-  { value: 'Microsoft Power Apps', label: 'Microsoft Power Apps' },
-  { value: 'JavaScript', label: 'JavaScript' },
+  { value: 'Dynamics 365', label: 'Dynamics 365' },
+  { value: 'Microsoft 365', label: 'Microsoft 365' },
+  { value: 'Power BI', label: 'Power BI' },
   { value: 'Python', label: 'Python' },
 ] 
 
@@ -53,9 +53,11 @@ interface Props{
   page: number;
   setPage: (value: any) => void
   setOpenModal?: (value: boolean) => void
+  location?: string | null;
+  setLocation: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
+const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams.toString());
@@ -68,7 +70,7 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
   const [salaryRange, setSalaryRange] = useState<string | null>(null)
   const [experienceLevel, setExperienceLevel] = useState<string | null>(null)
   const [role, setRole] = useState<string | null>(null)
-  const [country, setCountry] = useState<string | null>(null);
+  const [country, setCountry] = useState<string | null>("United States");
   const [state, setState] = useState<string | null>(null);
   const [city, setCity] = useState<string | null>(null);
 
@@ -109,16 +111,16 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
         updatedParams.delete("salary");
       }
     } else if (key === "minSalary" || key === "maxSalary") {
-  if (value) {
-          updatedParams.set(key, value);
-          updatedParams.delete("salary");  // remove preset because user is using custom
-        } else {
-          updatedParams.delete(key);
-          if (!updatedParams.get("minSalary") && !updatedParams.get("maxSalary")) {
-            updatedParams.delete("salary");
-          }
+      if (value) {
+        updatedParams.set(key, value);
+        updatedParams.delete("salary");  // remove preset because user is using custom
+      } else {
+        updatedParams.delete(key);
+        if (!updatedParams.get("minSalary") && !updatedParams.get("maxSalary")) {
+          updatedParams.delete("salary");
         }
-      }else {
+      }
+    } else {
       if (value) {
         updatedParams.set(key, value);
       } else {
@@ -143,6 +145,16 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
     router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
   };
   
+  useEffect(() => {
+    const urlCountry = searchParams.get("country");
+
+    if (!urlCountry) {
+      setCountry("United States");
+      updateSingleParam("country", "United States");
+    } else {
+      setCountry(urlCountry);
+    }
+  }, [])
 
   useEffect(() => {
     setJobType(searchParams.getAll('jobType'));
@@ -160,6 +172,24 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
   const minSalary = searchParams.get("minSalary");
   const maxSalary = searchParams.get("maxSalary");
 
+  const clearAllFilters = () => {
+    // Clear all state including country
+    setDate(null);
+    setCountry(null);
+    setState(null);
+    setCity(null);
+    setRole(null);
+    setJobType([]);
+    setSalaryRange(null);
+    setSkills([]);
+    setWorkSettings([]);
+    setExperienceLevel(null);
+    setLocation(null)
+
+    const updatedParams = new URLSearchParams();
+    router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
+  };
+
   return (
     <div className='bg-[#1B1E28] border border-[#363636] rounded-lg gap-y-2.5 max-md:pb-10'>
       <div className='max-lg:fixed max-lg:-top-1 max-lg:bg-[#1B1E28] max-lg:z-50 flex justify-between px-4 py-4 border-b border-[#363636] overflow-y-clip w-full'>
@@ -171,22 +201,7 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
         </div>
         <h1 className='text-heading text-[18px] font-medium max-lg:hidden'>Filter</h1>
         <button 
-          onClick={() => {
-            const updatedParams = new URLSearchParams();
-            setDate(null);
-            setCountry(null);
-            setState(null);
-            setCity(null);
-            setRole(null);
-            setJobType([]);
-            setSalaryRange(null);
-            setSkills([]);
-            setWorkSettings([]);
-            setExperienceLevel(null);
-
-            updatedParams.set("country", "United States");
-            router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
-          }}
+          onClick={() => {clearAllFilters()}}
           className='text-neutral text-[16px] max-md:text-[14px] leading-6 cursor-pointer'>
             Clear all
         </button>
@@ -311,20 +326,7 @@ const JobSidebar = ({ page, setPage, setOpenModal }: Props) => {
         <button
           className='w-1/4 text-primary text-[12px] cursor-pointer font-semibold'
           onClick={() => {
-            const updatedParams = new URLSearchParams();
-            setDate(null);
-            setCountry(null);
-            setState(null);
-            setCity(null);
-            setRole(null);
-            setJobType([]);
-            setSalaryRange(null);
-            setSkills([]);
-            setWorkSettings([]);
-            setExperienceLevel(null);
-
-            updatedParams.set("country", "United States");
-            router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
+            clearAllFilters()
             setOpenModal && setOpenModal(false)
           }}
         >

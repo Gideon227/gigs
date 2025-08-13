@@ -8,7 +8,7 @@ import type { JobProps } from '@/constants/Jobs';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
-  const jobs = await getJobs("limit=10000");
+  const jobs = await getJobs("limit=1000000");
 
   return jobs.data.jobs.map((job: JobProps) => ({
     id: job.id, 

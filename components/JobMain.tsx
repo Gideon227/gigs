@@ -8,18 +8,23 @@ import { useSearchParams } from 'next/navigation'
 const JobMain = () => {
   const searchParams = useSearchParams();
   const currentPage = searchParams.get("page");
-
+  const params = new URLSearchParams(searchParams.toString())
   const getPage = Number(currentPage);
 
   const [page, setPage] = useState<number>(getPage || 1);
-  
+  const [location, setLocation] = useState<string | null>(params.get('location') || "");
+
   return (
     <div className='grid grid-cols-7 md:gap-6 max-sm:gap-2'>
         <div className='col-span-2 max-lg:hidden'>
-            <JobSidebar page={page} setPage={setPage}/>
+            <JobSidebar 
+              page={page} 
+              setPage={setPage} 
+              setLocation={setLocation} 
+              location={location} />
         </div>
         <div className='col-span-5 max-lg:col-span-7'>
-            <JobBoard page={page} setPage={setPage}/>
+            <JobBoard page={page} setPage={setPage} setLocation={setLocation} location={location}/>
         </div>
     </div>
   )

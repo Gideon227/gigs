@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useMemo, useRef, useLayoutEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback, useLayoutEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import JobBoardHeader from './JobBoardHeader'
 import { JobProps } from '@/constants/Jobs'
@@ -24,116 +24,125 @@ const JobDrawer = dynamic(() => import('./JobDrawer'), {
 interface Props{
     page: number;
     setPage: (value: any) => void
+    location?: string | null;
+    setLocation: React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const JobBoard = ({ page, setPage }: Props ) => {
-    const [selectedJob, setSelectedJob] = useState<JobProps | null>(null)
-    const searchParams = useSearchParams();
-
-    const router = useRouter();
+const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
+     // State Management
+    const [selectedJob, setSelectedJob] = useState<JobProps | null>(null);
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(false);
     const [jobLength, setJobLength] = useState<number>(0);
-    // const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const [countryReady, setCountryReady] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
     const [hasFetched, setHasFetched] = useState(false);
+    const [openShareModal, setOpenShareModal] = useState<JobProps | null>(null);
+    const [userRemovedCountry, setUserRemovedCountry] = useState(false);
 
+    // Hooks
+    const searchParams = useSearchParams();
+    const router = useRouter();
 
-    const [openShareModal, setOpenShareModal] = useState<JobProps | null>(null)
-    const id = searchParams.get("id");
-
+    // Refs
     const preloadRef = useRef<HTMLDivElement | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
     const queryString = useMemo(() => {
-        const params = new URLSearchParams(searchParams.toString());
-        // params.delete("id"); 
+        if (!isInitialized) {
+            console.log('Query string not ready - not initialized');
+            return '';
+        }
         
+        const params = new URLSearchParams(searchParams.toString());
+
+        const hasLocationFilters =
+            params.has('location') ||
+            params.has('city') ||
+            params.has('state') ||
+            params.has('country');
+        
+        if (!hasLocationFilters && !hasFetched){
+            params.set("country", "United States")
+        }
+        
+        // Always include current page and limit
         params.set("page", page.toString());
         params.set("limit", pageSize.toString());
+        setHasFetched(true)
         
+        console.log('Generated query string:', params.toString());
+       
         return params.toString();
-    }, [searchParams, page, pageSize]);
+    }, [searchParams.toString(), page, pageSize, isInitialized]);
 
-    // const queryString = searchParams.toString();
-
-    useEffect(() => {
-        if (!id) {
-            setSelectedJob(null);
+    // Main jobs fetching function
+    const fetchJobs = useCallback(async () => {
+        if (!isInitialized || !queryString) {
+            console.log('Skipping fetch - not initialized or no query string');
             return;
         }
-
-        let cancelled = false;
-        (async () => {
-        try {
-            const job = await getJobById(id);
-            if (!cancelled) setSelectedJob(job.data);
-        } catch (err) {
-            console.error('Failed to load job by ID', err);
-            if (!cancelled) setSelectedJob(null);
-        }
-        })();
-        return () => { cancelled = true };
-    }, [id]);
-
-
-    const fetchJobs = async () => {
-        const params = new URLSearchParams(searchParams.toString());
-        setLoading(true); 
-        console.log(queryString)
+        
+        setLoading(true);
+        console.log('Fetching jobs with query:', queryString);
         
         try {
+            router.replace(`/browse-jobs?${queryString}`, { scroll: false })
+
             const data = await getJobs(queryString);
             const newJobs = data?.data.jobs || data.data || [];
-            console.log(data)
+            
+            console.log('Jobs fetched:', newJobs.length, 'jobs');
             setJobs(newJobs);
-            setJobLength(data?.data.totalJobs)
+            setJobLength(data?.data.totalJobs || 0);
             setHasFetched(true);
+
         } catch (error: any) {
-            console.log(error.message)
-            if (page === 1) setJobs([])
-            setJobLength(0)
+            console.error('Failed to fetch jobs:', error.message);
+            setJobs([]);
+            setJobLength(0);
             setHasFetched(true);
         } finally {
             setLoading(false);
-        }   
-    };
-    
+        }
+    }, [queryString, isInitialized]);
+
+    // Fetch jobs when query changes
     useEffect(() => {
-        if (!countryReady) return;
         fetchJobs();
-    }, [searchParams.toString(), countryReady, pageSize]);
+    }, [fetchJobs]);
 
-
+    // Intersection Observer for prefetching next page
     useEffect(() => {
-        if (loading || !preloadRef.current) return;
-      
+        if (loading || !preloadRef.current || !isInitialized) return;
+
         const observer = new IntersectionObserver(
-          async ([entry]) => {
+        async ([entry]) => {
             if (entry.isIntersecting) {
-              const query = new URLSearchParams(searchParams.toString());
-              query.set("page", (page + 1).toString());
-              query.set("limit", pageSize.toString());
-              try {
+            const query = new URLSearchParams(searchParams.toString());
+            query.set("page", (page + 1).toString());
+            query.set("limit", pageSize.toString());
+            
+            try {
                 await getJobs(query.toString());
-              } catch (err) {
+                console.log('Prefetched next page');
+            } catch (err) {
                 console.error("Prefetch failed", err);
-              }
             }
-          },
-          { threshold: 1.0 }
+            }
+        },
+        { threshold: 1.0 }
         );
-      
+
         observer.observe(preloadRef.current);
-      
+
         return () => {
-          if (preloadRef.current) {
+        if (preloadRef.current) {
             observer.unobserve(preloadRef.current);
-          }
+        }
         };
-    }, [page, searchParams, loading]);
-      
+    }, [page, searchParams, loading, isInitialized, pageSize]);
+
     useEffect(() => {
         return () => {
           updateSearchParam.cancel();
@@ -147,54 +156,86 @@ const JobBoard = ({ page, setPage }: Props ) => {
 
         if (hasLocation && hasCountry) {
             params.delete("country");
-            setCountryReady(true);
+            setIsInitialized(true);
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
             return;
         }
-
-        if (!hasLocation && !hasCountry) {
-            params.set("country", "United States");
-            router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-            return;
-        }
-
-        setCountryReady(true);
-    }, [searchParams.toString(), page]);
+        setIsInitialized(true);
+    }, [page]);
 
 
-    useEffect(() => {
-        if (searchParams.get("country")) {
-            setCountryReady(true);
-        } else {
-            setCountryReady(false);
-        }
-    }, [searchParams]);
+    const handlePageSizeChange = useCallback((newPageSize: number) => {
+        const currentIndex = (page - 1) * pageSize;
+        const newPage = Math.max(1, Math.floor(currentIndex / newPageSize) + 1);
+        
+        setPageSize(newPageSize);
+        setPage(newPage);
+        
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("page", newPage.toString());
+        params.set("limit", newPageSize.toString());
+        
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+    }, [page, pageSize, searchParams, router, setPage]);
 
+    // Utility function to scroll to section
     const scrollToSection = useCallback((ref: React.RefObject<HTMLElement | null>) => {
         if (!ref.current || !containerRef.current) return;
         const top = ref.current.offsetTop;
         containerRef.current.scrollTo({ top, behavior: 'smooth' });
     }, []);
-    
-    const rawUpdateSearchParam = (key: string, value: string | null) => {
+
+    // Update search parameters with debouncing
+    const rawUpdateSearchParam = useCallback((key: string, value: string | null) => {
         const params = new URLSearchParams(searchParams);
-    
+
         if (value) {
-        params.set(key, value);
+            params.set(key, value);
         } else {
-        params.delete(key);
+            params.delete(key);
         }
-    
+
         setPage(1);
-        // params.set("page", "1");
+
+        // if (key === 'country' && !value) {
+        //     // If removing country, check if we need to add default
+        //     const hasOtherLocation = params.has('location');
+        //     if (!hasOtherLocation) {
+        //         // No other location filters, keep the default country
+        //         params.set('country', 'United States');
+        //     }
+        // }
+
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-    };
-    
+    }, [searchParams, router, setPage]);
+
     // Memoized debounced function
     const updateSearchParam = useMemo(
         () => debounce(rawUpdateSearchParam, 250),
-        [searchParams]
+        [rawUpdateSearchParam]
     );
+
+    // Cleanup debounced function
+    useEffect(() => {
+        return () => {
+        updateSearchParam.cancel?.();
+        };
+    }, [updateSearchParam]);
+
+    // Helper function to clear all location filters
+    const clearLocationFilters = useCallback(() => {
+        const params = new URLSearchParams(searchParams);
+        params.delete('location');
+        params.delete('country');
+        params.delete('city');
+        params.delete('state');
+        
+        // Add back default country
+        params.set('country', 'United States');
+        setPage(1);
+        
+        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+    }, [searchParams, router, setPage]);
 
     const openJob = (job: JobProps) => {
         setSelectedJob(job)
@@ -212,7 +253,7 @@ const JobBoard = ({ page, setPage }: Props ) => {
   return (
     <div className='flex flex-col space-y-4'>
         <div className='bg-[#1B1E28] border border-[#363636] py-4 rounded-lg gap-y-2.5'>
-            <JobBoardHeader page={page} setPage={setPage}/>
+            <JobBoardHeader page={page} setPage={setPage} location={location!} setLocation={setLocation} />
             <div className='py-4 max-sm:px-4 sm:px-6 w-full' ref={containerRef}>
                 <div className='flex w-full justify-between items-center'>
                     <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobLength} Jobs</h1>

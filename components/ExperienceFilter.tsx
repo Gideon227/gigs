@@ -55,7 +55,7 @@ const ExperienceLevelFilter = ({ experienceLevel, setExperienceLevel }: Experien
                         <h1
                             key={index}
                             onClick={() => handleSelect(level)}
-                            className={`py-4 cursor-pointer text-[#F8F6F0] text-[14px] leading-6 capitalize ${index !== level.length - 1 && "border-b border-[#363636]" }`}
+                            className={`py-4 cursor-pointer text-[#F8F6F0] text-[14px] leading-6 capitalize ${index !== experienceOptions.length - 1 && "border-b border-[#363636]" }`}
                         >
                             {level.charAt(0).toUpperCase() + level.slice(1)}
                         </h1>

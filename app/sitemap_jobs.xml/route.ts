@@ -5,7 +5,7 @@ import type { JobProps } from '@/constants/Jobs'
 
 export async function GET() {
   try {
-    const getJobsData = await getJobs("sort=-createdAt&limit=1000")
+    const getJobsData = await getJobs("sort=-createdAt&limit=1000000")
     const jobs: JobProps[] = getJobsData.data
 
     if (!jobs || jobs.length === 0) {

@@ -1,26 +1,38 @@
 "use client"
 import React, { useState } from 'react'
+import toast from 'react-hot-toast'
 
 const JobCta = () => {
     const [email, setEmail] = useState<string>("")
     const [message, setMessage] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
 
-    const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-
     const handleClick = async (e: React.FormEvent) => {
-        e.preventDefault()
+        e.preventDefault();
+
         try {
-            setLoading(true)
-            await wait(5000)
-            
-            console.log(email, message)
+            setLoading(true);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_CONTACT_BACKEND_URL}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, message }),
+            });
+
+            if (!res.ok) throw new Error("Failed to send");
+
+            toast.success("Your message has been successfully sent!", {
+                style: { fontSize: "14px", background: "#101217", color: "#fff" },
+            });
+
+            setEmail("");
+            setMessage("");
         } catch (error) {
-            console.error(error)
-        } finally{
-            setLoading(false)
+            toast.error("Failed to send message");
+        } finally {
+            setLoading(false);
         }
-    }
+    };
+
 
   return (
     <div className='max-w-[1600px] mx-auto bg-[url(/cta-bg.png)] rounded-xl bg-cover max-md:bg-center'>

@@ -31,6 +31,11 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
   const [openCity, setOpenCity] = useState<boolean>(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    setSelectedCountry(params.get('country'))
+  }, [searchParams.toString()])
+
+  useEffect(() => {
     fetch("https://countriesnow.space/api/v0.1/countries/positions")
       .then((res) => res.json())
       .then((data) => setCountries(data.data || []));
@@ -80,13 +85,22 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
     //   countryQueryValue = "England";
     // }
 
-    if (selectedCountry) params.set("country", countryQueryValue!);
+    if (selectedCountry) {
+      params.set("country", countryQueryValue!);
+      params.delete("location")
+    }
     else params.delete("country");
 
-    if (selectedState) params.set("state", selectedState);
+    if (selectedState) {
+      params.set("state", selectedState);
+      params.delete("location")
+    }
     else params.delete("state");
 
-    if (selectedCity) params.set("city", selectedCity);
+    if (selectedCity) {
+      params.set("city", selectedCity);
+      params.delete("location")
+    }
     else params.delete("city");
 
     router.push(`/browse-jobs?${params.toString()}`, { scroll: false });
@@ -94,7 +108,7 @@ const CountryFilter = ({ onChange }: CountryFilterCardProps) => {
   }, [selectedCountry, selectedState, selectedCity]);
 
 const clearAll = () => {
-    setSelectedCountry("United States");
+    setSelectedCountry(null);
     setSelectedState(null);
     setSelectedCity(null);
     setStates([]);
@@ -102,7 +116,7 @@ const clearAll = () => {
     onChange({ country: null, state: null, city: null });
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set("country", "United States");
+    // params.set("country", "United States");
     params.delete("state");
     params.delete("city");
 
