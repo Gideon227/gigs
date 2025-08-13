@@ -9,11 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Get repo code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Setup Node.js & Build Locally in GitHub Actions
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -25,13 +23,11 @@ jobs:
           npm ci
           npm run build
 
-      # Setup SSH to connect to EC2
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
         with:
           ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
 
-      # Upload built files to EC2
       - name: Deploy to EC2
         run: |
           echo "Uploading build to EC2..."
@@ -40,7 +36,6 @@ jobs:
             .next package.json public .env \
             ec2-user@3.132.58.64:/var/www/frontend/
 
-      # 5️⃣ Install only production deps & Restart PM2
       - name: Restart Application on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@3.132.58.64 << 'EOF'
