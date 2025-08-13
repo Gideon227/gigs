@@ -2,44 +2,50 @@ name: Deploy Next.js Frontend to EC2 - Production
 
 on:
   push:
-    branches: [ prod ]
+    branches: [ prod ] # Only runs when you push to prod branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get code
+      # Get repo code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js & Build
+      # Setup Node.js & Build Locally in GitHub Actions
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Prepare .env and build
+      - name: Install dependencies & Build
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
           npm ci
           npm run build
 
+      # Setup SSH to connect to EC2
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.6.0
         with:
           ssh-private-key: ${{ secrets.PRODUCTION_SSH_KEY }}
 
-      - name: Test SSH Connection
+      # Upload built files to EC2
+      - name: Deploy to EC2
         run: |
-          echo "Testing SSH connection..."
-          ssh -v -o StrictHostKeyChecking=no ec2-user@3.132.58.64 "echo 'SSH connected'"
+          echo "Uploading build to EC2..."
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            .next package.json public .env \
+            ec2-user@3.132.58.64:/var/www/frontend/
 
-      - name: Sync to Server
+      # 5️⃣ Install only production deps & Restart PM2
+      - name: Restart Application on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@3.132.58.64 << 'EOF'
             cd /var/www/frontend
-            git pull origin prod
-            npm ci
-            npm run build
+            npm ci --only=production
             pm2 restart frontend || pm2 start npm --name "frontend" -- run start
-            echo "Deployment complete"
+            pm2 save
           EOF
