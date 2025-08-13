@@ -50,7 +50,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
 
     const queryString = useMemo(() => {
         if (!isInitialized) {
-            console.log('Query string not ready - not initialized');
             return '';
         }
         
@@ -70,8 +69,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
         params.set("page", page.toString());
         params.set("limit", pageSize.toString());
         setHasFetched(true)
-        
-        console.log('Generated query string:', params.toString());
        
         return params.toString();
     }, [searchParams.toString(), page, pageSize, isInitialized]);
@@ -79,12 +76,10 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
     // Main jobs fetching function
     const fetchJobs = useCallback(async () => {
         if (!isInitialized || !queryString) {
-            console.log('Skipping fetch - not initialized or no query string');
             return;
         }
         
         setLoading(true);
-        console.log('Fetching jobs with query:', queryString);
         
         try {
             router.replace(`/browse-jobs?${queryString}`, { scroll: false })
@@ -92,7 +87,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
             const data = await getJobs(queryString);
             const newJobs = data?.data.jobs || data.data || [];
             
-            console.log('Jobs fetched:', newJobs.length, 'jobs');
             setJobs(newJobs);
             setJobLength(data?.data.totalJobs || 0);
             setHasFetched(true);
@@ -125,7 +119,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
             
             try {
                 await getJobs(query.toString());
-                console.log('Prefetched next page');
             } catch (err) {
                 console.error("Prefetch failed", err);
             }

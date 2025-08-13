@@ -37,15 +37,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@3.132.58.64 << 'EOF'
             cd /var/www/frontend
-
-            echo "Pulling latest code..."
             git pull origin prod
-
-            echo "Installing dependencies..."
-            npm install
-
-            echo "Restarting app with PM2..."
+            npm ci
+            npm run build
             pm2 restart frontend || pm2 start npm --name "frontend" -- run start
-
             echo "Deployment complete"
           EOF

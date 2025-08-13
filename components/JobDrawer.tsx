@@ -41,7 +41,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 const data = await getRelatedJobs(job!.id)
                 setRelatedJobs(data.data); 
             } catch (error: any) {
-                console.log(error.message)
+                console.error(error.message)
                 setRelatedJobs([])
             } finally {
                 setLoading(false);
