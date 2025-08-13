@@ -52,8 +52,8 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
     }, [])
 
     const timeAgo = React.useMemo(() => {
-        if (!job?.createdAt) return '';
-        const createdDate = new Date(job.createdAt.replace(' ', 'T'));
+        if (!job?.postedDate) return '';
+        const createdDate = new Date(job.postedDate.replace(' ', 'T'));
         const now = new Date();
         const diffMs = now.getTime() - createdDate.getTime();
       
@@ -66,7 +66,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''}`;
         if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''}`;
         return `${seconds} second${seconds !== 1 ? 's' : ''}`;
-    }, [job?.createdAt]);  
+    }, [job?.postedDate]);  
 
     if (!hasMounted) return null;
 
