@@ -27,7 +27,7 @@ const SortFilter = () => {
 
 
     useLayoutEffect(() => {
-        updateSearchParam("sort", "-postedDate")
+        updateSearchParam("sort", "-datePosted")
     }, [])
     
     const sortName = () => {

@@ -13,8 +13,11 @@ interface Props{
 }
 
 const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams.toString())
+
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [keyword, setKeyword] = useState("");
+    const [keyword, setKeyword] = useState(params.get("keyword") || "");
     // const [location, setLocation] = useState("United States");
     const [loading, setLoading] = useState(false);
     const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -22,7 +25,6 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
     const [errMessage, setErrMessage] = useState<string>("");
     const [paramsReady, setParamsReady] = useState(false);
 
-    const searchParams = useSearchParams();
     const router = useRouter();
 
     useEffect(() => {
@@ -83,6 +85,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
             }
 
             params.set("page", "1");
+            params.set("sort", "-datePosted")
             setPage(1);
 
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
