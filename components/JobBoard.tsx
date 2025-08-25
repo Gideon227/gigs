@@ -178,7 +178,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     }, [page, pageSize, searchParams, router, setPage]);
 
-    // Utility function to scroll to section
     const scrollToSection = useCallback((ref: React.RefObject<HTMLElement | null>) => {
         if (!ref.current || !containerRef.current) return;
         const top = ref.current.offsetTop;
