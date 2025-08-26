@@ -127,7 +127,7 @@ const stateAbbr = React.useMemo(() => {
     <div className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
       <Link href={slug} onClick={() => setPreviousUrl(currentUrl)} prefetch={true} className='flex items-start gap-x-5 justify-between w-full'>
         <div className='flex space-x-4 justify-start items-start '>
-          <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${companyLogo ? "bg-white" : "bg-transparent"}`} />
+          <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2.5 object-contain bg-[#777777]`} />
                 
           <div className='flex flex-col justify-between items-start'>
             <div className='flex justify-between items-start gap-x-2'>

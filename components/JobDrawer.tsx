@@ -7,6 +7,7 @@ import Link from 'next/link';
 import useIsMobile from '@/hooks/useIsMobile'
 import { getRelatedJobs } from '@/libs/getRelatedJobs';
 import { formatNumber } from '@/utils/formatNumber';
+import { Country, State } from 'country-state-city';
 
 import { RxCross2 } from "react-icons/rx";
 import { URL } from 'url';
@@ -104,6 +105,18 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         }
     };
 
+    const stateAbbr = React.useMemo(() => {
+        const countries = Country.getAllCountries();
+        const countryName = countries.find(c => c.name.toLowerCase() === job.country.toLowerCase());
+    
+        if (!countryName) return null;
+    
+        const states = State.getStatesOfCountry(countryName.isoCode);
+        const found = states.find(s => s.name.toLowerCase() === job.state.toLowerCase());
+    
+        return found?.isoCode;
+    }, [job.country, job.state]);
+
     const variants = {
         initial: isMobile ? { y: '100%' } : { x: '100%' },
         animate: isMobile ? { y: '0%' } : { x: '0%' },
@@ -173,7 +186,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <span className='inline-block rounded-full w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${job.country}, ${job.state}` }</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${job.city} ${job.state && `, ${stateAbbr}`}`} {!job.city && !job.state && job.country}</p>
                                 </div>
                             </div>
 
@@ -248,7 +261,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/location-03.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{`${job.country}, ${job.state}` }</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{`${job.city} ${job.state && `, ${stateAbbr}`}`} {!job.city && !job.state && job.country}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Location</p>
                                     </div>
                                 </div>
