@@ -87,9 +87,11 @@ const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Prop
     }
 
     params.delete(key);
+
     for (const v of values) {
       params.append(key, v);
     }
+    params.set('page', '1')
     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
   };
 
@@ -127,7 +129,7 @@ const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Prop
         updatedParams.delete(key);
       }
     }
-
+    params.set('page', '1')
     router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
   };
 
@@ -142,6 +144,7 @@ const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Prop
     updatedParams.set("minSalary", range[0].toString());
     updatedParams.set("maxSalary", range[1].toString());
 
+    params.set('page', '1');
     router.replace(`/browse-jobs?${updatedParams.toString()}`, { scroll: false });
   };
   
