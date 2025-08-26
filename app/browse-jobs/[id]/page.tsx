@@ -15,13 +15,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ id: string }> 
-}): Promise<Metadata> {
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
    try {
-    const { id } = await params; 
+    const { id } = params; 
     const jobId = id.split('-').slice(-5).join('-').toString();
     
     const getJob = await getJobById(jobId);
@@ -66,8 +63,8 @@ export async function generateMetadata({
   }
 }
 
-const Page = async ({params}: {params: Promise<{ id: string }>}) => {
-  const { id } =  await params;
+const Page = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   const jobId = id.split('-').slice(-5).join('-').toString();
 
   const getJob = await getJobById(jobId!)
