@@ -5,6 +5,7 @@ import { getJobById } from '@/libs/getJobById';
 import { getJobs } from '@/libs/getJobs';
 import type { JobProps } from '@/constants/Jobs';
 
+import { useNavigationStore } from '@/app/stores/useNavigationStore'
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -15,10 +16,13 @@ export async function generateStaticParams() {
   }));
 }
 
-
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ id: string }> 
+}): Promise<Metadata> {
    try {
-    const { id } = params; 
+    const { id } = await params; 
     const jobId = id.split('-').slice(-5).join('-').toString();
     
     const getJob = await getJobById(jobId);
@@ -63,8 +67,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-const Page = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const Page = async ({params}: {params: Promise<{ id: string }>}) => {
+  const { previousUrl } = useNavigationStore();
+  const { id } =  await params;
   const jobId = id.split('-').slice(-5).join('-').toString();
 
   const getJob = await getJobById(jobId!)
@@ -74,7 +79,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="px-4 pt-6 pb-12">
-      <JobDrawerClient job={job} />
+      <JobDrawerClient job={job} previousUrl={previousUrl} />
     </div>
   )
 }
