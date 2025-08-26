@@ -5,7 +5,6 @@ import { getJobById } from '@/libs/getJobById';
 import { getJobs } from '@/libs/getJobs';
 import type { JobProps } from '@/constants/Jobs';
 
-import { useNavigationStore } from '@/app/stores/useNavigationStore'
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -68,7 +67,6 @@ export async function generateMetadata({
 }
 
 const Page = async ({params}: {params: Promise<{ id: string }>}) => {
-  const { previousUrl } = useNavigationStore();
   const { id } =  await params;
   const jobId = id.split('-').slice(-5).join('-').toString();
 
@@ -79,7 +77,7 @@ const Page = async ({params}: {params: Promise<{ id: string }>}) => {
 
   return (
     <div className="px-4 pt-6 pb-12">
-      <JobDrawerClient job={job} previousUrl={previousUrl} />
+      <JobDrawerClient job={job} />
     </div>
   )
 }

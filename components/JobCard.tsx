@@ -58,6 +58,7 @@ function truncateText(text: string, wordLimit: number) {
 
 
 const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardProps) => {
+  const { setPreviousUrl } = useNavigationStore();
   const { title, description, location, country, state, city, jobType, salary, skills, applicationUrl, companyLogo, companyName, postedDate } = job
 
   function getTimeAgo(dateString: string): string {
@@ -81,7 +82,6 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname();
-  const { setPreviousUrl } = useNavigationStore();
 
   const currentUrl = `${pathname}?${searchParams.toString()}`
 

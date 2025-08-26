@@ -31,7 +31,7 @@
     "react-icons": "^5.5.0",
     "tailwind-merge": "^3.3.0",
     "world-countries-capitals": "^3.4.0",
-    "zustand": "^5.0.7"
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
