@@ -1,4 +1,4 @@
-//export const dynamic = 'force-static';
+export const dynamic = 'force-static';
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

@@ -107,15 +107,15 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
     const stateAbbr = React.useMemo(() => {
         const countries = Country.getAllCountries();
-        const countryName = countries.find(c => c.name.toLowerCase() === job.country.toLowerCase());
+        const countryName = countries.find(c => c.name.toLowerCase() === job?.country.toLowerCase());
     
         if (!countryName) return null;
     
         const states = State.getStatesOfCountry(countryName.isoCode);
-        const found = states.find(s => s.name.toLowerCase() === job.state.toLowerCase());
+        const found = states.find(s => s.name.toLowerCase() === job?.state.toLowerCase());
     
         return found?.isoCode;
-    }, [job.country, job.state]);
+    }, [job?.country, job?.state]);
 
     const variants = {
         initial: isMobile ? { y: '100%' } : { x: '100%' },
