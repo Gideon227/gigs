@@ -69,6 +69,28 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         return `${seconds} second${seconds !== 1 ? 's' : ''}`;
     }, [job?.postedDate]);  
 
+    const stateAbbr = React.useMemo(() => {
+        if (!job?.country || !job?.state) return null;
+        const normalize = (str: string) => str.trim().toLowerCase();
+
+
+        const country = Country.getAllCountries().find(
+            c => normalize(c.name) === normalize(job.country)
+        );
+        if (!country) return null;
+
+        const states = State.getStatesOfCountry(country.isoCode);
+        if (!states?.length) return null;
+
+        let found = states.find(s => normalize(s.name) === normalize(job.state));
+
+        if (!found) {
+            found = states.find(s => normalize(s.isoCode) === normalize(job.state));
+        }
+
+        return found?.isoCode || null;
+    }, [job?.country, job?.state]);
+
     if (!hasMounted) return null;
 
     if (!job) {
@@ -104,18 +126,6 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
             return workSettings;
         }
     };
-
-    const stateAbbr = React.useMemo(() => {
-        const countries = Country.getAllCountries();
-        const countryName = countries.find(c => c.name.toLowerCase() === job?.country.toLowerCase());
-    
-        if (!countryName) return null;
-    
-        const states = State.getStatesOfCountry(countryName.isoCode);
-        const found = states.find(s => s.name.toLowerCase() === job?.state.toLowerCase());
-    
-        return found?.isoCode;
-    }, [job?.country, job?.state]);
 
     const variants = {
         initial: isMobile ? { y: '100%' } : { x: '100%' },
