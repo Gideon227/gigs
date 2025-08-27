@@ -28,6 +28,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_FRONTEND_KEY }}
 
+      - name: Cleanup Next.js cache
+        run: rm -rf .next/cache
+
       - name: Rsync build + node_modules to EC2
         run: |
           ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
