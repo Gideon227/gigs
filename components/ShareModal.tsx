@@ -11,6 +11,7 @@ import { createPortal } from 'react-dom';
 import { JobProps } from '@/constants/Jobs';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import { generateJobSlug } from '@/utils/generateSlug';
 
 const truncateText = (text: string, wordLimit: number) => {
    const words = text.trim().split(/\s+/);
@@ -29,8 +30,9 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
   const params = new URLSearchParams(searchParams.toString());
 
   useEffect(() => setMounted(true), []);
+  const slug = generateJobSlug(job.title, job.companyName!, job.country, job.id);
 
-  const displayLink = `${process.env.NEXT_PUBLIC_FRONTEND_URL}?${params}`;
+  const displayLink = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs/${slug}`;
   const whatsappLink = `https://wa.me/?text=${encodeURIComponent(displayLink)}`;
   const twitterLink = `https://twitter.com/intent/tweet?url=${encodeURIComponent(displayLink)}&hashtags=gigs-tech`;
   const facebookLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(displayLink)}`;

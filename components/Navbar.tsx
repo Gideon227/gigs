@@ -61,14 +61,14 @@ const Navbar = () => {
             </a>
 
             {/* MOBILE SCREEN NAV */}
-            <button onClick={() => setToggle(prev => !prev)} className='lg:hidden bg-transparent justify-center items-center flex flex-col z-10 space-y-0.5'>
+            <button onClick={() => setToggle(prev => !prev)} className='lg:hidden bg-transparent justify-center items-center flex flex-col z-30 space-y-0.5'>
                 <div className={`${toggle && 'bar-1 bg-white'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
                 <div className={`${toggle && 'bar-2 bg-white'} bg-white w-[25px] h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
                 <div className={`${toggle && 'bar-3 bg-white'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
             </button>
 
             {toggle && (
-                <div className={`py-20 pl-6 fixed top-0 right-0 w-full h-full bg-[#1B1E28] text-white z-40 transform transition-transform duration-300 ease-in-out ${
+                <div className={`py-20 pl-6 fixed top-0 right-0 w-full h-full bg-[#1B1E28] text-white z-20 transform transition-transform duration-300 ease-in-out ${
                     toggle ? 'translate-x-0' : 'translate-x-full'
                 }`}>
                     <nav className='flex-col flex justify-start items-start space-y-8 font-normal text-start text-[18px] text-heading'>
