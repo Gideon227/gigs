@@ -85,7 +85,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
             }
 
             params.set("page", "1");
-            params.set("sort", "-datePosted")
+            params.set("sort", "-postedDate")
             setPage(1);
 
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });

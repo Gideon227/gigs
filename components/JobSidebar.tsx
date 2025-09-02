@@ -341,7 +341,7 @@ const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Prop
             setOpenModal && setOpenModal(false)
           }}
           className='cursor-pointer font-semibold text-dark text-[12px] leading-6 bg-primary py-2 rounded-md w-3/4'>
-            SHOW 
+            SEARCH 
         </button>
       </div>
 

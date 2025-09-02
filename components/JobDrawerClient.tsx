@@ -1,13 +1,14 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import JobDrawer from '@/components/JobDrawer'
 import type { JobProps } from '@/constants/Jobs'
 import { AnimatePresence } from 'framer-motion'
 import { useNavigationStore } from '@/app/stores/useNavigationStore'
 
 export default function JobDrawerClient({ job }: { job: JobProps }) {
-  const router = useRouter()
+  const router = useRouter();
+   const searchParams = useSearchParams();
 
   const { previousUrl } = useNavigationStore();
 
@@ -18,9 +19,12 @@ export default function JobDrawerClient({ job }: { job: JobProps }) {
       router.push('/browse-jobs'); 
     }
   };
+
+  const from = searchParams.get("from") || "/jobs";
+
   return (
     <AnimatePresence mode='wait'>
-      <JobDrawer key={job?.id} job={job} onClose={handleClose} />
+      <JobDrawer key={job?.id} job={job} onClose={() => router.push(from)} />
     </AnimatePresence>
   )
 }

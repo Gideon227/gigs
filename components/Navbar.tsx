@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div className='bg-[#1B1E28] z-50 w-full '>
         <div className='max-w-[1600px] m-auto flex justify-between items-center pt-2 px-8 max-lg:py-4 max-lg:px-6'>
-            <Link href='/browse-jobs' className='items-start flex flex-1 justify-start'>
+            <Link href='/browse-jobs?country=United+States&page=1&limit=10' className='items-start flex flex-1 justify-start'>
                 <Image src='/logo.png' height={35} width={140} alt='logo image' className='max-lg:hidden'/>
                 <Image src='/logo.png' height={35} width={110} alt='logo image' className='lg:hidden'/>
             </Link>
@@ -27,7 +27,7 @@ const Navbar = () => {
                         Home
                 </Link>
                 <Link 
-                    href="/browse-jobs" 
+                    href="/browse-jobs?country=United+States&page=1&limit=10" 
                     className={`text-[14px] leading-[80px] text-heading ${pathname === "/browse-jobs" 
                         ? "border-b  border-b-primary " 
                         : "hover:text-primary"}
@@ -84,7 +84,7 @@ const Navbar = () => {
                         </Link>
                         <Link 
                             onClick={() => setToggle(false)}
-                            href="/browse-jobs" 
+                            href="/browse-jobs?country=United+States&page=1&limit=10" 
                             className={`s${pathname === "/browse-jobs" 
                                 ? "text-primary " 
                                 : "hover:text-primary"}

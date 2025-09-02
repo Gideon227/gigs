@@ -180,7 +180,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 <div className='border-b border-[#363636] flex max-sm:flex-col justify-between md:py-8 max-md:py-4'>
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
-                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${job.companyLogo ? "bg-white" : "bg-transparent"}`}/>
+                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain bg-[#777777]`}/>
                             <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px] max-ms:text-[18px]'>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
