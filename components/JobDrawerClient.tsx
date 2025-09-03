@@ -20,7 +20,7 @@ export default function JobDrawerClient({ job }: { job: JobProps }) {
     }
   };
 
-  const from = searchParams.get("from") || "/jobs";
+  const from = searchParams.get("currentUrl") || "/browse-jobs";
 
   return (
     <AnimatePresence mode='wait'>

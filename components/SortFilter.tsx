@@ -27,7 +27,7 @@ const SortFilter = () => {
 
 
     useLayoutEffect(() => {
-        updateSearchParam("sort", "-datePosted")
+        updateSearchParam("sort", "-postedDate")
     }, [])
     
     const sortName = () => {
@@ -60,7 +60,7 @@ const SortFilter = () => {
                             onClick={() => {
                                 setSortBy("relevancy")
                                 setOpen(false)
-                                updateSearchParam("sort", "-id" )
+                                updateSearchParam("sort", "relevancy" )
                             }}
                         >
                             Relevancy
