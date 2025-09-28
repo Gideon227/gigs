@@ -1,9 +1,29 @@
 "use client"
+import {
+  Calculator,
+  Calendar,
+  CreditCard,
+  Settings,
+  Smile,
+  User,
+} from "lucide-react"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command"
 import React, { useState, useEffect, ReactEventHandler } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import JobSidebar from './JobSidebar'
+
+import { getLocationSuggestions } from '@/libs/getLocation'
 
 interface Props{
     page: number;
@@ -26,6 +46,20 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
     const [paramsReady, setParamsReady] = useState(false);
 
     const router = useRouter();
+
+    useEffect(() => {
+        if (!location) {
+            setSuggestions([]);
+            return;
+        }
+
+        const delayDebounce = setTimeout(async () => {
+            const data = await getLocationSuggestions(location);
+            setSuggestions(data);
+        }, 400); // debounce
+
+        return () => clearTimeout(delayDebounce);
+    }, [location]);
 
     useEffect(() => {
         const currentCountry = searchParams.get("country");
@@ -100,44 +134,6 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
     };
 
 
-    const fetchLocationSuggestions = async (query: string) => {
-        if (!query.trim()) {
-            setSuggestions([]);
-            return;
-        }
-
-        try {
-            const response = await fetch(
-                `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${query}&limit=5`,
-                {
-                    method: "GET",
-                    headers: {
-                        "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY!,
-                        "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com"
-                    }
-                }
-            );
-            if (!response.ok) {
-                if (response.status === 429) throw new Error("Rate limit exceeded. Please try again later.");
-                throw new Error("Network error");
-            }
-
-            const data = await response.json();
-
-            setSuggestions(data.data.map((city: any) => `${city.city}, ${city.country}`));
-            setShowSuggestions(true);
-        } catch ( error ) {
-            console.error("Error fetching location suggestions:", error);
-
-            if (error instanceof Error) {
-                setErrMessage(error.message);
-            } else {
-                setErrMessage("An unknown error occurred");
-            }
-        }
-    };
-
-
   return (
     <div className='space-y-2 border-b border-[#363636] pb-3'>
         <form onSubmit={handleClick} className='flex max-md:flex-col max-md:space-y-2 space-x-0 my-2 md:px-10 max-md:px-4'>
@@ -152,7 +148,44 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                 />
             </div>
 
-            <div className='w-full border-[#363636] border bg-[#101217] py-1 md:rounded-e-lg max-md:rounded-lg flex justify-center items-center space-x-2'>
+            <div className='relative w-full border-[#363636] border bg-[#101217] py-1 md:rounded-e-lg max-md:rounded-lg flex justify-center items-center space-x-2'>
+                <Command shouldFilter={false} className="bg-transparent">
+                    <CommandInput
+                        placeholder="Enter city, state, zip, or country"
+                        value={location || ""}
+                        className="relative bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-2/3 ml-4 placeholder-[#7E7E7E]"
+                        onValueChange={(val) => {
+                            setLocation(val)
+                            setShowSuggestions(true)
+                        }}
+                        onFocus={() => {
+                            if (suggestions.length > 0) setShowSuggestions(true)
+                        }}
+                    />
+                    {showSuggestions && (
+                        <CommandList className="absolute top-full left-0 right-0 bg-[#101217] border border-[#363636] rounded-b-lg max-h-60 overflow-y-auto z-50">
+                        {suggestions.length > 0 ? (
+                            <CommandGroup>
+                                {suggestions.map((item: any, index) => (
+                                    <CommandItem
+                                        key={index}
+                                        value={item.display_name}
+                                        onSelect={(val) => {
+                                        setLocation(val)
+                                        setShowSuggestions(false)
+                                        }}
+                                    >
+                                        {item.display_name}
+                                    </CommandItem>
+                                ))}
+                            </CommandGroup>
+                            ) : (
+                            <CommandEmpty>Seach for desired location</CommandEmpty>
+                            )}
+                        </CommandList>
+                    )}
+                </Command>
+               
                 <input
                     type="text"
                     value={location!}
@@ -170,7 +203,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                     }}
                 />
 
-                {showSuggestions && suggestions.length > 0 && (
+                {/* {showSuggestions && suggestions.length > 0 && (
                     <ul className="absolute z-50 bg-background border border-[#363636] w-full rounded-b-lg max-h-60 overflow-y-auto">
                         {suggestions.map((item, index) => (
                             <li
@@ -185,7 +218,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                             </li>
                         ))}
                     </ul>
-                )}
+                )} */}
 
                 <button 
                     type="submit"
