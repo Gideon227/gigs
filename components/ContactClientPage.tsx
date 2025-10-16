@@ -2,8 +2,10 @@ import React from 'react'
 import ContactMain from './ContactMain'
 import Cta from './Cta'
 import Image from 'next/image'
+import useGtagPageview from '@/hooks/useGtagPageview'
 
 const ContactClientPage = () => {
+    useGtagPageview()
   return (
      <div className='bg-[#101217] overflow-hidden'>
       <div className='hero_bg w-full lg:h-[606px] flex-1 flex items-center justify-center max-lg:h-[350px] max-md:flex-col'>

@@ -1,7 +1,5 @@
-
 import TermClientPage from '@/components/TermClientPage';
 import { Metadata } from 'next';
-import useGtagPageview from '@/hooks/useGtagPageview';
 
 export const metadata: Metadata = {
   title: "Terms Of Use",
@@ -13,10 +11,9 @@ export const metadata: Metadata = {
 
 
 const TermPage = () => {
-  useGtagPageview()
     return(
         <>
-            <TermClientPage />
+          <TermClientPage />
         </>
     )
 }

@@ -4,8 +4,10 @@ import AboutSection from './AboutSection'
 import Card from './Card'
 import AboutMain from './AboutMain'
 import Cta from './Cta'
+import useGtagPageview from '@/hooks/useGtagPageview'
 
 const AboutClientPage = () => {
+    useGtagPageview()
   return (
     <div className='bg-[#101217] m-0 hide-scrollbar'>
         <AboutHero />

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Metadata } from 'next';
-import useGtagPageview from '@/hooks/useGtagPageview';
 import AboutClientPage from '@/components/AboutClientPage';
 
 export const metadata: Metadata = {
@@ -18,7 +17,6 @@ export const metadata: Metadata = {
 };
 
 const About = () => {
-  useGtagPageview()
   return (
     <AboutClientPage />
   )

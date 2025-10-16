@@ -1,6 +1,5 @@
 import PolicyClient from '@/components/PolicyClient';
 import { Metadata } from 'next';
-import useGtagPageview from '@/hooks/useGtagPageview';
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 const PrivacyPage = () => {
-    useGtagPageview();
     return (
       <>
         <PolicyClient /> 
