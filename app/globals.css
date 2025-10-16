@@ -160,8 +160,14 @@ body {
   }
 }
 
-.command-input-wrapper{
-  border: none !important;
+[data-slot="command-input-wrapper"] {
+  border-bottom: none !important;
+}
+
+[data-slot="command-input-wrapper"]:focus,
+[data-slot="command-input-wrapper"]:active,
+[data-slot="command-input-wrapper"]:hover {
+  border-bottom: none !important;
 }
 
 /* Text inside banner */
