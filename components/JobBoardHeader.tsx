@@ -149,7 +149,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
             </div>
 
             <div className='relative w-full border-[#363636] border bg-[#101217] py-1 md:rounded-e-lg max-md:rounded-lg flex justify-center items-center space-x-2'>
-                <Command shouldFilter={false} className="bg-transparent">
+                <Command shouldFilter={false} className="bg-transparent border-none">
                     <CommandInput
                         placeholder="Enter city, state, zip, or country"
                         value={location || ""}
