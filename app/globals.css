@@ -162,12 +162,17 @@ body {
 
 [data-slot="command-input-wrapper"] {
   border-bottom: none !important;
+  padding-left: 0 !important;
 }
 
 [data-slot="command-input-wrapper"]:focus,
 [data-slot="command-input-wrapper"]:active,
 [data-slot="command-input-wrapper"]:hover {
   border-bottom: none !important;
+}
+
+[data-slot="command-input-wrapper"] svg {
+  display: none !important;
 }
 
 /* Text inside banner */

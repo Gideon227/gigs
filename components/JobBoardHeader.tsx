@@ -62,10 +62,11 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
     }, [location]);
 
     useEffect(() => {
-        if (showSuggestions && suggestions.length === 0) {
+        if (!location?.trim()) {
             setShowSuggestions(false);
         }
-    }, [suggestions, showSuggestions]);
+    }, [location]);
+
 
 
     useEffect(() => {
