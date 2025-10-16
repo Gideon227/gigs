@@ -85,7 +85,7 @@ export default function RootLayout({
       <head>
         {/* Google Analytics Script */}
         <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -93,7 +93,7 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){ dataLayer.push(arguments); }
             gtag('js', new Date());
-            gtag('config', '${GA_ID}', {
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}', {
               page_path: window.location.pathname,
             });
           `}
@@ -113,6 +113,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">
           {children}
+          <h1 className="text-blue-500">{process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}</h1>
         </main>
         <Footer />
       </body>
