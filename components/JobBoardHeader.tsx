@@ -153,7 +153,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                     <CommandInput
                         placeholder="Enter city, state, zip, or country"
                         value={location || ""}
-                        className="relative bg-transparent outline-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-2/3 ml-4 placeholder-[#7E7E7E]"
+                        className="relative bg-transparent outline-none border-none focus:ring-0 focus:border-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-2/3 ml-4 placeholder-[#7E7E7E]"
                         onValueChange={(val) => {
                             setLocation(val)
                             setShowSuggestions(true)
@@ -171,9 +171,10 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                                         key={index}
                                         value={item.display_name}
                                         onSelect={(val) => {
-                                        setLocation(val)
-                                        setShowSuggestions(false)
+                                            setLocation(val)
+                                            setShowSuggestions(false)
                                         }}
+                                        className="text-white text-[14px]"
                                     >
                                         {item.display_name}
                                     </CommandItem>
@@ -186,7 +187,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                     )}
                 </Command>
                
-                <input
+                {/* <input
                     type="text"
                     value={location!}
                     onChange={(e) => {
@@ -201,7 +202,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                     onBlur={() => {
                         setTimeout(() => setShowSuggestions(false), 150);
                     }}
-                />
+                /> */}
 
                 {/* {showSuggestions && suggestions.length > 0 && (
                     <ul className="absolute z-50 bg-background border border-[#363636] w-full rounded-b-lg max-h-60 overflow-y-auto">
