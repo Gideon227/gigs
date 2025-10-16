@@ -113,7 +113,6 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">
           {children}
-          <h1 className="text-blue-500">{process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}</h1>
         </main>
         <Footer />
       </body>
