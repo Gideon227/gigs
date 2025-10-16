@@ -1,4 +1,4 @@
-"use client"
+
 import TermClientPage from '@/components/TermClientPage';
 import { Metadata } from 'next';
 import useGtagPageview from '@/hooks/useGtagPageview';

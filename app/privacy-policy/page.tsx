@@ -1,4 +1,3 @@
-"use client"
 import PolicyClient from '@/components/PolicyClient';
 import { Metadata } from 'next';
 import useGtagPageview from '@/hooks/useGtagPageview';
