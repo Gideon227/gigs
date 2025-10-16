@@ -1,14 +1,21 @@
+"use client"
 import ContactMain from '@/components/ContactMain';
 import Cta from '@/components/Cta';
 import Image from 'next/image';
 import React from 'react';
 import { Metadata } from 'next';
+import useGtagPageview from '@/hooks/useGtagPageview';
 
 export const metadata: Metadata = {
-    title: "Contact"
-}
+  title: "Contact Us",
+  description: "Get in touch with Gigs.Tech for partnerships, support, or community inquiries.",
+  alternates: {
+    canonical: "https://test.gigs.tech/contact",
+  },
+};
 
 const Contact = () => {
+  useGtagPageview()
   return (
     <div className='bg-[#101217] overflow-hidden'>
       <div className='hero_bg w-full lg:h-[606px] flex-1 flex items-center justify-center max-lg:h-[350px] max-md:flex-col'>

@@ -12,6 +12,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Analytics from "@/components/Analytics";
+import CookieBanner from "@/components/CookieBanner";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -38,15 +39,40 @@ const segoeUi = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gigs.tech"), 
   title: {
     default: "Gigs Tech",
     template: "%s - Gigs Tech"
   },
   description: "Power Platform & Dynamics 365 jobs all in one place.",
+  openGraph: {
+    title: "Gigs Tech",
+    description: "Power Platform & Dynamics 365 jobs all in one place.",
+    url: "https://gigs.tech",
+    siteName: "Gigs Tech",
+    images: [
+      {
+        url: "https://gigs.tech/_next/image?url=%2Flogo.png&w=256&q=75",
+        width: 1200,
+        height: 630,
+        alt: "Gigs Tech",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
   twitter: {
-    card: "summary_large_image"
-  }
+    card: "summary_large_image",
+    title: "Gigs Tech",
+    description: "Power Platform & Dynamics 365 jobs all in one place.",
+    images: ["https://gigs.tech//_next/image?url=%2Flogo.png&w=256&q=75"],
+  },
+  alternates: {
+    canonical: "https://gigs.tech",
+  },
+  robots: "index, follow",
 };
+
 
 export default function RootLayout({
   children,
@@ -81,6 +107,7 @@ export default function RootLayout({
           ${segoeUi.variable}
           antialiased overflow-x-hidden min-h-screen hide-scrollbar`}
       >
+        <CookieBanner />
         <Toaster />
         <Analytics />
         <Navbar />
