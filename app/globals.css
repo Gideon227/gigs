@@ -160,6 +160,10 @@ body {
   }
 }
 
+.command-input-wrapper{
+  border: none !important;
+}
+
 /* Text inside banner */
 .cookie-text {
   color: #fff;
