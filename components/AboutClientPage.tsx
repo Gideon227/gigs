@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import AboutHero from './AboutHero'
 import AboutSection from './AboutSection'

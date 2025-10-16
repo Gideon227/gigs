@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import ContactMain from './ContactMain'
 import Cta from './Cta'
