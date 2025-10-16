@@ -62,6 +62,13 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
     }, [location]);
 
     useEffect(() => {
+        if (showSuggestions && suggestions.length === 0) {
+            setShowSuggestions(false);
+        }
+    }, [suggestions, showSuggestions]);
+
+
+    useEffect(() => {
         const currentCountry = searchParams.get("country");
         const currentLocation = searchParams.get("location");
 
@@ -148,12 +155,12 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                 />
             </div>
 
-            <div className='relative w-full border-[#363636] border bg-[#101217] py-1 md:rounded-e-lg max-md:rounded-lg flex justify-center items-center space-x-2'>
-                <Command shouldFilter={false} className="bg-transparent !border-b-0 !border-none">
+            <div className='relative w-full overflow-hidden border-[#363636] border bg-[#101217] py-1 md:rounded-e-lg max-md:rounded-lg flex justify-center items-center space-x-2'>
+                <Command shouldFilter={false} className="bg-transparent !border-b-0 !border-none flex-1 min-w-0">
                     <CommandInput
                         placeholder="Enter city, state, zip, or country"
                         value={location || ""}
-                        className="relative bg-transparent outline-none border-none focus:ring-0 focus:border-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] leading-[24px] w-2/3 ml-4 placeholder-[#7E7E7E]"
+                        className="relative bg-transparent outline-none border-none focus:ring-0 focus:border-none text-[#808080] 2xl:text-[16px] max-2xl:text-[14px] w-full leading-[24px] ml-4 placeholder-[#7E7E7E]"
                         onValueChange={(val) => {
                             setLocation(val)
                             setShowSuggestions(true)
@@ -164,7 +171,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                     />
                     {showSuggestions && (
                         <CommandList className="absolute top-full left-0 right-0 bg-[#101217] border border-[#363636] rounded-b-lg max-h-60 overflow-y-auto z-50">
-                        {suggestions.length > 0 ? (
+                        {suggestions.length > 0 && (
                             <CommandGroup>
                                 {suggestions.map((item: any, index) => (
                                     <CommandItem
@@ -180,8 +187,6 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                                     </CommandItem>
                                 ))}
                             </CommandGroup>
-                            ) : (
-                            <CommandEmpty>Seach for desired location</CommandEmpty>
                             )}
                         </CommandList>
                     )}
@@ -224,7 +229,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation  }: Props) => {
                 <button 
                     type="submit"
                     disabled={loading}
-                    className='bg-primary leading-6 w-1/3 text-nowrap rounded-lg py-2 px-4 font-semibold 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] text-dark cursor-pointer'>
+                    className='bg-primary leading-6 shrink-0 flex-nowrap text-nowrap rounded-lg py-2 px-4 font-semibold 2xl:text-[16px] max-2xl:text-[14px] max-sm:text-[12px] text-dark cursor-pointer'>
                         Find Jobs
                 </button>
             </div>
