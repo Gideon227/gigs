@@ -17,9 +17,9 @@ export default function CookieBanner() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[90%] sm:w-auto animate-slideUp">
+    <div className="fixed bottom-0 left-0 w-full z-50 animate-slideUp">
       <CookieConsent
-        location="none" // prevent default full-width style
+        location="none"
         buttonText="Accept"
         declineButtonText="Decline"
         enableDeclineButton
@@ -30,43 +30,38 @@ export default function CookieBanner() {
         style={{
           background: 'rgba(15,15,15,0.95)',
           color: '#fff',
-          borderRadius: '12px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-          padding: '0.75rem 1rem',
-          fontSize: '0.8rem',
-          maxWidth: '420px',
+          padding: '0.6rem 1rem', // 👈 reduced height
+          fontSize: '0.85rem',
           display: 'flex',
-          flexDirection: 'column',
           alignItems: 'center',
-          textAlign: 'center',
-          lineHeight: '1.4',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
         }}
         buttonStyle={{
           color: '#fff',
           background: '#0070f3',
           border: 'none',
           borderRadius: '6px',
-          padding: '0.4rem 0.9rem',
+          padding: '0.4rem 1rem',
           fontWeight: '600',
           fontSize: '0.8rem',
-          marginTop: '0.6rem',
+          marginLeft: '0.5rem',
         }}
         declineButtonStyle={{
           color: '#fff',
           background: '#555',
           border: 'none',
           borderRadius: '6px',
-          padding: '0.4rem 0.9rem',
+          padding: '0.4rem 1rem',
           fontWeight: '600',
           fontSize: '0.8rem',
           marginLeft: '0.5rem',
-          marginTop: '0.6rem',
         }}
-        buttonWrapperClasses="flex justify-center gap-2 flex-wrap"
-        containerClasses="flex flex-col items-center text-center"
+        buttonWrapperClasses="flex items-center justify-end flex-wrap gap-2 mt-2 sm:mt-0"
+        containerClasses="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left"
       >
-        <span className="text-sm sm:text-[15px] leading-snug">
-        We use cookies to analyze our website traffic and to support technical features that enhance your experience.{' '}&nbsp;
+        <span className="text-[13px] sm:text-[14px] leading-snug">
+          We use cookies to enhance your experience.&nbsp;
           <Link
             href="/privacy-policy"
             className="text-blue-400 underline hover:text-blue-300"
@@ -76,20 +71,20 @@ export default function CookieBanner() {
         </span>
       </CookieConsent>
 
-      {/* 👇 Animation styles */}
+      {/* Animation */}
       <style jsx global>{`
         @keyframes slideUp {
           from {
             opacity: 0;
-            transform: translate(-50%, 30px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
-            transform: translate(-50%, 0);
+            transform: translateY(0);
           }
         }
         .animate-slideUp {
-          animation: slideUp 0.6s ease-out forwards;
+          animation: slideUp 0.5s ease-out forwards;
         }
       `}</style>
     </div>
