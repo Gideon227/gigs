@@ -1,12 +1,13 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import CookieConsent, { Cookies } from 'react-cookie-consent';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 export default function CookieBanner() {
   const [show, setShow] = useState(false);
 
+  // check cookie on mount
   useEffect(() => {
     const consent = Cookies.get('site_cookie_consent');
     if (!consent) {
@@ -14,77 +15,59 @@ export default function CookieBanner() {
     }
   }, []);
 
-  if (!show) return null;
+  if (!show) {
+    return null;
+  }
+
+  const handleAccept = () => {
+    Cookies.set('site_cookie_consent', 'accepted', { expires: 365 });
+    if (window.gtag) window.gtag('event', 'cookie_accept');
+    setShow(false);
+  };
+
+  const handleDecline = () => {
+    Cookies.set('site_cookie_consent', 'declined', { expires: 365 });
+    if (window.gtag) window.gtag('event', 'cookie_decline');
+    setShow(false);
+  };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full z-50 animate-slideUp">
-      <CookieConsent
-        location="none"
-        buttonText="Accept"
-        declineButtonText="Decline"
-        enableDeclineButton
-        cookieName="site_cookie_consent"
-        hideOnAccept
-        hideOnDecline
-        overlay={false}
-        style={{
-          background: 'rgba(15,15,15,0.95)',
-          color: '#fff',
-          padding: '0.6rem 1rem', // 👈 reduced height
-          fontSize: '0.85rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-        }}
-        buttonStyle={{
-          color: '#fff',
-          background: '#0070f3',
-          border: 'none',
-          borderRadius: '6px',
-          padding: '0.4rem 1rem',
-          fontWeight: '600',
-          fontSize: '0.8rem',
-          marginLeft: '0.5rem',
-        }}
-        declineButtonStyle={{
-          color: '#fff',
-          background: '#555',
-          border: 'none',
-          borderRadius: '6px',
-          padding: '0.4rem 1rem',
-          fontWeight: '600',
-          fontSize: '0.8rem',
-          marginLeft: '0.5rem',
-        }}
-        buttonWrapperClasses="flex items-center justify-end flex-wrap gap-2 mt-2 sm:mt-0"
-        containerClasses="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left"
-      >
-        <span className="text-[13px] sm:text-[14px] leading-snug">
-          We use cookies to enhance your experience.&nbsp;
-          <Link
-            href="/privacy-policy"
-            className="text-blue-400 underline hover:text-blue-300"
-          >
-            Learn more
+    <div className="fixed bottom-0 left-0 w-full bg-gray-900 bg-opacity-95 text-white z-50 animate-slide-up">
+      <div className="max-w-4xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div className="flex-1 text-sm sm:text-base leading-tight">
+          We use cookies to enhance your browsing experience.{" "}
+          <Link href="/privacy-policy" className="underline text-blue-300 hover:text-blue-200">
+            Cookie Policy
           </Link>
-        </span>
-      </CookieConsent>
-
-      {/* Animation */}
-      <style jsx global>{`
+        </div>
+        <div className="flex-shrink-0 flex gap-2">
+          <button
+            onClick={handleDecline}
+            className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 text-sm"
+          >
+            Decline
+          </button>
+          <button
+            onClick={handleAccept}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 text-sm"
+          >
+            Accept
+          </button>
+        </div>
+      </div>
+      <style jsx>{`
         @keyframes slideUp {
           from {
+            transform: translateY(100%);
             opacity: 0;
-            transform: translateY(30px);
           }
           to {
+            transform: translateY(0%);
             opacity: 1;
-            transform: translateY(0);
           }
         }
-        .animate-slideUp {
-          animation: slideUp 0.5s ease-out forwards;
+        .animate-slide-up {
+          animation: slideUp 0.4s ease-out forwards;
         }
       `}</style>
     </div>
