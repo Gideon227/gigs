@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Contact Us",
   description: "Get in touch with Gigs.Tech for partnerships, support, or community inquiries.",
   alternates: {
-    canonical: "https://test.gigs.tech/contact",
+    canonical: "https://gigs.tech/contact",
   },
 };
 

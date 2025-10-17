@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Terms Of Use",
   description: "Understand the terms and conditions of using Gigs.Tech’s services and platform.",
   alternates: {
-    canonical: "https://test.gigs.tech/terms-of-use",
+    canonical: "https://gigs.tech/terms-of-use",
   },
 };
 

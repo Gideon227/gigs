@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Read Gigs.Tech’s privacy practices and how we handle your personal information.",
   alternates: {
-    canonical: "https://test.gigs.tech/privacy-policy",
+    canonical: "https://gigs.tech/privacy-policy",
   }
 };
 
