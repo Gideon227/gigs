@@ -122,6 +122,8 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         switch (workSettings.toLowerCase()) {
           case 'onsite':
             return 'On-Site';
+          case 'remote':
+            return 'Remote';
           default:
             return workSettings;
         }
@@ -262,7 +264,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                         <div className='bg-[#151820] border border-gray p-6 rounded-2xl space-y-6 text-start'>
                             <div className=''>
                                 <h1 className='text-heading text-start 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[18px] font-semibold leading-8'>
-                                    {formatNumber(job.salary)} 
+                                    {formatNumber(job.salary) || "Salary not specified"} 
                                 </h1>
                                 <p className='text-neutral text-[16px] max-sm:text-sm leading-6'>Salary range</p>
                             </div>
@@ -279,7 +281,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/building-2.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job && getJobTypeText(job.jobType)}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job && getJobTypeText(job.jobType) || "Job Type not specified"}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Job Type</p>
                                     </div>
                                 </div>
@@ -287,7 +289,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/work-update.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings).charAt(0).toUpperCase() + getWorkSettingsText(job.workSettings).slice(1)}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings).charAt(0).toUpperCase() + getWorkSettingsText(job.workSettings).slice(1) || "On site"}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Work Setting</p>
                                     </div>
                                 </div>

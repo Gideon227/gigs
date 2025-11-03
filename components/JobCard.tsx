@@ -173,7 +173,7 @@ const stateAbbr = React.useMemo(() => {
         <div className='flex text-end flex-col justify-between max-sm:hidden text-nowrap'>
           {salary && salary !== "" && salary !== 'NA' ? (
             <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
-              {formatNumber(salary)}
+              {formatNumber(salary) || "Salary not specified"}
             </h1>
           ) : null}
           <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>Posted {timeAgo} ago</p>
@@ -193,7 +193,7 @@ const stateAbbr = React.useMemo(() => {
       <div className="flex justify-between sm:hidden items-start">
         {salary && salary !== "" ? (
           <h1 className="text-heading text-start text-[14px] font-semibold leading-6">
-            {formatNumber(salary)}
+            {formatNumber(salary) || "Salary not specified"}
           </h1>
         ) : null}
           
