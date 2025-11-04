@@ -164,7 +164,7 @@ const stateAbbr = React.useMemo(() => {
 
               <div className='flex space-x-1.5'>
                 <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${city} ${state && `, ${stateAbbr}`}`} {!city && !state && country}</p>
+                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${city}, ${state && stateAbbr}`} {!city && !state && country}</p>
               </div>
             </div>
           </div>
