@@ -54,11 +54,8 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
     const timeAgo = React.useMemo(() => {
         if (!job?.postedDate) return '';
-<<<<<<< HEAD
+        
         const postedDate = new Date(job.postedDate.replace(' ', 'T'));
-=======
-        const createdDate = new Date(job.postedDate.replace(' ', 'T'));
->>>>>>> main
         const now = new Date();
         const diffMs = now.getTime() - postedDate.getTime();
       
@@ -72,13 +69,10 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''}`;
         return `${seconds} second${seconds !== 1 ? 's' : ''}`;
     }, [job?.postedDate]);  
-<<<<<<< HEAD
-=======
-
+    
     const stateAbbr = React.useMemo(() => {
         if (!job?.country || !job?.state) return null;
         const normalize = (str: string) => str.trim().toLowerCase();
-
 
         const country = Country.getAllCountries().find(
             c => normalize(c.name) === normalize(job.country)
@@ -96,7 +90,6 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
         return found?.isoCode || null;
     }, [job?.country, job?.state]);
->>>>>>> main
 
     if (!hasMounted) return null;
 
