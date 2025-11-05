@@ -1,49 +1,30 @@
-name: Deploy Next.js Frontend to EC2
-
+name: Deploy Frontend to DigitalOcean
 on:
   push:
-    branches: [ main ]
+    branches:
+      - prod
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js & Build
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
-      - name: Prepare .env and build
-        run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
-          npm ci
-          npm run build
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.6.0
-        with:
-          ssh-private-key: ${{ secrets.EC2_FRONTEND_KEY }}
-
-      - name: Cleanup Next.js cache
-        run: rm -rf .next/cache
-
-      - name: Rsync build + node_modules to EC2
         run: |
-          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "mkdir -p ${{ secrets.FRONTEND_DIR }}"
-          rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" \
-            --exclude .git \
-            ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:${{ secrets.FRONTEND_DIR }}
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DO_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Restart on EC2
+      - name: Deploy Frontend
         run: |
-          ssh -tt -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ${{ secrets.FRONTEND_DIR }}
-            pm2 startOrRestart ecosystem.config.js
-            pm2 save || true
-            exit 0 
-          EOF
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} "
+            cd /var/www/gigs-tech/frontend &&
+            git pull origin main &&
+            npm install &&
+            npm run build &&
+            pm2 restart gigs-frontend || pm2 serve out 3000 --name gigs-frontend
+          "
