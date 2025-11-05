@@ -53,7 +53,7 @@ export async function generateMetadata({
       },
       robots: 'index, follow',
       alternates: {
-        canonical: `https://test.gigs.tech/browse-jobs/${job.id}`,
+        canonical: `https://gigs.tech/browse-jobs/${job.id}`,
       },
     };
   } catch (error) {

@@ -4,7 +4,6 @@ export async function getJobById(id: string) {
     if (!backendUrl) {
       throw new Error('Environment variable BACKEND_URL is not defined');
     }
-    console.log("backend running")
     try {
         const response = await fetch(`${backendUrl}/${id}`, {
             method: 'GET',

@@ -2,9 +2,11 @@
 import Link from 'next/link';
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image';
+import useGtagPageview from '@/hooks/useGtagPageview';
 
 const TermClientPage = () => {
-  const [activeId, setActiveId] = useState('about-gig')
+    const [activeId, setActiveId] = useState('about-gig')
+    useGtagPageview()
 
     const containerRef = useRef<HTMLDivElement>(null);
     const aboutGigRef = useRef<HTMLElement | null>(null);

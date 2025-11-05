@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /admin/
-
+Disallow: /api/
+Allow: /
 Sitemap: https://gigs.tech/sitemap_jobs.xml

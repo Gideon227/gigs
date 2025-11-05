@@ -1,4 +1,3 @@
-
 import React from 'react'
 import Image from 'next/image'
 import JobCta from '@/components/JobCta'
@@ -6,8 +5,18 @@ import JobMain from '@/components/JobMain'
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Browse Jobs"
-}
+  title: "Browse Jobs",
+  description: "Discover how Gigs.Tech connects Microsoft Business Apps professionals and employers.",
+  alternates: {
+    canonical: "https://gigs.tech/browse-jobs",
+  },
+  openGraph: {
+    title: "Gigs.Tech",
+    description: "Learn how Gigs.Tech connects Microsoft Power Platform professionals to top jobs.",
+    url: "https://gigs.tech/browse-jobs",
+    type: "website",
+  },
+};
 
 const Jobs = () => {
 

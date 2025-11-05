@@ -2,9 +2,11 @@
 import Link from 'next/link';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import useGtagPageview from '@/hooks/useGtagPageview';
 
 const PolicyClient = () => {
-  const [activeId, setActiveId] = useState('data')
+    const [activeId, setActiveId] = useState('data')  
+    useGtagPageview()
 
     const containerRef = useRef<HTMLDivElement>(null);
     const dataRef = useRef<HTMLElement | null>(null);

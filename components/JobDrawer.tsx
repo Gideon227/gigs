@@ -7,6 +7,7 @@ import Link from 'next/link';
 import useIsMobile from '@/hooks/useIsMobile'
 import { getRelatedJobs } from '@/libs/getRelatedJobs';
 import { formatNumber } from '@/utils/formatNumber';
+import { Country, State } from 'country-state-city';
 
 import { RxCross2 } from "react-icons/rx";
 import { URL } from 'url';
@@ -53,7 +54,11 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
 
     const timeAgo = React.useMemo(() => {
         if (!job?.postedDate) return '';
+<<<<<<< HEAD
         const postedDate = new Date(job.postedDate.replace(' ', 'T'));
+=======
+        const createdDate = new Date(job.postedDate.replace(' ', 'T'));
+>>>>>>> main
         const now = new Date();
         const diffMs = now.getTime() - postedDate.getTime();
       
@@ -67,6 +72,31 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''}`;
         return `${seconds} second${seconds !== 1 ? 's' : ''}`;
     }, [job?.postedDate]);  
+<<<<<<< HEAD
+=======
+
+    const stateAbbr = React.useMemo(() => {
+        if (!job?.country || !job?.state) return null;
+        const normalize = (str: string) => str.trim().toLowerCase();
+
+
+        const country = Country.getAllCountries().find(
+            c => normalize(c.name) === normalize(job.country)
+        );
+        if (!country) return null;
+
+        const states = State.getStatesOfCountry(country.isoCode);
+        if (!states?.length) return null;
+
+        let found = states.find(s => normalize(s.name) === normalize(job.state));
+
+        if (!found) {
+            found = states.find(s => normalize(s.isoCode) === normalize(job.state));
+        }
+
+        return found?.isoCode || null;
+    }, [job?.country, job?.state]);
+>>>>>>> main
 
     if (!hasMounted) return null;
 
@@ -99,6 +129,8 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
         switch (workSettings.toLowerCase()) {
           case 'onsite':
             return 'On-Site';
+          case 'remote':
+            return 'Remote';
           default:
             return workSettings;
         }
@@ -157,7 +189,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                 <div className='border-b border-[#363636] flex max-sm:flex-col justify-between md:py-8 max-md:py-4'>
                     <div className='space-y-2.5'>
                         <div className='flex items-center space-x-3'>
-                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${job.companyLogo ? "bg-white" : "bg-transparent"}`}/>
+                            <img src={job.companyLogo ? job.companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain bg-[#777777]`}/>
                             <h2 className='text-heading font-semibold 2xl:text-[22px] max-2xl:text-[20px] max-ms:text-[18px]'>{job.title}</h2>
                         </div>
                         <div className='flex space-x-2 justify-start items-center max-sm:flex-col max-sm:space-y-1.5 max-sm:items-start'>
@@ -173,7 +205,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <span className='inline-block rounded-full w-1 mx-2 h-1 bg-[#4F4F4F]'></span>
                                 <div className='flex space-x-1.5'>
                                     <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${job.country}, ${job.state}` }</p>
+                                    <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${job.city} ${job.state && `, ${stateAbbr}`}`} {!job.city && !job.state && job.country}</p>
                                 </div>
                             </div>
 
@@ -239,7 +271,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                         <div className='bg-[#151820] border border-gray p-6 rounded-2xl space-y-6 text-start'>
                             <div className=''>
                                 <h1 className='text-heading text-start 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[18px] font-semibold leading-8'>
-                                    {formatNumber(job.salary)} 
+                                    {formatNumber(job.salary) || "Salary not specified"} 
                                 </h1>
                                 <p className='text-neutral text-[16px] max-sm:text-sm leading-6'>Salary range</p>
                             </div>
@@ -248,7 +280,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/location-03.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{`${job.country}, ${job.state}` }</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{`${job.city}, ${job.state && stateAbbr}`} {!job.city && !job.state && job.country}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Location</p>
                                     </div>
                                 </div>
@@ -256,7 +288,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/building-2.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job && getJobTypeText(job.jobType)}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{job && getJobTypeText(job.jobType) || "Job Type not specified"}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Job Type</p>
                                     </div>
                                 </div>
@@ -264,7 +296,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
                                 <div className='flex space-x-2.5 items-center'>
                                     <Image src='/work-update.svg' width={20} height={20} alt='building icon'/>
                                     <div className='flex flex-col'>
-                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings).charAt(0).toUpperCase() + getWorkSettingsText(job.workSettings).slice(1)}</h1>
+                                        <h1 className='2xl:text-[16px] max-2xl:text-[14px] text-white leading-6'>{getWorkSettingsText(job.workSettings).charAt(0).toUpperCase() + getWorkSettingsText(job.workSettings).slice(1) || "On site"}</h1>
                                         <p className='text-neutral text-[14px] leading-5'>Work Setting</p>
                                     </div>
                                 </div>

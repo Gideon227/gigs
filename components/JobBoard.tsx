@@ -57,6 +57,7 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
 
         const hasLocationFilters =
             params.has('location') ||
+            params.has('keyword') ||
             params.has('city') ||
             params.has('state') ||
             params.has('country');
@@ -145,9 +146,10 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
     useEffect(() => {
         const params = new URLSearchParams(searchParams.toString());
         const hasLocation = params.has("location");
+        const hasKeyword = params.has("keyword");
         const hasCountry = params.has("country");
 
-        if (hasLocation && hasCountry) {
+        if (hasLocation && hasCountry && hasKeyword) {
             params.delete("country");
             setIsInitialized(true);
             router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
@@ -171,7 +173,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     }, [page, pageSize, searchParams, router, setPage]);
 
-    // Utility function to scroll to section
     const scrollToSection = useCallback((ref: React.RefObject<HTMLElement | null>) => {
         if (!ref.current || !containerRef.current) return;
         const top = ref.current.offsetTop;
@@ -216,32 +217,32 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
     }, [updateSearchParam]);
 
     // Helper function to clear all location filters
-    const clearLocationFilters = useCallback(() => {
-        const params = new URLSearchParams(searchParams);
-        params.delete('location');
-        params.delete('country');
-        params.delete('city');
-        params.delete('state');
+    // const clearLocationFilters = useCallback(() => {
+    //     const params = new URLSearchParams(searchParams);
+    //     params.delete('location');
+    //     params.delete('country');
+    //     params.delete('city');
+    //     params.delete('state');
         
-        // Add back default country
-        params.set('country', 'United States');
-        setPage(1);
+    //     // Add back default country
+    //     params.set('country', 'United States');
+    //     setPage(1);
         
-        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-    }, [searchParams, router, setPage]);
+    //     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+    // }, [searchParams, router, setPage]);
 
-    const openJob = (job: JobProps) => {
-        setSelectedJob(job)
-    }
+    // const openJob = (job: JobProps) => {
+    //     setSelectedJob(job)
+    // }
 
-    const closeDrawer = () => {
-        const params = new URLSearchParams(searchParams.toString());
-        params.delete("id");
-        const pageFromURL = Number(searchParams.get("page") || 1);
-        setPage(pageFromURL);
-        router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-        setSelectedJob(null)
-    }
+    // const closeDrawer = () => {
+    //     const params = new URLSearchParams(searchParams.toString());
+    //     params.delete("id");
+    //     const pageFromURL = Number(searchParams.get("page") || 1);
+    //     setPage(pageFromURL);
+    //     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+    //     setSelectedJob(null)
+    // }
     
   return (
     <div className='flex flex-col space-y-4'>

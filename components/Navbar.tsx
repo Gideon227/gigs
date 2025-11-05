@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div className='bg-[#1B1E28] z-50 w-full '>
         <div className='max-w-[1600px] m-auto flex justify-between items-center pt-2 px-8 max-lg:py-4 max-lg:px-6'>
-            <Link href='/browse-jobs' className='items-start flex flex-1 justify-start'>
+            <Link href='/browse-jobs?country=United+States&page=1&limit=10' className='items-start flex flex-1 justify-start'>
                 <Image src='/logo.png' height={35} width={140} alt='logo image' className='max-lg:hidden'/>
                 <Image src='/logo.png' height={35} width={110} alt='logo image' className='lg:hidden'/>
             </Link>
@@ -27,7 +27,7 @@ const Navbar = () => {
                         Home
                 </Link>
                 <Link 
-                    href="/browse-jobs" 
+                    href="/browse-jobs?country=United+States&page=1&limit=10" 
                     className={`text-[14px] leading-[80px] text-heading ${pathname === "/browse-jobs" 
                         ? "border-b  border-b-primary " 
                         : "hover:text-primary"}
@@ -61,14 +61,14 @@ const Navbar = () => {
             </a>
 
             {/* MOBILE SCREEN NAV */}
-            <button onClick={() => setToggle(prev => !prev)} className='lg:hidden bg-transparent justify-center items-center flex flex-col z-10 space-y-0.5'>
+            <button onClick={() => setToggle(prev => !prev)} className='lg:hidden bg-transparent justify-center items-center flex flex-col z-30 space-y-0.5'>
                 <div className={`${toggle && 'bar-1 bg-white'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
                 <div className={`${toggle && 'bar-2 bg-white'} bg-white w-[25px] h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
                 <div className={`${toggle && 'bar-3 bg-white'} bg-white w-3.5 h-0.5 my-[3px] transition duration-300 rounded block cursor-pointer`}></div>
             </button>
 
             {toggle && (
-                <div className={`py-20 pl-6 fixed top-0 right-0 w-full h-full bg-[#1B1E28] text-white z-40 transform transition-transform duration-300 ease-in-out ${
+                <div className={`py-20 pl-6 fixed top-0 right-0 w-full h-full bg-[#1B1E28] text-white z-20 transform transition-transform duration-300 ease-in-out ${
                     toggle ? 'translate-x-0' : 'translate-x-full'
                 }`}>
                     <nav className='flex-col flex justify-start items-start space-y-8 font-normal text-start text-[18px] text-heading'>
@@ -84,7 +84,7 @@ const Navbar = () => {
                         </Link>
                         <Link 
                             onClick={() => setToggle(false)}
-                            href="/browse-jobs" 
+                            href="/browse-jobs?country=United+States&page=1&limit=10" 
                             className={`s${pathname === "/browse-jobs" 
                                 ? "text-primary " 
                                 : "hover:text-primary"}

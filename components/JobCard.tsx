@@ -3,13 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { JobProps } from '@/constants/Jobs';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { formatNumber } from '@/utils/formatNumber';
 import { Country, State } from 'country-state-city';
+import { useNavigationStore } from '@/app/stores/useNavigationStore';
 
 const getJobTypeColor = (jobType: string): string => {
     switch (jobType.toLowerCase()) {
-      case 'gigswork':
+      case 'gigwork':
         return 'bg-[#008080]';
       case 'fulltime':
         return 'bg-[#CC007A]';
@@ -26,8 +27,8 @@ const getJobTypeColor = (jobType: string): string => {
 
 const getJobTypeText = (jobType: string): string => {
     switch (jobType.toLowerCase()) {
-      case 'gigswork':
-        return 'Gigs-work';
+      case 'gigwork':
+        return 'Gig-work';
       case 'fulltime':
         return 'Full-time';
       case 'contracttohire':
@@ -57,6 +58,7 @@ function truncateText(text: string, wordLimit: number) {
 
 
 const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardProps) => {
+  const { setPreviousUrl } = useNavigationStore();
   const { title, description, location, country, state, city, jobType, salary, skills, applicationUrl, companyLogo, companyName, postedDate } = job
 
   function getTimeAgo(dateString: string): string {
@@ -79,6 +81,9 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
   const timeAgo = getTimeAgo(postedDate); 
   const searchParams = useSearchParams()
   const router = useRouter()
+  const pathname = usePathname();
+
+  const currentUrl = `${pathname}?${searchParams.toString()}`
 
   const handleSkillClick = (value: string | null) => {
     const params = new URLSearchParams(searchParams);
@@ -120,9 +125,24 @@ const stateAbbr = React.useMemo(() => {
 
   return (
     <div className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
-      <Link href={slug} prefetch={true} className='flex items-start gap-x-5 justify-between w-full'>
+      <Link 
+        href={{
+          pathname: slug,
+          query: { currentUrl }
+        }} 
+        onClick={() => setPreviousUrl(currentUrl)} 
+        prefetch={true} 
+        className='flex items-start gap-x-5 justify-between w-full'
+      >
         <div className='flex space-x-4 justify-start items-start '>
-          <img src={companyLogo ? companyLogo : "/symbol.png"} alt='company logo' className={`w-12 h-12 rounded-full p-2 object-contain ${companyLogo ? "bg-white" : "bg-transparent"}`} />
+          <img 
+            src={companyName === 'Nigel Frank International' || companyName === 'Nigel Frank' 
+              ? '/nigel-frank.jpg' 
+              : companyLogo 
+                ? companyLogo 
+                : "/symbol.png"} 
+            alt='company logo' 
+            className={`w-12 h-12 rounded-full p-2 object-contain bg-[#777777]`} />
                 
           <div className='flex flex-col justify-between items-start'>
             <div className='flex justify-between items-start gap-x-2'>
@@ -135,7 +155,7 @@ const stateAbbr = React.useMemo(() => {
               <div className='flex space-x-1.5'>
                 <Image src='/Building.svg' width={16} height={16} alt='building icon'/>
                 <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>
-                  {companyName ? companyName.charAt(0).toUpperCase() + companyName.slice(1, 28): "Company Name"}
+                  {companyName ? companyName.charAt(0).toUpperCase() + companyName.slice(1, 28): "Nigel Frank"}
                   {companyName && companyName.length > 28 && <span className='text-neutral-500'>...</span>}
                 </p>
               </div>
@@ -144,7 +164,7 @@ const stateAbbr = React.useMemo(() => {
 
               <div className='flex space-x-1.5'>
                 <Image src='/Map Point.svg' width={16} height={16} alt='building icon'/>
-                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${city} ${state && `, ${stateAbbr}`}`} {!city && !state && country}</p>
+                <p className='text-neutral md:text-[16px] max-md:text-[14px] leading-6'>{`${city}, ${state && stateAbbr}`} {!city && !state && country}</p>
               </div>
             </div>
           </div>
@@ -153,7 +173,7 @@ const stateAbbr = React.useMemo(() => {
         <div className='flex text-end flex-col justify-between max-sm:hidden text-nowrap'>
           {salary && salary !== "" && salary !== 'NA' ? (
             <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
-              {formatNumber(salary.slice(0, 26))}
+              {formatNumber(salary) || "Salary not specified"}
             </h1>
           ) : null}
           <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>Posted {timeAgo} ago</p>
@@ -173,7 +193,7 @@ const stateAbbr = React.useMemo(() => {
       <div className="flex justify-between sm:hidden items-start">
         {salary && salary !== "" ? (
           <h1 className="text-heading text-start text-[14px] font-semibold leading-6">
-            {formatNumber(salary)}
+            {formatNumber(salary) || "Salary not specified"}
           </h1>
         ) : null}
           
