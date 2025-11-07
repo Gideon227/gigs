@@ -5,6 +5,13 @@ import JobBoard from './JobBoard'
 import { JobProps } from '@/constants/Jobs'
 import { useSearchParams } from 'next/navigation'
 
+export interface SelectedLocation {
+  country?: string;
+  state?: string;
+  city?: string;
+}
+
+
 const JobMain = () => {
   const searchParams = useSearchParams();
   const currentPage = searchParams.get("page");
@@ -12,7 +19,8 @@ const JobMain = () => {
   const getPage = Number(currentPage);
 
   const [page, setPage] = useState<number>(getPage || 1);
-  const [location, setLocation] = useState<string | null>(params.get('location') || "");
+  // const [location, setLocation] = useState<string | null>(params.get('location') || "");
+  const [location, setLocation] = useState<SelectedLocation | null>(null);
 
   return (
     <div className='grid grid-cols-7 md:gap-6 max-sm:gap-2'>

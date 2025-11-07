@@ -14,12 +14,26 @@ import {
 } from "@/components/ui/command";
 import JobSidebar from "./JobSidebar";
 import { getLocationSuggestions } from "@/libs/getLocation";
+import { SelectedLocation } from "./JobMain";
 
 interface Props {
   page: number;
   setPage: (value: any) => void;
-  location: string | null;
-  setLocation: React.Dispatch<React.SetStateAction<string | null>>;
+  location: SelectedLocation | null;
+  setLocation: React.Dispatch<React.SetStateAction<SelectedLocation | null>>;
+}
+
+interface LocationSuggestion {
+  display_name: string;
+  address: {
+    country?: string;
+    state?: string;
+    region?: string;
+    city?: string;
+    town?: string;
+    village?: string;
+    county?: string;
+  };
 }
 
 const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
@@ -28,14 +42,16 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
 
   const [openModal, setOpenModal] = useState(false);
   const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [loading, setLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [query, setQuery] = useState("");
+
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // 🔍 Debounced location search
+  // Debounced location search
   useEffect(() => {
-    if (!location?.trim()) {
+    if (!query?.trim()) {
       setSuggestions([]);
       return;
     }
@@ -43,7 +59,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       try {
-        const data = await getLocationSuggestions(location);
+        const data = await getLocationSuggestions(query);
         setSuggestions(data || []);
       } catch (error) {
         console.error("Suggestion fetch failed:", error);
@@ -54,14 +70,14 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
       clearTimeout(timer);
       controller.abort();
     };
-  }, [location]);
+  }, [query]);
 
-  // 🔒 Close suggestions if input is empty
+  // Close suggestions if input is empty
   useEffect(() => {
-    if (!location?.trim()) setShowSuggestions(false);
-  }, [location]);
+    if (!query?.trim()) setShowSuggestions(false);
+  }, [query]);
 
-  // 🖱️ Close suggestions when clicking outside
+  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
@@ -72,7 +88,18 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // 🧭 Search handler
+  useEffect(() => {
+    const country = searchParams.get("country") || "";
+    const state = searchParams.get("state") || "";
+    const city = searchParams.get("city") || "";
+    if (country || state || city) {
+      setLocation({ country, state, city });
+      setQuery([city, state, country].filter(Boolean).join(", "));
+    }
+  }, []);
+
+
+  // Search handler
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
@@ -81,11 +108,17 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     const params = new URLSearchParams(searchParams.toString());
     keyword.trim() ? params.set("keyword", keyword.trim()) : params.delete("keyword");
 
-    if (location?.trim()) {
-      params.set("location", location.trim());
-      params.delete("country");
-      params.delete("state");
-      params.delete("city");
+    if (location) {
+      const { country, state, city } = location;
+
+      if (country) params.set("country", country);
+      else params.delete("country");
+      if (state) params.set("state", state);
+      else params.delete("state");
+      if (city) params.set("city", city);
+      else params.delete("city");
+
+      params.delete("location");
     } else {
       params.delete("location");
       params.delete("country");
@@ -102,7 +135,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     setTimeout(() => setLoading(false), 200);
   };
 
-  // 🔒 Disable background scroll when modal open
+  // Disable background scroll when modal open
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "";
   }, [openModal]);
@@ -113,7 +146,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
         onSubmit={handleSubmit}
         className="flex max-md:flex-col max-md:space-y-2 my-2 md:px-10 max-md:px-4"
       >
-        {/* 🔎 Keyword search */}
+        {/* Keyword search */}
         <div className="w-full border border-[#363636] bg-[#101217] py-1 max-md:py-3 md:rounded-s-lg max-md:rounded-lg flex items-center">
           <Image
             src="/Rounded Magnifer.svg"
@@ -131,17 +164,17 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
           />
         </div>
 
-        {/* 📍 Location search */}
+        {/* Location search */}
         <div
           ref={containerRef}
-          className="relative w-full border border-[#363636] bg-[#101217] py-1 max-md:py-3 md:rounded-e-lg max-md:rounded-lg flex items-center justify-between"
+          className="relative w-full border border-[#363636] bg-[#101217] py-1 max-md:py-1 md:rounded-e-lg max-md:rounded-lg flex items-center justify-between"
         >
           <Command shouldFilter={false} className="bg-transparent border-none flex-1">
             <CommandInput
               placeholder="Enter city, state, zip, or country"
-              value={location || ""}
+              value={query}
               onValueChange={(val) => {
-                setLocation(val);
+                setQuery(val);
                 setShowSuggestions(true);
               }}
               onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
@@ -155,8 +188,19 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
                     <CommandItem
                       key={index}
                       value={item.display_name}
-                      onSelect={(val) => {
-                        setLocation(val);
+                      onSelect={() => {
+                        const { address } = item;
+                        setQuery(item.display_name);
+                        setLocation({
+                          country: address.country || "",
+                          state: address.state || address.region || "",
+                          city:
+                            address.city ||
+                            address.town ||
+                            address.village ||
+                            address.county ||
+                            "",
+                        });
                         setShowSuggestions(false);
                       }}
                       className="text-white text-[14px]"

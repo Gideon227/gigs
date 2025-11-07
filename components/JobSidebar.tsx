@@ -11,6 +11,7 @@ import useUpdateSearchParams from '@/utils/updateSearchParams';
 import CountryFilter from './CountryFilter';
 import CustomSalarySlider from './CustomSalarySlider';
 import { RxCross2  } from 'react-icons/rx';
+import { SelectedLocation } from './JobMain';
 
 export type Option = {
   value: string;
@@ -53,8 +54,8 @@ interface Props{
   page: number;
   setPage: (value: any) => void
   setOpenModal?: (value: boolean) => void
-  location?: string | null;
-  setLocation: React.Dispatch<React.SetStateAction<string | null>>
+  location?: SelectedLocation | null;
+  setLocation: React.Dispatch<React.SetStateAction<SelectedLocation | null>>
 }
 
 const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Props) => {

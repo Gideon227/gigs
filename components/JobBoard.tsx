@@ -16,6 +16,7 @@ import { getJobById } from '@/libs/getJobById';
 import Pagination from './Pagination';
 import { generateJobSlug } from '@/utils/generateSlug';
 import Link from 'next/link';
+import { SelectedLocation } from './JobMain';
 
 const JobDrawer = dynamic(() => import('./JobDrawer'), {
     ssr: false
@@ -24,8 +25,8 @@ const JobDrawer = dynamic(() => import('./JobDrawer'), {
 interface Props{
     page: number;
     setPage: (value: any) => void
-    location?: string | null;
-    setLocation: React.Dispatch<React.SetStateAction<string | null>>
+    location?: SelectedLocation | null;
+    setLocation: React.Dispatch<React.SetStateAction<SelectedLocation | null>>
 }
 
 const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {

@@ -4,7 +4,13 @@ export async function getLocationSuggestions(query: string) {
   try {
     const res = await fetch(`/api/location?q=${encodeURIComponent(query)}`);
     if (!res.ok) return [];
-    return res.json();
+    const data = await res.json();
+    return data.map((item: any) => ({
+      display_name: item.display_name,
+      address: item.address,
+      lat: item.lat,
+      lon: item.lon,
+    }));
   } catch (err) {
     console.error("Location fetch failed:", err);
     return [];
