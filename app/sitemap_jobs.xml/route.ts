@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server'
 import { getJobs } from '@/libs/getJobs'
 import type { JobProps } from '@/constants/Jobs'
+import { generateJobSlug } from '@/utils/generateSlug'
 
 export async function GET() {
   try {
@@ -24,13 +25,14 @@ export async function GET() {
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       ${jobs
         .map((job) => {
-          const jobUrl = `https://gigs.tech/browse-jobs/${job.id}`
+          const slug = generateJobSlug(job.title, job.companyName!, job.country, job.id);
+          const jobUrl = `https://gigs.tech/browse-jobs/${slug}`
           const lastMod = new Date(job.createdAt).toISOString().split('T')[0]
           return `
             <url>
               <loc>${jobUrl}</loc>
               <lastmod>${lastMod}</lastmod>
-              <changefreq>weekly</changefreq>
+              <changefreq>daily</changefreq>
               <priority>0.8</priority>
             </url>
           `

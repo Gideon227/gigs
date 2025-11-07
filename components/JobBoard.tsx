@@ -191,15 +191,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
 
         setPage(1);
 
-        // if (key === 'country' && !value) {
-        //     // If removing country, check if we need to add default
-        //     const hasOtherLocation = params.has('location');
-        //     if (!hasOtherLocation) {
-        //         // No other location filters, keep the default country
-        //         params.set('country', 'United States');
-        //     }
-        // }
-
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     }, [searchParams, router, setPage]);
 
@@ -216,33 +207,6 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
         };
     }, [updateSearchParam]);
 
-    // Helper function to clear all location filters
-    // const clearLocationFilters = useCallback(() => {
-    //     const params = new URLSearchParams(searchParams);
-    //     params.delete('location');
-    //     params.delete('country');
-    //     params.delete('city');
-    //     params.delete('state');
-        
-    //     // Add back default country
-    //     params.set('country', 'United States');
-    //     setPage(1);
-        
-    //     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-    // }, [searchParams, router, setPage]);
-
-    // const openJob = (job: JobProps) => {
-    //     setSelectedJob(job)
-    // }
-
-    // const closeDrawer = () => {
-    //     const params = new URLSearchParams(searchParams.toString());
-    //     params.delete("id");
-    //     const pageFromURL = Number(searchParams.get("page") || 1);
-    //     setPage(pageFromURL);
-    //     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-    //     setSelectedJob(null)
-    // }
     
   return (
     <div className='flex flex-col space-y-4'>
