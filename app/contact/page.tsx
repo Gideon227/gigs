@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import ContactClientPage from '@/components/ContactClientPage';
 
@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 
 const Contact = () => {
   return (
-   <ContactClientPage />
+    <Suspense fallback={<>...</>}>
+      <ContactClientPage />
+    </Suspense>
   )
 }
 

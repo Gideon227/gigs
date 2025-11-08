@@ -1,5 +1,6 @@
 import PolicyClient from '@/components/PolicyClient';
 import { Metadata } from 'next';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
 
 const PrivacyPage = () => {
     return (
-      <>
+      <Suspense fallback={<>...</>}>
         <PolicyClient /> 
-      </>
+      </Suspense>
     )
 }
 

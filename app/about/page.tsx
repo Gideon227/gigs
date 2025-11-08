@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import AboutClientPage from '@/components/AboutClientPage';
 
@@ -18,7 +18,9 @@ export const metadata: Metadata = {
 
 const About = () => {
   return (
-    <AboutClientPage />
+    <Suspense fallback={<>...</>}>
+      <AboutClientPage />
+    </Suspense>
   )
 }
 
