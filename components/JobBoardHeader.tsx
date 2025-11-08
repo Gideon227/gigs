@@ -221,7 +221,8 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
                         setQuery(item.display_name);
                         setLocation({
                           country: address.country || "",
-                          state: address.state || address.region || "",
+                          state: address.state || "",
+                          region: address.state ? "" : address.region || "",
                           city:
                             address.city ||
                             address.town ||
