@@ -1,17 +1,19 @@
-"use client";
+// components/Analytics.tsx
+'use client'
 
-import { useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { pageview } from "@/libs/gtag";
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 export default function Analytics() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const pathname = usePathname()
 
   useEffect(() => {
-    const url = pathname + searchParams.toString();
-    pageview(url);
-  }, [pathname, searchParams]);
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID, {
+        page_path: pathname,
+      })
+    }
+  }, [pathname])
 
-  return null;
+  return null
 }
