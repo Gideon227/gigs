@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import Image from 'next/image'
 import JobCta from '@/components/JobCta'
 import JobMain from '@/components/JobMain'
@@ -17,6 +17,17 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
+
+function JobsLoading() {
+  return (
+    <div className='max-w-[1600px] p-4 m-auto'>
+      <div className="animate-pulse">
+        <div className="h-10 bg-gray-700 rounded mb-4"></div>
+        <div className="h-64 bg-gray-700 rounded"></div>
+      </div>
+    </div>
+  );
+}
 
 const Jobs = () => {
 
@@ -41,9 +52,11 @@ const Jobs = () => {
             </div>
         </div>
 
-        <div className='max-w-[1600px] p-4 m-auto'>
-            <JobMain />
-        </div>
+        <Suspense fallback={<JobsLoading />}>
+          <div className='max-w-[1600px] p-4 m-auto'>
+              <JobMain />
+          </div>
+        </Suspense>
         
         <div className='bg-black flex justify-center items-center flex-1 p-20 max-md:px-8 max-md:py-16'>
             <JobCta />
