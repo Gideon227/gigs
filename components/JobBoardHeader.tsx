@@ -218,6 +218,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
                       value={item.display_name}
                       onSelect={() => {
                         const { address } = item;
+                        console.log(item)
                         setQuery(item.display_name);
                         setLocation({
                           country: address.country || "",
