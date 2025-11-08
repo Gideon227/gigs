@@ -111,7 +111,9 @@ export default function RootLayout({
       >
         <CookieBanner />
         <Toaster />
-        <Analytics />
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
         <Suspense fallback={<div className="h-20 bg-[#1B1E28]" />}>
           <Navbar />
         </Suspense>
