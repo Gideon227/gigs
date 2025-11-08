@@ -6,6 +6,9 @@ import { getJobs } from '@/libs/getJobs';
 import type { JobProps } from '@/constants/Jobs';
 
 import { Metadata } from 'next';
+import { Suspense } from 'react';
+
+export const revalidate = 21600;
 
 export async function generateStaticParams() {
   const jobs = await getJobs("limit=1000000");
@@ -14,6 +17,8 @@ export async function generateStaticParams() {
     id: job.id, 
   }));
 }
+
+export const dynamicParams = true;
 
 export async function generateMetadata({ 
   params 
@@ -77,7 +82,19 @@ const Page = async ({params}: {params: Promise<{ id: string }>}) => {
 
   return (
     <div className="px-4 pt-6 pb-12">
-      <JobDrawerClient job={job} />
+      <Suspense fallback={
+        <div className="px-4 pt-6 pb-12">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-gray-700 rounded w-3/4"></div>
+            <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+            <div className="h-64 bg-gray-700 rounded"></div>
+          </div>
+        </div>
+      }>
+        <div className="px-4 pt-6 pb-12">
+          <JobDrawerClient job={job} />
+        </div>
+      </Suspense>
     </div>
   )
 }
