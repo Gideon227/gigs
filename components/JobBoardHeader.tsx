@@ -100,6 +100,69 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
 
 
   // Search handler
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (loading) return;
+  //   setLoading(true);
+
+  //   const params = new URLSearchParams(searchParams.toString());
+  //   keyword.trim() ? params.set("keyword", keyword.trim()) : params.delete("keyword");
+
+  //   if (location) {
+  //     let { country, state, city } = location;
+
+  //     const normalizeCountry = (input?: string) => {
+  //       if (!input) return input;
+  //       const cleaned = input.trim().toLowerCase();
+
+  //       const map: Record<string, string> = {
+  //         "united states of america": "United States",
+  //         "usa": "United States",
+  //         "u.s.": "United States",
+  //         "u.s.a": "United States",
+  //         "america": "United States",
+  //         "uk": "United Kingdom",
+  //         "united kingdom of great britain and northern ireland": "United Kingdom",
+  //         "republic of korea": "South Korea",
+  //         "south korea": "South Korea",
+  //       };
+
+  //       for (const [key, value] of Object.entries(map)) {
+  //         if (cleaned.includes(key)) return value;
+  //       }
+
+  //       return input; 
+  //     };
+
+  //     country = normalizeCountry(country);
+
+  //     if (!state && location.region) state = location.region;
+  //     if (!city && location.locality) city = location.locality;
+
+  //     if (!state && location.region) state = location.region;
+  //     if (!city && location.locality) city = location.locality;
+
+  //     country ? params.set("country", country) : params.delete("country");
+  //     state ? params.set("state", state) : params.delete("state");
+  //     city ? params.set("city", city) : params.delete("city");
+
+  //     params.delete("location");
+  //   } else {
+  //     params.delete("location");
+  //     params.delete("country");
+  //     params.delete("state");
+  //     params.delete("city");
+  //   }
+
+  //   params.set("page", "1");
+  //   params.set("sort", "-postedDate");
+  //   setPage(1);
+
+  //   router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
+
+  //   setTimeout(() => setLoading(false), 200);
+  // };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
@@ -109,7 +172,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     keyword.trim() ? params.set("keyword", keyword.trim()) : params.delete("keyword");
 
     if (location) {
-      let { country, state, city } = location;
+      let { country, state, city, locality } = location;
 
       const normalizeCountry = (input?: string) => {
         if (!input) return input;
@@ -136,15 +199,34 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
 
       country = normalizeCountry(country);
 
-      if (!state && location.region) state = location.region;
-      if (!city && location.locality) city = location.locality;
+      // Use locality as fallback if city is empty
+      if (!city && locality) {
+        city = locality;
+      }
 
-      if (!state && location.region) state = location.region;
-      if (!city && location.locality) city = location.locality;
-
-      country ? params.set("country", country) : params.delete("country");
-      state ? params.set("state", state) : params.delete("state");
-      city ? params.set("city", city) : params.delete("city");
+      // Set params - country is required, state and city are optional
+      if (country) {
+        params.set("country", country);
+        
+        // Only set state if it exists
+        if (state) {
+          params.set("state", state);
+        } else {
+          params.delete("state");
+        }
+        
+        // Only set city if it exists
+        if (city) {
+          params.set("city", city);
+        } else {
+          params.delete("city");
+        }
+      } else {
+        // If no country, clear all location params
+        params.delete("country");
+        params.delete("state");
+        params.delete("city");
+      }
 
       params.delete("location");
     } else {
@@ -219,22 +301,31 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
                       onSelect={() => {
                         const { address } = item;
                         setQuery(item.display_name);
-
-                        const extractedCity = address.city || 
-                         address.town || 
-                         address.village || 
-                         address.county || 
-                         "";
-    
-                        const extractedState = address.state || address.region || "";
+                        
+                        // Extract city-level locations
+                        const cityValue = address.city || 
+                                        address.town || 
+                                        address.village || 
+                                        address.municipality ||
+                                        "";
+                        
+                        // Extract state/region
+                        const stateValue = address.state || 
+                                          address.province || 
+                                          address.region || 
+                                          "";
+                        
+                        // Extract country
+                        const countryValue = address.country || "";
+                        
                         setLocation({
-                          country: address.country || "",
-                          state: extractedState,
-                          region: address.region || "",
-                          city: extractedCity,
-                          // using locality as fallback
-                          locality: extractedCity || extractedState,
+                          country: countryValue,
+                          state: stateValue,
+                          region: stateValue, // Keep for backward compatibility
+                          city: cityValue,
+                          locality: cityValue || stateValue, // Fallback hierarchy
                         });
+                        
                         setShowSuggestions(false);
                       }}
                       className="text-white text-[14px]"
