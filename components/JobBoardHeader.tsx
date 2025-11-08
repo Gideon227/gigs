@@ -219,16 +219,21 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
                       onSelect={() => {
                         const { address } = item;
                         setQuery(item.display_name);
+
+                        const extractedCity = address.city || 
+                         address.town || 
+                         address.village || 
+                         address.county || 
+                         "";
+    
+                        const extractedState = address.state || address.region || "";
                         setLocation({
                           country: address.country || "",
-                          state: address.state || "",
-                          region: address.state ? "" : address.region || "",
-                          city:
-                            address.city ||
-                            address.town ||
-                            address.village ||
-                            address.county ||
-                            "",
+                          state: extractedState,
+                          region: address.region || "",
+                          city: extractedCity,
+                          // using locality as fallback
+                          locality: extractedCity || extractedState,
                         });
                         setShowSuggestions(false);
                       }}
