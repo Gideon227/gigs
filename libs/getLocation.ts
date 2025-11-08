@@ -5,6 +5,7 @@ export async function getLocationSuggestions(query: string) {
     const res = await fetch(`/api/location?q=${encodeURIComponent(query)}`);
     if (!res.ok) return [];
     const data = await res.json();
+    console.log(data)
     return data.map((item: any) => ({
       display_name: item.display_name,
       address: item.address,
