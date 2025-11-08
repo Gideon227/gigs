@@ -109,18 +109,23 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     keyword.trim() ? params.set("keyword", keyword.trim()) : params.delete("keyword");
 
     if (location) {
-      const { country, state, city } = location;
+      let { country, state, city } = location;
 
-      if (country === 'United States of America'){
-        params.set("country", "United States")
+      const countryMap: Record<string, string> = {
+        "United States of America": "United States",
+        "U.S.": "United States",
+        "USA": "United States",
+        "UK": "United Kingdom",
+        "Republic of Korea": "South Korea",
+      };
+
+      if (country && countryMap[country]) {
+        country = countryMap[country];
       }
 
-      if (country) params.set("country", country);
-      else params.delete("country");
-      if (state) params.set("state", state);
-      else params.delete("state");
-      if (city) params.set("city", city);
-      else params.delete("city");
+       country ? params.set("country", country) : params.delete("country");
+      state ? params.set("state", state) : params.delete("state");
+      city ? params.set("city", city) : params.delete("city");
 
       params.delete("location");
     } else {
