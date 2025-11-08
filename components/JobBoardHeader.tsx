@@ -111,19 +111,38 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     if (location) {
       let { country, state, city } = location;
 
-      const countryMap: Record<string, string> = {
-        "United States of America": "United States",
-        "U.S.": "United States",
-        "USA": "United States",
-        "UK": "United Kingdom",
-        "Republic of Korea": "South Korea",
+      const normalizeCountry = (input?: string) => {
+        if (!input) return input;
+        const cleaned = input.trim().toLowerCase();
+
+        const map: Record<string, string> = {
+          "united states of america": "United States",
+          "usa": "United States",
+          "u.s.": "United States",
+          "u.s.a": "United States",
+          "america": "United States",
+          "uk": "United Kingdom",
+          "united kingdom of great britain and northern ireland": "United Kingdom",
+          "republic of korea": "South Korea",
+          "south korea": "South Korea",
+        };
+
+        for (const [key, value] of Object.entries(map)) {
+          if (cleaned.includes(key)) return value;
+        }
+
+        return input; 
       };
 
-      if (country && countryMap[country]) {
-        country = countryMap[country];
-      }
+      country = normalizeCountry(country);
 
-       country ? params.set("country", country) : params.delete("country");
+      if (!state && location.region) state = location.region;
+      if (!city && location.locality) city = location.locality;
+
+      if (!state && location.region) state = location.region;
+      if (!city && location.locality) city = location.locality;
+
+      country ? params.set("country", country) : params.delete("country");
       state ? params.set("state", state) : params.delete("state");
       city ? params.set("city", city) : params.delete("city");
 

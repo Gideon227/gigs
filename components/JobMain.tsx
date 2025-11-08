@@ -9,6 +9,8 @@ export interface SelectedLocation {
   country?: string;
   state?: string;
   city?: string;
+  locality?: string;
+  region?: string;
 }
 
 

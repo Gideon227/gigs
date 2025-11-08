@@ -20,12 +20,8 @@ export const metadata: Metadata = {
 
 function JobsLoading() {
   return (
-    <div className='max-w-[1600px] p-4 m-auto'>
-      <div className="animate-pulse">
-        <div className="h-10 bg-gray-700 rounded mb-4"></div>
-        <div className="h-64 bg-gray-700 rounded"></div>
-      </div>
-    </div>
+    <>
+    </>
   );
 }
 
