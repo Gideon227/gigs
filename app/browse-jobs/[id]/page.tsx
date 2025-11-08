@@ -11,11 +11,12 @@ import { Suspense } from 'react';
 export const revalidate = 21600;
 
 export async function generateStaticParams() {
-  const jobs = await getJobs("limit=1000000");
+  // const jobs = await getJobs("limit=1000000");
 
-  return jobs.data.jobs.map((job: JobProps) => ({
-    id: job.id, 
-  }));
+  // return jobs.data.jobs.map((job: JobProps) => ({
+  //   id: job.id, 
+  // }));
+  return [];
 }
 
 export const dynamicParams = true;
