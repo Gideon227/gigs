@@ -111,6 +111,10 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
     if (location) {
       const { country, state, city } = location;
 
+      if (country === 'United States of America'){
+        params.set("country", "United States")
+      }
+
       if (country) params.set("country", country);
       else params.delete("country");
       if (state) params.set("state", state);
@@ -160,7 +164,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             placeholder="Search job title or keyword..."
-            className="bg-transparent outline-none text-[#808080] w-full ml-3 text-sm md:text-base placeholder-[#7E7E7E]"
+            className="bg-transparent outline-none text-[#808080] w-full ml-3 text-sm md:text-[14px] placeholder-[#7E7E7E]"
           />
         </div>
 
@@ -178,7 +182,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
                 setShowSuggestions(true);
               }}
               onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
-              className="bg-transparent border-none focus:ring-0 text-[#808080] w-full ml-4 text-sm md:text-base placeholder-[#7E7E7E]"
+              className="bg-transparent border-none focus:ring-0 text-[#808080] w-full ml-4 text-sm md:text-[14px] placeholder-[#7E7E7E]"
             />
 
             {showSuggestions && suggestions.length > 0 && (
@@ -222,7 +226,7 @@ const JobBoardHeader = ({ page, setPage, location, setLocation }: Props) => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-primary flex-shrink-0 whitespace-nowrap rounded-lg py-2 px-4 font-semibold text-dark cursor-pointer text-sm md:text-base mr-2"
+            className="bg-primary flex-shrink-0 whitespace-nowrap rounded-lg py-2 px-4 font-semibold text-dark cursor-pointer text-sm md:text-base"
           >
             {loading ? "Searching..." : "Find Jobs"}
           </button>
