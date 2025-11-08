@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Analytics from "@/components/Analytics";
 import CookieBanner from "@/components/CookieBanner";
+import { Suspense } from "react";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -111,7 +112,9 @@ export default function RootLayout({
         <CookieBanner />
         <Toaster />
         <Analytics />
-        <Navbar />
+        <Suspense fallback={<div className="h-20 bg-[#1B1E28]" />}>
+          <Navbar />
+        </Suspense>
         <main className="flex-1">
           {children}
         </main>
