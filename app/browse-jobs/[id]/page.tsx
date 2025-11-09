@@ -31,7 +31,8 @@ export async function generateMetadata({
     // const jobId = id.split('-').slice(-5).join('-').toString();
 
     const slugParts = id.split("/");
-    const jobId = slugParts[slugParts.length - 1];
+    const lastPart = slugParts[slugParts.length - 1];  
+    const jobId = lastPart.split("?")[0];
     
     const getJob = await getJobById(jobId);
     const job: JobProps = getJob?.data || getJob;
@@ -80,7 +81,8 @@ const Page = async ({params}: {params: Promise<{ id: string }>}) => {
   // const jobId = id.split('-').slice(-5).join('-').toString();
 
   const slugParts = id.split("/");
-  const jobId = slugParts[slugParts.length - 1];  
+  const lastPart = slugParts[slugParts.length - 1];  
+  const jobId = lastPart.split("?")[0];
 
   const getJob = await getJobById(jobId!)
   const job = getJob.data
