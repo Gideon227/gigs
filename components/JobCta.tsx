@@ -9,9 +9,9 @@ const JobCta = () => {
 
     const handleClick = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
 
         try {
-            setLoading(true);
             const res = await fetch(`${process.env.NEXT_PUBLIC_CONTACT_BACKEND_URL}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -20,7 +20,7 @@ const JobCta = () => {
 
             if (!res.ok) throw new Error("Failed to send");
 
-            toast.success("Your message has been successfully sent!", {
+            toast.success("Message sent successfully! We'll get back to you soon.", {
                 style: { fontSize: "14px", background: "#101217", color: "#fff" },
             });
 
