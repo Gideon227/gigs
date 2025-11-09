@@ -30,7 +30,7 @@ const ShareModal = ({ job, onClose }: ShareModalProps) => {
   const params = new URLSearchParams(searchParams.toString());
 
   useEffect(() => setMounted(true), []);
-  const slug = generateJobSlug(job.title, job.companyName!, job.country, job.id);
+  const slug = generateJobSlug(job.title, job.companyName!, job.country, job.state, job.city, job.id);
 
   const displayLink = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/browse-jobs/${slug}`;
   const whatsappLink = `https://wa.me/?text=${encodeURIComponent(displayLink)}`;
