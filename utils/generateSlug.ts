@@ -16,5 +16,5 @@ export const generateJobSlug = (title: string, company: string, country: string,
   const slugState = sanitize(state);
   const slugCity = sanitize(city);
 
-  return `${slugTitle}-${slugCompany}-${slugCountry}-${slugState}-${slugCity}/${id}`;
+  return `${slugTitle}-${slugCompany}-${slugCountry}-${slugState}-${slugCity}-${id}`;
 }

@@ -29,10 +29,8 @@ export async function generateMetadata({
    try {
     const { id } = await params; 
     // const jobId = id.split('-').slice(-5).join('-').toString();
-
-    const slugParts = id.split("/");
-    const lastPart = slugParts[slugParts.length - 1];  
-    const jobId = lastPart.split("?")[0];
+    const cleanId = id.split('?')[0]
+    const jobId = cleanId.split('-').slice(-5).join('-').toString();
     
     const getJob = await getJobById(jobId);
     const job: JobProps = getJob?.data || getJob;
@@ -78,11 +76,10 @@ export async function generateMetadata({
 
 const Page = async ({params}: {params: Promise<{ id: string }>}) => {
   const { id } =  await params;
-  // const jobId = id.split('-').slice(-5).join('-').toString();
+  const cleanId = id.split('?')[0]
+  const jobId = cleanId.split('-').slice(-5).join('-').toString();
 
-  const slugParts = id.split("/");
-  const lastPart = slugParts[slugParts.length - 1];  
-  const jobId = lastPart.split("?")[0];
+  console.log(jobId)
 
   const getJob = await getJobById(jobId!)
   const job = getJob.data
@@ -101,7 +98,6 @@ const Page = async ({params}: {params: Promise<{ id: string }>}) => {
         </div>
       }>
         <div className="px-4 pt-6 pb-12">
-          {console.log(jobId, job)!}
           <JobDrawerClient job={job} />
         </div>
       </Suspense>
