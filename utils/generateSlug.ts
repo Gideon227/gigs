@@ -1,5 +1,5 @@
 // utils/generateSlug.ts
-export const generateJobSlug = (title: string, company: string, country: string, id: string | number) => {
+export const generateJobSlug = (title: string, company: string, country: string, state: string, city: string, id: string | number) => {
   const stopWords = ['a', 'the', 'to', 'with', 'and', 'for', 'in', 'on', 'at', 'of'];
   
   const sanitize = (text: string) =>
@@ -13,6 +13,8 @@ export const generateJobSlug = (title: string, company: string, country: string,
   const slugTitle = sanitize(title);
   const slugCompany = sanitize(company);
   const slugCountry = sanitize(country);
+  const slugState = sanitize(state);
+  const slugCity = sanitize(city);
 
-  return `${slugTitle}-${slugCompany}-${slugCountry}-job-${id}`;
+  return `${slugTitle}-${slugCompany}-${slugCountry}-${slugState}-${slugCity}/${id}`;
 }

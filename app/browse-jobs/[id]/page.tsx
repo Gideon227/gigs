@@ -28,7 +28,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
    try {
     const { id } = await params; 
-    const jobId = id.split('-').slice(-5).join('-').toString();
+    // const jobId = id.split('-').slice(-5).join('-').toString();
+
+    const slugParts = id.split("/");
+    const jobId = slugParts[slugParts.length - 1];
     
     const getJob = await getJobById(jobId);
     const job: JobProps = getJob?.data || getJob;
@@ -74,7 +77,10 @@ export async function generateMetadata({
 
 const Page = async ({params}: {params: Promise<{ id: string }>}) => {
   const { id } =  await params;
-  const jobId = id.split('-').slice(-5).join('-').toString();
+  // const jobId = id.split('-').slice(-5).join('-').toString();
+
+  const slugParts = id.split("/");
+  const jobId = slugParts[slugParts.length - 1];  
 
   const getJob = await getJobById(jobId!)
   const job = getJob.data

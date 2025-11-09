@@ -229,20 +229,20 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
                     </div>
                     ) : jobs.length > 0 ? (
                     jobs.map((job:JobProps, index) => {
-                        const slug = generateJobSlug(job.title, job.companyName!, job.country, job.id);
+                        const slug = generateJobSlug(job.title, job.companyName!, job.country, job.state, job.city, job.id);
 
                         return (
                             <JobCard
-                                    key={index}
-                                    job={job}
-                                    hasBorder={index !== jobs.length - 1}
-                                    onClick={() => {
-                                        // openJob(job)
-                                        // updateSearchParam("id", job.id.toString())
-                                        // router.push(`/browse-jobs/${slug}`);
-                                    }}
-                                    slug={`/browse-jobs/${slug}`}
-                                    setOpenShareModal={setOpenShareModal}
+                                key={index}
+                                job={job}
+                                hasBorder={index !== jobs.length - 1}
+                                onClick={() => {
+                                    // openJob(job)
+                                    // updateSearchParam("id", job.id.toString())
+                                    // router.push(`/browse-jobs/${slug}`);
+                                }}
+                                slug={`/browse-jobs/${slug}`}
+                                setOpenShareModal={setOpenShareModal}
                             />
                         )
                     })
