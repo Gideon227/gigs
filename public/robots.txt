@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /api/
 Allow: /
 Sitemap: https://gigs.tech/sitemap_jobs.xml
+Sitemap: https://gigs.tech/sitemap.xml

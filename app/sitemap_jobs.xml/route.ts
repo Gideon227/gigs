@@ -16,37 +16,37 @@ function escapeXml(unsafe: string) {
 export async function GET() {
   try {
     const getJobsData = await getJobs('sort=-createdAt&limit=1000000');
-    const jobs: JobProps[] = getJobsData?.data || [];
-
-    if (!jobs.length) {
-      return new NextResponse(
-        `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`,
-        { headers: { 'Content-Type': 'application/xml' } }
-      );
-    }
+    const jobs: JobProps[] = getJobsData?.data.jobs || [];
 
     const urls = jobs
       .map((job) => {
-        const slug = generateJobSlug(
-          job.title,
-          job.companyName!,
-          job.country,
-          job.state,
-          job.city,
-          job.id
-        );
-        const jobUrl = `https://gigs.tech/browse-jobs/${encodeURIComponent(slug)}`;
-        const lastMod = new Date(job.createdAt).toISOString().split('T')[0];
-        return `<url>
-  <loc>${escapeXml(jobUrl)}</loc>
-  <lastmod>${lastMod}</lastmod>
-  <changefreq>daily</changefreq>
-  <priority>0.8</priority>
-</url>`;
+        try {
+          const slug = generateJobSlug(
+            job.title,
+            job.companyName || '',
+            job.country,
+            job.state || '',
+            job.city || '',
+            job.id
+          );
+          const jobUrl = `https://gigs.tech/browse-jobs/${encodeURIComponent(slug)}`;
+          const lastMod = new Date(job.createdAt).toISOString().split('T')[0];
+          
+          return `  <url>
+    <loc>${escapeXml(jobUrl)}</loc>
+    <lastmod>${lastMod}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+        } catch (error) {
+          console.error('Error generating URL for job:', job.id, error);
+          return null;
+        }
       })
+      .filter(Boolean) // Remove any null entries
       .join('\n');
 
+    // Build sitemap with proper structure
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls}
@@ -61,11 +61,14 @@ ${urls}
   } catch (error) {
     console.error('Error generating jobs sitemap:', error);
 
+    // Return a valid empty sitemap on error
     const fallback = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+</urlset>`;
 
     return new NextResponse(fallback, {
       headers: { 'Content-Type': 'application/xml' },
+      status: 500,
     });
   }
 }

@@ -7,7 +7,7 @@ const AboutMain = () => {
   return (
     <div className='w-full bg-[#1B1E28]'>
         <div className='max-w-[1600px] mx-auto lg:p-16 flex flex-col justify-start max-lg:items-center max-lg:px-4 max-lg:py-16'>
-            <Image src='/diamond sparkle.svg' width={58} height={58} alt='diamond sparkle' className='object-contain'/>
+            <Image src='/diamond sparkle.svg' width={58} height={58} alt='diamond sparkle' placeholder="blur" className='object-contain'/>
 
             <div className='lg:w-2/3 flex flex-col justify-start space-y-6 max-lg:mt-4 max-md:space-y-4'>
                 <LastLineImage 
