@@ -101,6 +101,7 @@ const Page = async ({params}: {params: Promise<{ id: string }>}) => {
         </div>
       }>
         <div className="px-4 pt-6 pb-12">
+          {console.log(jobId, job)!}
           <JobDrawerClient job={job} />
         </div>
       </Suspense>
