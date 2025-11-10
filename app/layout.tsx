@@ -15,6 +15,7 @@ import Navbar from "@/components/Navbar";
 import Analytics from "@/components/Analytics";
 import CookieBanner from "@/components/CookieBanner";
 import { Suspense } from "react";
+import StructuredData from "@/components/StructuredData";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -43,21 +44,21 @@ const segoeUi = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://gigs.tech"), 
   title: {
-    default: "Gigs Tech",
-    template: "%s - Gigs Tech"
+    default: "Microsoft Power Platform & Dynamics 365 Jobs | GIGS.TECH",
+    template: "%s | GIGS.TECH"
   },
-  description: "Power Platform & Dynamics 365 jobs all in one place.",
+  description: "Find the latest Microsoft Power Platform & Dynamics 365 jobs worldwide. Discover roles for developers, consultants, and architects—all on GIGS.TECH.",
   openGraph: {
-    title: "Gigs Tech",
-    description: "Power Platform & Dynamics 365 jobs all in one place.",
+    title: "Microsoft Power Platform & Dynamics 365 Jobs | GIGS.TECH",
+    description: "Find the latest Microsoft Power Platform & Dynamics 365 jobs worldwide. Discover roles for developers, consultants, and architects—all on GIGS.TECH.",
     url: "https://gigs.tech",
-    siteName: "Gigs Tech",
+    siteName: "GIGS.TECH",
     images: [
       {
         url: "https://gigs.tech/_next/image?url=%2Flogo.png&w=256&q=75",
         width: 1200,
         height: 630,
-        alt: "Gigs Tech",
+        alt: "Microsoft Power Platform & Dynamics 365 Jobs",
       },
     ],
     locale: "en_US",
@@ -65,14 +66,15 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gigs Tech",
-    description: "Power Platform & Dynamics 365 jobs all in one place.",
-    images: ["https://gigs.tech//_next/image?url=%2Flogo.png&w=256&q=75"],
+    title: "Microsoft Power Platform & Dynamics 365 Jobs | GIGS.TECH",
+    description: "Find the latest Microsoft Power Platform & Dynamics 365 jobs worldwide. Discover roles for developers, consultants, and architects—all on GIGS.TECH.",
+    images: ["https://gigs.tech/_next/image?url=%2Flogo.png&w=256&q=75"],
   },
   alternates: {
     canonical: "https://gigs.tech",
   },
   robots: "index, follow",
+  keywords: ["Power Platform jobs", "Dynamics 365 jobs", "Microsoft jobs", "Power Apps developer", "Power BI consultant", "D365 architect"],
 };
 
 
@@ -85,6 +87,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#1B1E28" />
+        <StructuredData />
+
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Google Analytics Script */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}

@@ -7,6 +7,7 @@ import type { JobProps } from '@/constants/Jobs';
 
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import Script from 'next/script';
 
 export const revalidate = 21600;
 
@@ -86,8 +87,47 @@ const Page = async ({params}: {params: Promise<{ id: string }>}) => {
 
   if (!job) notFound()
 
+  const jobSchema = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": job.title,
+    "description": job.description,
+    "datePosted": job.createdAt,
+    "validThrough": job.expiryDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    "employmentType": job.employmentType || "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": job.companyName,
+      "logo": job.companyLogo,
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": job.city,
+        "addressRegion": job.state,
+        "addressCountry": job.country
+      }
+    },
+    "baseSalary": job.salary ? {
+      "@type": "MonetaryAmount",
+      "currency": "USD",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": job.salary,
+        "unitText": "YEAR"
+      }
+    } : undefined
+  };
+
+
   return (
     <div className="px-4 pt-6 pb-12">
+      <Script
+        id={`job-schema-${jobId}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobSchema) }}
+      />
       <Suspense fallback={
         <div className="px-4 pt-6 pb-12">
           <div className="animate-pulse space-y-4">
