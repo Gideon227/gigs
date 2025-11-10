@@ -201,9 +201,9 @@ const JobSidebar = ({ page, setPage, setOpenModal, location, setLocation }: Prop
           <button onClick={() => setOpenModal && setOpenModal(false)}>
             <RxCross2  size={21} color='#FCFCFC'/>
           </button>
-          <h1 className='text-[16px] font-medium text-heading'>Filter</h1>
+          <h2 className='text-[16px] font-medium text-heading'>Filter</h2>
         </div>
-        <h1 className='text-heading text-[18px] font-medium max-lg:hidden'>Filter</h1>
+        <h2 className='text-heading text-[18px] font-medium max-lg:hidden'>Filter</h2>
         <button 
           onClick={() => {clearAllFilters()}}
           className='text-neutral text-[16px] max-md:text-[14px] leading-6 cursor-pointer'>

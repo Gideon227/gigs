@@ -146,7 +146,7 @@ const stateAbbr = React.useMemo(() => {
                 
           <div className='flex flex-col justify-between items-start'>
             <div className='flex justify-between items-start gap-x-2'>
-              <h1 className='text-[20px] max-md:text-[16px] leading-[27px] max-md:leading-6 font-semibold flex-1 text-start text-wrap text-heading pr-2'>{title}</h1>
+              <h2 className='text-[20px] max-md:text-[16px] leading-[27px] max-md:leading-6 font-semibold flex-1 text-start text-wrap text-heading pr-2'>{title}</h2>
               <span className={`max-sm:hidden rounded-full py-1 px-4 flex items-center mt-1 ${getJobTypeColor(jobType)}`}>
                 <p className='text-heading font-normal 2xl:text-[14px] max-2xl:text-[12px] text-nowrap'>{getJobTypeText(jobType)}</p>
               </span>
@@ -172,9 +172,9 @@ const stateAbbr = React.useMemo(() => {
 
         <div className='flex text-end flex-col justify-between max-sm:hidden text-nowrap'>
           {salary && salary !== "" && salary !== 'NA' ? (
-            <h1 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
+            <h2 className="text-heading text-nowrap text-end 2xl:text-[24px] max-2xl:text-[22px] max-sm:text-[16px] font-semibold leading-8">
               {formatNumber(salary) || "Salary not specified"}
-            </h1>
+            </h2>
           ) : null}
           <p className='text-neutral md:text-[16px] max-md:text-[14px] font-normal text-end'>Posted {timeAgo} ago</p>
         </div>
@@ -192,9 +192,9 @@ const stateAbbr = React.useMemo(() => {
 
       <div className="flex justify-between sm:hidden items-start">
         {salary && salary !== "" ? (
-          <h1 className="text-heading text-start text-[14px] font-semibold leading-6">
+          <h2 className="text-heading text-start text-[14px] font-semibold leading-6">
             {formatNumber(salary) || "Salary not specified"}
-          </h1>
+          </h2>
         ) : null}
           
         <p className="text-neutral text-[12px] font-normal text-end leading-6">

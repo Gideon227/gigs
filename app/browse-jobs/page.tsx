@@ -5,8 +5,8 @@ import JobMain from '@/components/JobMain'
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Browse Jobs",
-  description: "Discover how Gigs.Tech connects Microsoft Business Apps professionals and employers.",
+  title: "Microsoft Power Platform & Dynamics 365 Jobs",
+  description: "Find the latest Microsoft Power Platform & Dynamics 365 jobs worldwide. Discover roles for developers, consultants, and architects—all on GIGS.TECH.",
   alternates: {
     canonical: "https://gigs.tech/browse-jobs",
   },
@@ -50,12 +50,12 @@ const Jobs = () => {
 
         <Suspense fallback={<JobsLoading />}>
           <div className='max-w-[1600px] p-4 m-auto'>
-              <JobMain />
+            <JobMain />
           </div>
         </Suspense>
         
         <div className='bg-black flex justify-center items-center flex-1 p-20 max-md:px-8 max-md:py-16'>
-            <JobCta />
+          <JobCta />
         </div>
     </div>
   )

@@ -215,7 +215,7 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
             <JobBoardHeader page={page} setPage={setPage} location={location!} setLocation={setLocation} />
             <div className='py-4 max-sm:px-4 sm:px-6 w-full' ref={containerRef}>
                 <div className='flex w-full justify-between items-center'>
-                    <h1 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobLength} Jobs</h1>
+                    <h2 className='font-medium leading-[33px] 2xl:text-[18px] max-2xl:text-[18px] max-md:text-[16px] max-sm:text-sm text-heading '>{jobLength} Jobs</h2>
                     <div className='flex sm:space-x-4 max-sm:space-x-2 items-center'>
                         <p className='max-sm:text-sm sm:text-[16px] 2xl:text-[18px] leading-6 text-start text-heading'>Sort by:</p>
                         <SortFilter />
@@ -247,7 +247,7 @@ const JobBoard = ({ page, setPage, location, setLocation }: Props ) => {
                         )
                     })
                     ): hasFetched ? (
-                        <h1 className='text-heading text-[18px] py-4 text-center'>No jobs found</h1>
+                        <h2 className='text-heading text-[18px] py-4 text-center'>No jobs found</h2>
                     ) : null
                 }
             </div>

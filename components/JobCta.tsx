@@ -39,7 +39,7 @@ const JobCta = () => {
   return (
     <div className='max-w-[1600px] mx-auto bg-[url(/cta-bg.png)] rounded-xl bg-cover max-md:bg-center'>
         <div className='py-16 px-40 items-center justify-center flex flex-col max-md:px-6 max-md:py-12'>
-            <h1 className='text-center text-dark 2xl:text-[32px] max-2xl:text-[28px] leading-[48px] font-semibold'>How do you like Gigs.Tech? </h1>
+            <h2 className='text-center text-dark 2xl:text-[32px] max-2xl:text-[28px] leading-[48px] font-semibold'>How do you like Gigs.Tech? </h2>
             <p className='text-center text-[16px] max-md:text-[14px] leading-6 text-dark'>This isn&apos;t just another job site — we&apos;re building a community, and your feedback helps us shape it.</p>
         
             <div className='border-[1.5px] border-[#363636] my-6 rounded-lg bg-transparent w-full'>
