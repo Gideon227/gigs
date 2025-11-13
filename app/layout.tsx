@@ -49,8 +49,8 @@ export const metadata: Metadata = {
   },
   description: "Find the latest Microsoft Power Platform & Dynamics 365 jobs worldwide. Discover roles for developers, consultants, and architects—all on GIGS.TECH.",
   openGraph: {
-    title: "Microsoft Power Platform & Dynamics 365 Jobs | GIGS.TECH",
-    description: "Find the latest Microsoft Power Platform & Dynamics 365 jobs worldwide. Discover roles for developers, consultants, and architects—all on GIGS.TECH.",
+    title: "GIGS.TECH | Microsoft Power Platform & Dynamics 365 Jobs",
+    description: "Find verified Microsoft Power Platform & Dynamics 365 jobs from developers to architects, updated daily from top Microsoft partners and recruiters. Start your next gig at GIGS.TECH.",
     url: "https://gigs.tech",
     siteName: "GIGS.TECH",
     images: [
