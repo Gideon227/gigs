@@ -60,7 +60,7 @@ const SortFilter = () => {
                             onClick={() => {
                                 setSortBy("relevancy")
                                 setOpen(false)
-                                updateSearchParam("sort", "relevancy" )
+                                updateSearchParam("sort", null )
                             }}
                         >
                             Relevancy

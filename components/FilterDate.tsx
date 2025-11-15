@@ -30,6 +30,16 @@ const FilterDate = ({ date, setDate, setPage }: DateProps) => {
     const searchParams = useSearchParams();
 
     useEffect(() => {
+        const dateParam = searchParams.get('datePosted');
+        if (dateParam) {
+            const option = options.find((opt) => opt.value === dateParam);
+            if (option) {
+                setDate(option.label);
+            }
+        }
+    }, []);
+
+    useEffect(() => {
         // setPage(1);
     }, [searchParams.toString()]);
       
@@ -37,10 +47,13 @@ const FilterDate = ({ date, setDate, setPage }: DateProps) => {
         const params = new URLSearchParams(searchParams);
 
         if (value) {
-        params.set(key, value);
+            params.set(key, value);
         } else {
-        params.delete(key);
+            params.delete(key);
         }
+
+        params.set('page', '1');
+
         router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
     };
 
