@@ -43,6 +43,14 @@ const Navbar = () => {
                         About
                 </Link>
                 <Link 
+                    href="/blog" 
+                    className={`text-[14px] leading-[80px] text-heading ${pathname === "/blog" 
+                        ? "border-b  border-b-primary " 
+                        : "hover:text-primary"}
+                        `}>
+                        Blog
+                </Link>
+                <Link 
                     href="/contact" 
                     className={`text-[14px] leading-[80px] text-heading ${pathname === "/contact" 
                         ? "border-b  border-b-primary " 
@@ -99,6 +107,15 @@ const Navbar = () => {
                                 : "hover:text-primary"}
                                 `}>
                                 About
+                        </Link>
+                        <Link 
+                            onClick={() => setToggle(false)}
+                            href="/blog" 
+                            className={`s${pathname === "/blog" 
+                                ? "text-primary " 
+                                : "hover:text-primary"}
+                                `}>
+                                Blog
                         </Link>
                         <Link 
                             onClick={() => setToggle(false)}

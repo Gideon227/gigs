@@ -30,6 +30,7 @@ const Footer = () => {
                             <li><Link href='/browse-jobs' className='text-neutral text-sm leading-[21px]'>Browse Jobs</Link></li>
                             <li><Link href='/contact' className='text-neutral text-sm leading-[21px]'>Contact</Link></li>
                             <li><Link href='/about' className='text-neutral text-sm leading-[21px]'>About</Link></li>
+                            <li><Link href='/blog' className='text-neutral text-sm leading-[21px]'>Blog</Link></li>
                         </ul>
                     </div>
                 </div>
