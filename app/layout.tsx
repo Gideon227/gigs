@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     images: ["https://gigs.tech/_next/image?url=%2Flogo.png&w=256&q=75"],
   },
   alternates: {
-    canonical: "https://gigs.tech",
+    canonical: "./",
   },
   robots: "index, follow",
   keywords: ["Power Platform jobs", "Dynamics 365 jobs", "Microsoft jobs", "Power Apps developer", "Power BI consultant", "D365 architect"],

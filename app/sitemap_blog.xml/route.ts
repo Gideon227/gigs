@@ -4,47 +4,48 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const res = await fetch("https://uximjvcbkz.blogbowl.app/api/posts", {
-      headers: { "Content-Type": "application/json" },
+    const BLOG_URL = "https://uximjvcbkz.blogbowl.app"; 
+    const res = await fetch(BLOG_URL, {
+      headers: { 
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" 
+      },
       cache: "no-store",
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch blog posts", await res.text());
+      console.error("Failed to fetch blog homepage");
       return new NextResponse(generateEmptySitemap(), {
         headers: { "Content-Type": "application/xml" },
         status: 500,
       });
     }
 
-    const posts = await res.json();
+    const html = await res.text();
 
-    if (!Array.isArray(posts)) {
-      console.error("Blog API returned unexpected format:", posts);
-      return new NextResponse(generateEmptySitemap(), {
-        headers: { "Content-Type": "application/xml" },
-        status: 500,
-      });
+    const linkRegex = /href=["'](?:https?:\/\/[^"']*)?\/posts\/([^"'\/\?]+)["']/g;
+    
+    const slugs = new Set<string>();
+    let match;
+    
+    while ((match = linkRegex.exec(html)) !== null) {
+      if (match[1]) {
+        slugs.add(match[1]);
+      }
     }
 
-    const urls = posts
-      .map((post: any) => {
-        const slug = post?.slug;
-
-        if (!slug) return null;
-
+    const urls = Array.from(slugs)
+      .map((slug) => {
         const loc = `https://gigs.tech/blog/posts/${slug}`;
-        const lastMod = post.updatedAt || post.createdAt || new Date().toISOString();
+        const lastMod = new Date().toISOString().split("T")[0];
 
         return `
   <url>
     <loc>${loc}</loc>
-    <lastmod>${new Date(lastMod).toISOString().split("T")[0]}</lastmod>
+    <lastmod>${lastMod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>`;
       })
-      .filter(Boolean)
       .join("\n");
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -58,9 +59,9 @@ ${urls}
         "Cache-Control": "public, max-age=3600",
       },
     });
+
   } catch (err) {
     console.error("Sitemap generation error:", err);
-
     return new NextResponse(generateEmptySitemap(), {
       headers: { "Content-Type": "application/xml" },
       status: 500,
