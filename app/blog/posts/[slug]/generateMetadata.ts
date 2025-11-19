@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const slug = params.slug;
 
-  const url = `https://uximjvcbkz.blogbowl.app/blog/posts/${slug}`;
+  const url = `https://uximjvcbkz.blogbowl.app/posts/${slug}`;
   const res = await fetch(url, { 
     cache: "no-store",
     headers: {

@@ -22,12 +22,12 @@ export async function GET() {
 
     const html = await res.text();
 
-    const linkRegex = /href=["'](?:https?:\/\/[^"']*)?\/blog\/posts\/([^"'\/\?]+)["']/g;
+    const pathRegex = /href=["'](?:https?:\/\/[^"']*)?\/posts\/([^"'\/\?]+)["']/g;
     
     const slugs = new Set<string>();
     let match;
     
-    while ((match = linkRegex.exec(html)) !== null) {
+    while ((match = pathRegex.exec(html)) !== null) {
       if (match[1]) {
         slugs.add(match[1]);
       }
