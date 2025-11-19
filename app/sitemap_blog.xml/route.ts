@@ -22,7 +22,8 @@ export async function GET() {
 
     const html = await res.text();
 
-    const pathRegex = /href=["'](?:https?:\/\/[^"']*)?\/posts\/([^"'\/\?]+)["']/g;
+    // const pathRegex = /href=["'](?:https?:\/\/[^"']*)?\/posts\/([^"'\s]+)["']/g;
+    const pathRegex = /href=["'](?:https?:\/\/[^"']*)?\/blog\/posts\/([^"'\/\?]+)["']/g;
     
     const slugs = new Set<string>();
     let match;
