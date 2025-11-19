@@ -6,14 +6,14 @@ export async function GET() {
   try {
     const BLOG_URL = "https://uximjvcbkz.blogbowl.app"; 
     const res = await fetch(BLOG_URL, {
-      headers: { 
+      headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" 
       },
       cache: "no-store",
     });
 
     if (!res.ok) {
-      console.error("Failed to fetch blog homepage");
+      console.error("Failed to fetch blog homepage, status:", res.status);
       return new NextResponse(generateEmptySitemap(), {
         headers: { "Content-Type": "application/xml" },
         status: 500,
@@ -22,7 +22,7 @@ export async function GET() {
 
     const html = await res.text();
 
-    const linkRegex = /href=["'](?:https?:\/\/[^"']*)?\/posts\/([^"'\/\?]+)["']/g;
+    const linkRegex = /href=["'](?:https?:\/\/[^"']*)?\/blog\/posts\/([^"'\/\?]+)["']/g;
     
     const slugs = new Set<string>();
     let match;
@@ -32,6 +32,8 @@ export async function GET() {
         slugs.add(match[1]);
       }
     }
+
+    console.log(`Found ${slugs.size} blog posts`); 
 
     const urls = Array.from(slugs)
       .map((slug) => {

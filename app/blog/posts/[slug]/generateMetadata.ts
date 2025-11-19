@@ -16,37 +16,39 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   const html = await res.text();
 
-  const getMeta = (property: string) => {
-    const regex = new RegExp(`<meta[^>]+name=["']${property}["'][^>]+content=["']([^"']+)["']`, "i");
-    const match = html.match(regex);
+  const getMeta = (target: string) => {
+    const regex1 = new RegExp(`<meta[^>]+(?:property|name)=["']${target}["'][^>]+content=["']([^"']*)["']`, "i");
+    const regex2 = new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]+(?:property|name)=["']${target}["']`, "i");
+    
+    const match = html.match(regex1) || html.match(regex2);
     return match?.[1] ?? null;
   };
 
   // Extract OG metadata
-  const ogTitle = getMeta("og:title");
-  const ogDesc = getMeta("og:description");
-  const ogImage = getMeta("og:image");
+  const title = getMeta("og:title") || getMeta("twitter:title") || getMeta("title");
+  const desc = getMeta("og:description") || getMeta("description") || getMeta("twitter:description");
+  const image = getMeta("og:image") || getMeta("twitter:image");
   const ogUrl = `https://gigs.tech/blog/posts/${slug}`;
 
   return {
-    title: ogTitle ?? "Blog Post | GIGS.TECH",
-    description: ogDesc ?? "",
+    title: title ?? "Blog Post | GIGS.TECH",
+    description: desc ?? "",
     alternates: {
       canonical: ogUrl,
     },
     openGraph: {
-      title: ogTitle ?? "",
-      description: ogDesc ?? "",
+      title: title ?? "",
+      description: desc ?? "",
       url: ogUrl,
       type: "article",
-      images: ogImage ? [{ url: ogImage }] : [],
+      images: image ? [{ url: image }] : [],
       siteName: "GIGS.TECH",
     },
     twitter: {
       card: "summary_large_image",
-      title: ogTitle ?? "",
-      description: ogDesc ?? "",
-      images: ogImage ? [ogImage] : [],
+      title: title ?? "",
+      description: desc ?? "",
+      images: image ? [image] : [],
     },
   };
 }
