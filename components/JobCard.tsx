@@ -9,7 +9,7 @@ import { Country, State } from 'country-state-city';
 import { useNavigationStore } from '@/app/stores/useNavigationStore';
 
 const getJobTypeColor = (jobType: string): string => {
-    switch (jobType.toLowerCase()) {
+    switch (typeof jobType === 'string' && jobType?.toLowerCase()) {
       case 'gigwork':
         return 'bg-[#008080]';
       case 'fulltime':
@@ -26,7 +26,7 @@ const getJobTypeColor = (jobType: string): string => {
 };
 
 const getJobTypeText = (jobType: string): string => {
-    switch (jobType.toLowerCase()) {
+    switch (typeof jobType === 'string' && jobType?.toLowerCase()) {
       case 'gigwork':
         return 'Gig-work';
       case 'fulltime':
@@ -100,12 +100,12 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
 
 const getStateAbbreviation = (countryName: string, stateName: string): string | null => {
   const countries = Country.getAllCountries();
-  const country = countries.find(c => c.name.toLowerCase() === countryName.toLowerCase());
+  const country = countries.find(c => typeof c.name === 'string' && c.name.toLowerCase() === countryName.toLowerCase());
 
   if (!country) return null;
 
   const states = State.getStatesOfCountry(country.isoCode);
-  const state = states.find(s => s.name.toLowerCase() === stateName.toLowerCase());
+  const state = states.find(s => s.name === 'string' && s.name.toLowerCase() === stateName.toLowerCase());
 
   return state?.isoCode || null;
 };
@@ -113,12 +113,12 @@ const getStateAbbreviation = (countryName: string, stateName: string): string | 
 
 const stateAbbr = React.useMemo(() => {
     const countries = Country.getAllCountries();
-    const countryName = countries.find(c => c.name.toLowerCase() === country.toLowerCase());
+    const countryName = countries.find(c => c.name === 'string' && c.name.toLowerCase() === country.toLowerCase());
 
     if (!countryName) return null;
 
     const states = State.getStatesOfCountry(countryName.isoCode);
-    const found = states.find(s => s.name.toLowerCase() === state.toLowerCase());
+    const found = states.find(s => s.name === 'string' && s.name.toLowerCase() === state.toLowerCase());
 
     return found?.isoCode;
 }, [country, state]);

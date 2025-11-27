@@ -72,7 +72,7 @@ const JobDrawer: React.FC<JobDrawerProps> = ({ job, onClose }) => {
     
     const stateAbbr = React.useMemo(() => {
         if (!job?.country || !job?.state) return null;
-        const normalize = (str: string) => str.trim().toLowerCase();
+        const normalize = (str: string) => typeof str === 'string' && str.trim().toLowerCase();
 
         const country = Country.getAllCountries().find(
             c => normalize(c.name) === normalize(job.country)
