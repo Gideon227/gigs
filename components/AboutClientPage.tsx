@@ -51,7 +51,7 @@ const AboutClientPage = () => {
             <Cta 
                 title={<span>Join Us in Redefining the Future of Microsoft Business Apps Careers</span>}
                 text={<span>
-                        Whether you&apos;re a <b>job seeker</b> searching for your next meaningful role or a <b>recruiter</b> trying to find the perfect candidate in a sea of noise, <b>Gigs.Tech is here to bridge the gap.</b> We&apos;re not just building a platform — we&apos;re building a community for the people who power digital transformation with Microsoft technologies.
+                        Whether you&apos;re a <b>job seeker</b> searching for your next meaningful role or a <b>recruiter</b> trying to find the perfect candidate in a sea of noise, <b>GIGS.TECH is here to bridge the gap.</b> We&apos;re not just building a platform — we&apos;re building a community for the people who power digital transformation with Microsoft technologies.
                         <br /><br />
                         <b>This is your space. This is your moment.</b>
                         <br /><br />

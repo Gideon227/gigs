@@ -16,6 +16,7 @@ import Analytics from "@/components/Analytics";
 import CookieBanner from "@/components/CookieBanner";
 import { Suspense } from "react";
 import StructuredData from "@/components/StructuredData";
+import Head from "./head";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -86,14 +87,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <head>
+      {/* <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#1B1E28" />
         <StructuredData />
 
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* Google Analytics Script */}
+
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
           strategy="afterInteractive"
@@ -108,7 +109,9 @@ export default function RootLayout({
             });
           `}
         </Script>
-      </head>
+      </head> */}
+
+      <Head />
       <body
         className={`
           ${geistSans.variable} 
@@ -122,12 +125,11 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
-        <Suspense fallback={<div className="h-20 bg-[#1B1E28]" />}>
-          <Navbar />
-        </Suspense>
-        <main className="flex-1">
-          {children}
-        </main>
+
+        <Navbar />
+          <main className="flex-1">
+            {children}
+          </main>
         <Footer />
       </body>
     </html>

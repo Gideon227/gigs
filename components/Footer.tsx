@@ -10,7 +10,7 @@ const Footer = () => {
             <div className='grid grid-cols-4 gap-16 max-lg:gap-10 px-12 py-24 max-md:grid-cols-3 max-md:px-6'>
 
                 <div className='flex justify-start flex-col space-y-6 max-md:col-span-3'>
-                    <Image src='/logo.png' placeholder="blur" width={170} height={41} alt="Gigs logo"/>
+                    <Image src='/logo.png' width={170} height={41} alt="Gigs logo"/>
                     <p className='text-neutral text-sm leading-[21px]'>The only Microsoft Power Platform & Dynamics 365 job aggregator in the space.</p>
                     <a 
                         href='https://www.linkedin.com/company/gigs-dot-tech/' 
@@ -61,7 +61,7 @@ const Footer = () => {
             <hr className='text-[#363636] bg-[#363636] w-6/7 h-[1px] mx-auto'/>
 
             <div className='flex justify-center items-center p-6'>
-                <p className='text-center text-neutral text-sm leading-[21px] max-md:text-[10px]'>{`© Copyright ${new Date().getFullYear()}, All Rights Reserved by Gigs.Tech`}</p>
+                <p className='text-center text-neutral text-sm leading-[21px] max-md:text-[10px]'>{`© Copyright ${new Date().getFullYear()}, All Rights Reserved by GIGS.TECH`}</p>
             </div>  
         </div>
     </div>

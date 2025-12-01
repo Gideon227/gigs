@@ -7,7 +7,7 @@ const AboutMain = () => {
   return (
     <div className='w-full bg-[#1B1E28]'>
         <div className='max-w-[1600px] mx-auto lg:p-16 flex flex-col justify-start max-lg:items-center max-lg:px-4 max-lg:py-16'>
-            <Image src='/diamond sparkle.svg' width={58} height={58} alt='diamond sparkle' placeholder="blur" className='object-contain'/>
+            <Image src='/diamond sparkle.svg' width={58} height={58} alt='diamond sparkle' className='object-contain'/>
 
             <div className='lg:w-2/3 flex flex-col justify-start space-y-6 max-lg:mt-4 max-md:space-y-4'>
                 <LastLineImage 
@@ -18,7 +18,7 @@ const AboutMain = () => {
                     <Image src='/diamond.svg' alt='diamond' className='absolute -bottom-4 xl:left-60 left-72'/>
                 </h1> */}
 
-                <p className='font-normal text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary font-lora'>Gigs.Tech</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
+                <p className='font-normal text-[16px] leading-[27px] text-start text-paragraph'> <span className='text-primary font-lora'>GIGS.TECH</span> is a hyper-focused job aggregation platform built from the ground up to serve one mission:</p>
 
                 <p className='text-heading text-[24px] font-normal leading-[36px] max-lg:text-[18px] max-lg:leading-[27px]'>Help Microsoft job seekers discover the freshest roles, and help recruiters connect with qualified candidates — faster and smarter.</p>
 
@@ -56,7 +56,7 @@ const AboutMain = () => {
             </span>
 
             <div className='flex flex-col justify-end items-end text-end space-y-4'>
-                <h1 className='text-[32px] font-semibold leading-[48px] text-heading max-lg:text-[27px] max-lg:leading-[36px]'>Why <span className='text-primary'>Gigs.Tech?</span> The Benefits for Everyone Involved</h1>
+                <h1 className='text-[32px] font-semibold leading-[48px] text-heading max-lg:text-[27px] max-lg:leading-[36px]'>Why <span className='text-primary'>GIGS.TECH?</span> The Benefits for Everyone Involved</h1>
 
                 <p className='text-paragraph text-[20px] leading-[30px] max-md:text-[21px] pb-6'>For Job Seekers:</p>
 

@@ -15,7 +15,7 @@ const AboutSection = () => {
                 <p className='font-medium text-[16px] leading-[27px] text-heading max-md:text-sm max-md:leading-[24px]'>“Why is it so hard to find the right opportunities in this space?”</p>
 
                 <p className='font-normal text-[16px] leading-[27px] text-paragraph max-md:text-sm max-md:leading-[24px]'>
-                    <span className='text-primary font-normal'>Gigs.Tech</span> was born from that frustration. It&apos;s not just another job board. It&apos;s a specialized, recruiter-friendly, job seeker-first platform built exclusively for the Power Platform and Dynamics 365 ecosystem — so talent and opportunity can finally meet without the noise.
+                    <span className='text-primary font-normal'>GIGS.TECH</span> was born from that frustration. It&apos;s not just another job board. It&apos;s a specialized, recruiter-friendly, job seeker-first platform built exclusively for the Power Platform and Dynamics 365 ecosystem — so talent and opportunity can finally meet without the noise.
                 </p>
             </div>
        </div> 

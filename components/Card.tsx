@@ -26,8 +26,8 @@ const Card = ({ title, text, image, width, mobileWidth, imageHeight, image2, wid
 
         <div className='absolute bottom-0 right-0 z-10'>
             {extraImage && (<Image src={image2!} alt='image' width={width2} height={height2}  className={style2}/>)}
-            <Image src={image} alt='image' width={width} height={imageHeight} placeholder="blur" className='max-lg:hidden rounded-br-2xl'/>
-            <Image src={image} alt='image' width={mobileWidth || 90} height={imageHeight} placeholder="blur" className='lg:hidden rounded-br-2xl' />
+            <Image src={image} alt='image' width={width} height={imageHeight} className='max-lg:hidden rounded-br-2xl'/>
+            <Image src={image} alt='image' width={mobileWidth || 90} height={imageHeight} className='lg:hidden rounded-br-2xl' />
 
         </div>
     </div>

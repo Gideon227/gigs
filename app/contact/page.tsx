@@ -4,7 +4,7 @@ import ContactClientPage from '@/components/ContactClientPage';
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with Gigs.Tech for partnerships, support, or community inquiries.",
+  description: "Get in touch with GIGS.TECH for partnerships, support, or community inquiries.",
   alternates: {
     canonical: "https://gigs.tech/contact",
   },

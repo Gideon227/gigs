@@ -12,8 +12,8 @@ const Navbar = () => {
     <div className='bg-[#1B1E28] z-50 w-full '>
         <div className='max-w-[1600px] m-auto flex justify-between items-center pt-2 px-8 max-lg:py-4 max-lg:px-6'>
             <Link href='/browse-jobs?country=United+States&page=1&limit=10' className='items-start flex flex-1 justify-start'>
-                <Image src='/logo.png' placeholder="blur" height={35} width={140} alt='logo image' className='max-lg:hidden'/>
-                <Image src='/logo.png' placeholder="blur" height={35} width={110} alt='logo image' className='lg:hidden'/>
+                <Image src='/logo.png' height={35} width={140} alt='logo image' className='max-lg:hidden'/>
+                <Image src='/logo.png' height={35} width={110} alt='logo image' className='lg:hidden'/>
             </Link>
             
             <div className='flex flex-1 justify-center items-center space-x-8 pb-0.5 max-lg:hidden'>

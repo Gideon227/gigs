@@ -6,14 +6,14 @@ const ContactMain = () => {
   return (
     <div className='bg-[#101217] max-w-[1600px] mx-auto px-12 max-md:px-6 max-lg:px-6'>
         <div className='py-16 flex flex-col justify-center items-center text-center space-y-2'>
-            <h1 className='text-center text-[32px] leading-[48px] font-semibold text-heading max-md:text-[28px] max-md:leading-[35px]'>Get in Touch with Gigs.Tech</h1>
+            <h1 className='text-center text-[32px] leading-[48px] font-semibold text-heading max-md:text-[28px] max-md:leading-[35px]'>Get in Touch with GIGS.TECH</h1>
             <p className='text-paragraph text-[16px] leading-[24px] text-center'>Whether you&apos;re a <span className='text-primary'>Power Platform or Dynamics 365 professional</span> searching for your next opportunity,<br /> or a <span className='text-primary'>recruiter</span> looking to connect with qualified talent, we&apos;d love to hear from you.</p>
         </div>
 
         <div className='grid grid-cols-2 md:grid-rows-7 max-w-fit m-auto gap-6 xl:gap-8 max-md:grid-cols-1 max-md:space-y-0'>
             <Card 
                 title={<span>General Inquiries</span>}
-                text={<span>Got a question about how Gigs.Tech works? Want to partner with us or provide feedback?
+                text={<span>Got a question about how GIGS.TECH works? Want to partner with us or provide feedback?
                         <br /> <br /> 
                         <span className='text-white font-semibold'>Email:</span> <Link href='mailto:hello@gigs.tech' className='text-primary underline'>hello@gigs.tech</Link>
                     </span>}

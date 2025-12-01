@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Read Gigs.Tech’s privacy practices and how we handle your personal information.",
+  description: "Read GIGS.TECH's privacy practices and how we handle your personal information.",
   alternates: {
     canonical: "https://gigs.tech/privacy-policy",
   }

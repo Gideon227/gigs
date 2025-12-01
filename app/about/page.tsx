@@ -4,13 +4,13 @@ import AboutClientPage from '@/components/AboutClientPage';
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "Discover how Gigs.Tech connects Microsoft Business Apps professionals and employers.",
+  description: "Discover how GIGS.TECH connects Microsoft Business Apps professionals and employers.",
   alternates: {
     canonical: "https://gigs.tech/about",
   },
   openGraph: {
-    title: "About Gigs.Tech",
-    description: "Learn how Gigs.Tech connects Microsoft Power Platform professionals to top jobs.",
+    title: "About GIGS.TECH",
+    description: "Learn how GIGS.TECH connects Microsoft Power Platform professionals to top jobs.",
     url: "https://gigs.tech/about",
     type: "website",
   },

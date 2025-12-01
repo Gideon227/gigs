@@ -59,15 +59,15 @@ const TermClientPage = () => {
         <div className='hero_bg w-full h-[605px] bg-bottom -mt-20 -mb-20 flex items-center justify-center'>
             <div className='max-w-[1800px] flex items-center justify-center'>
                 <div className='lg:w-2/3 lg:px-36 max-lg:px-24 max-md:px-6 relative flex flex-col max-sm:space-y-2 sm:space-y-6 justify-center items-center text-center py-8'>
-                    <Image src='/Group 6.png' width={90} height={114} alt='sparkles' placeholder="blur" className='absolute left-20 top-0 max-lg:hidden'/>
-                    <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} placeholder="blur" className='absolute max-md:left-5 max-md:-top-5 left-28 top-0 lg:hidden'/>
+                    <Image src='/Group 6.png' width={90} height={114} alt='sparkles' className='absolute left-20 top-0 max-lg:hidden'/>
+                    <Image src='/Group 6.png' alt='Glitters in about page' width={50} height={113} className='absolute max-md:left-5 max-md:-top-5 left-28 top-0 lg:hidden'/>
 
-                    <Image src='/Group 5.png' width={100} height={86} alt='sparkles' placeholder="blur" className='absolute right-20 bottom-0 max-lg:hidden'/>
-                    <Image src='/Group 5.png' alt='sparkles' width={50} height={86} placeholder="blur" className='absolute max-md:right-7 max-md:-bottom-10 right-36 -bottom-10 lg:hidden'/>
+                    <Image src='/Group 5.png' width={100} height={86} alt='sparkles' className='absolute right-20 bottom-0 max-lg:hidden'/>
+                    <Image src='/Group 5.png' alt='sparkles' width={50} height={86} className='absolute max-md:right-7 max-md:-bottom-10 right-36 -bottom-10 lg:hidden'/>
 
                     <h1 className='leading-[84px] text-[56px] font-semibold text-heading max-md:text-[38px] max-lg:leading-[50px] max-lg:text-[45px] max-sm:text-[27px] max-sm:leading-[36px]'>Terms of Use</h1>
 
-                    <p className='text-[16px] leading-[24px] font-normal text-heading max-sm:text-sm'>By using <b>Gigs.Tech</b> ("we", "our", "us"), you agree to these Terms — whether you&apos;re browsing as a <b>job seeker</b> or posting as a <b>recruiter</b>.</p>
+                    <p className='text-[16px] leading-[24px] font-normal text-heading max-sm:text-sm'>By using <b>GIGS.TECH</b> ("we", "our", "us"), you agree to these Terms — whether you&apos;re browsing as a <b>job seeker</b> or posting as a <b>recruiter</b>.</p>
 
                     <div className='flex space-x-6 items-center justify-center lg:w-1/2'>
                         <div className='space-y-2 '>
@@ -90,7 +90,7 @@ const TermClientPage = () => {
             <div className='max-w-[1800px] 2xl:max-w-fit flex items-start m-auto lg:py-16 lg:px-20 px-6 py-10 h-screen'>
                 <div className='max-2xl:w-1/3 2xl:hidden bg-[#101217] p-4 border-r border-r-[#363636] h-full overflow-y-auto flex flex-col space-y-6 items-start max-lg:hidden'>
                     <Link href='#about-gig' onClick={() => scrollToSection(aboutGigRef)} className={`pl-4 leading-[18px] text-[16px] ${activeId === 'about-gig' ? 'text-primary border-l-2 border-l-primary font-semibold' : 'text-neutral '}`}>
-                        About Gigs.Tech
+                        About GIGS.TECH
                     </Link>
 
                     <Link 
@@ -135,7 +135,7 @@ const TermClientPage = () => {
                         ref={aboutGigRef}
                         className='flex flex-col space-y-1 text-start'
                     >
-                        <h1 className='text-[21px] leading-[36px] font-semibold text-heading'>About Gigs.Tech</h1>
+                        <h1 className='text-[21px] leading-[36px] font-semibold text-heading'>About GIGS.TECH</h1>
                         <p className='text-[16px] leading-[24px] text-heading'>We&apos;re a <b>niche job aggregator</b> focused on Microsoft Power Platform & Dynamics 365 careers.</p>
 
                         <p className='text-[16px] leading-[24px] text-heading mt-3'> Our goal: <b>Connect qualified professionals with real job opportunities — quickly and directly.</b></p>
@@ -182,7 +182,7 @@ const TermClientPage = () => {
                                 <li>Listings are either aggregated or posted directly by hiring partners</li>
                                 <li>We do our best to ensure accuracy but can&apos;t guarantee listings are always up to date
                                 </li>
-                                <li>Gigs.Tech is not responsible for hiring decisions or employer communications
+                                <li>GIGS.TECH is not responsible for hiring decisions or employer communications
                                 </li>
                             </ul>
                             <br /><br />
@@ -227,7 +227,7 @@ const TermClientPage = () => {
                     >
                         <h1 className='text-[21px] leading-[36px] font-semibold text-heading'>Intellectual Property</h1>
                         <div className='text-[16px] leading-[24px] text-heading'>
-                            The Gigs.Tech brand, logo, and platform features are the intellectual property of Gigs.Tech and may not be copied or reused without permission.
+                            The GIGS.TECH brand, logo, and platform features are the intellectual property of GIGS.TECH and may not be copied or reused without permission.
                             
                         </div>
                     </section>
@@ -241,7 +241,7 @@ const TermClientPage = () => {
                     >
                         <h1 className='text-[21px] leading-[36px] font-semibold text-heading'>Limitation of Liability</h1>
                         <div className='text-[16px] leading-[24px] text-heading'>
-                            We provide Gigs.Tech <b>“as-is”</b> without warranties of any kind.<br />
+                            We provide GIGS.TECH <b>“as-is”</b> without warranties of any kind.<br />
                             We are not liable for:<br />
                             <ul className='list-disc pl-6'>
                                 <li>Employment outcomes</li>
