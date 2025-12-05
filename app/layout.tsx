@@ -18,6 +18,7 @@ import { Suspense } from "react";
 import StructuredData from "@/components/StructuredData";
 import Head from "./head";
 import ScrollRestoration from "./scrollRestoration";
+import ScrollConfig from "@/components/ScrollConfig";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
@@ -126,7 +127,8 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Analytics />
         </Suspense>
-        <ScrollRestoration />
+        {/* <ScrollRestoration /> */}
+        <ScrollConfig />
         <Navbar />
           <main className="flex-1">
             {children}

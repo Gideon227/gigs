@@ -94,9 +94,8 @@ const JobCard = ({ job, hasBorder, onClick, slug, setOpenShareModal }: JobCardPr
       params.delete("skills");
     }
     router.replace(`/browse-jobs?${params.toString()}`, { scroll: false });
-};
+  };
 
-// onClick={() => onClick(job)}
 
 const getStateAbbreviation = (countryName: string, stateName: string): string | null => {
   const countries = Country.getAllCountries();
@@ -130,7 +129,12 @@ const stateAbbr = React.useMemo(() => {
           pathname: slug,
           query: { currentUrl }
         }} 
-        onClick={() => setPreviousUrl(currentUrl)} 
+        // onClick={() => setPreviousUrl(currentUrl)} 
+        onClick={(e) => {
+          sessionStorage.setItem("browse_scroll", window.scrollY.toString());
+          setPreviousUrl(currentUrl);
+        }}
+
         prefetch={true} 
         className='flex items-start gap-x-5 justify-between w-full'
       >
