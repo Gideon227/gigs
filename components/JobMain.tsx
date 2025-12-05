@@ -4,6 +4,7 @@ import JobSidebar from './JobSidebar'
 import JobBoard from './JobBoard'
 import { JobProps } from '@/constants/Jobs'
 import { useSearchParams } from 'next/navigation'
+import { useRestoreScroll } from '@/hooks/useRestoreScroll'
 
 export interface SelectedLocation {
   country?: string;
@@ -19,6 +20,8 @@ const JobMain = () => {
   const currentPage = searchParams.get("page");
   const params = new URLSearchParams(searchParams.toString())
   const getPage = Number(currentPage);
+
+  useRestoreScroll()
 
   const [page, setPage] = useState<number>(getPage || 1);
   // const [location, setLocation] = useState<string | null>(params.get('location') || "");

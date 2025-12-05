@@ -122,6 +122,7 @@ const stateAbbr = React.useMemo(() => {
     return found?.isoCode;
 }, [country, state]);
 
+
   return (
     <div className={`w-full pt-6 pb-8 space-y-5 ${hasBorder && 'border-b border-[#363636]'}`}>
       <Link 
@@ -130,9 +131,11 @@ const stateAbbr = React.useMemo(() => {
           query: { currentUrl }
         }} 
         // onClick={() => setPreviousUrl(currentUrl)} 
-        onClick={(e) => {
-          sessionStorage.setItem("browse_scroll", window.scrollY.toString());
-          setPreviousUrl(currentUrl);
+        onClick={() => {
+          const key = "browse_scroll_" + searchParams.toString();
+          sessionStorage.setItem(key, window.scrollY.toString());
+
+          setPreviousUrl(`${pathname}?${searchParams.toString()}`);
         }}
 
         prefetch={true} 
