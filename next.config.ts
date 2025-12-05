@@ -15,14 +15,11 @@ const nextConfig = {
   },
 
   compress: true,
-  swcMinify: true,
+  // swcMinify: true,
 
-  // compiler: {
-  //   removeConsole: process.env.NODE_ENV === 'production',
-  // },
   compiler: { removeConsole: false },
 
-  optimizeFonts: true,
+  // optimizeFonts: true,
 
   async rewrites() {
     return [
